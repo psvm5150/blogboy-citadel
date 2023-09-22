@@ -1,0 +1,1811 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>body {
+  max-width: 980px;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 45px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable,
+.markdown-body .highlighttable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr,
+.markdown-body .highlighttable {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite,
+.markdown-body .highlighttable pre,
+.markdown-body .highlighttable div.highlight {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td,
+.markdown-body .highlighttable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headerlink {
+  font: normal 400 16px fontawesome-mini;
+  vertical-align: middle;
+  margin-left: -16px;
+  float: left;
+  display: inline-block;
+  text-decoration: none;
+  opacity: 0;
+  color: #333;
+}
+
+.markdown-body .headerlink:focus {
+  outline: none;
+}
+
+.markdown-body h1 .headerlink {
+  margin-top: 0.8rem;
+}
+
+.markdown-body h2 .headerlink,
+.markdown-body h3 .headerlink {
+  margin-top: 0.6rem;
+}
+
+.markdown-body h4 .headerlink {
+  margin-top: 0.2rem;
+}
+
+.markdown-body h5 .headerlink,
+.markdown-body h6 .headerlink {
+  margin-top: 0;
+}
+
+.markdown-body .headerlink:hover,
+.markdown-body h1:hover .headerlink,
+.markdown-body h2:hover .headerlink,
+.markdown-body h3:hover .headerlink,
+.markdown-body h4:hover .headerlink,
+.markdown-body h5:hover .headerlink,
+.markdown-body h6:hover .headerlink {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 3px;
+}
+
+.markdown-body code:not(.highlight):not(.codehilite), .markdown-body samp {
+  background-color: rgba(0,0,0,0.04);
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite,
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+}
+
+.markdown-body .codehilite,
+.markdown-body .highlight,
+.markdown-body pre {
+  border-radius: 3px;
+}
+
+.markdown-body :not(.highlight) > pre {
+  background-color: #f7f7f7;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* MultiMarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px fontawesome-mini;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\e157';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+.markdown-body diagram-div, .markdown-body div.uml-sequence-diagram, .markdown-body, div.uml-flowchart {
+  overflow: auto;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><style>/*GitHub*/
+.highlight {background-color:#f7f7f7;color:#333333;}
+.highlight .hll {background-color:#ffffcc;}
+.highlight .c{color:#999988;font-style:italic}
+.highlight .err{color:#a61717;background-color:#e3d2d2}
+.highlight .k{font-weight:bold}
+.highlight .o{font-weight:bold}
+.highlight .cm{color:#999988;font-style:italic}
+.highlight .cp{color:#999999;font-weight:bold}
+.highlight .c1{color:#999988;font-style:italic}
+.highlight .cs{color:#999999;font-weight:bold;font-style:italic}
+.highlight .gd{color:#000000;background-color:#ffdddd}
+.highlight .ge{font-style:italic}
+.highlight .gr{color:#aa0000}
+.highlight .gh{color:#999999}
+.highlight .gi{color:#000000;background-color:#ddffdd}
+.highlight .go{color:#888888}
+.highlight .gp{color:#555555}
+.highlight .gs{font-weight:bold}
+.highlight .gu{color:#800080;font-weight:bold}
+.highlight .gt{color:#aa0000}
+.highlight .kc{font-weight:bold}
+.highlight .kd{font-weight:bold}
+.highlight .kn{font-weight:bold}
+.highlight .kp{font-weight:bold}
+.highlight .kr{font-weight:bold}
+.highlight .kt{color:#445588;font-weight:bold}
+.highlight .m{color:#009999}
+.highlight .s{color:#dd1144}
+.highlight .n{color:#333333}
+.highlight .na{color:teal}
+.highlight .nb{color:#0086b3}
+.highlight .nc{color:#445588;font-weight:bold}
+.highlight .no{color:teal}
+.highlight .ni{color:purple}
+.highlight .ne{color:#990000;font-weight:bold}
+.highlight .nf{color:#990000;font-weight:bold}
+.highlight .nn{color:#555555}
+.highlight .nt{color:navy}
+.highlight .nv{color:teal}
+.highlight .ow{font-weight:bold}
+.highlight .w{color:#bbbbbb}
+.highlight .mf{color:#009999}
+.highlight .mh{color:#009999}
+.highlight .mi{color:#009999}
+.highlight .mo{color:#009999}
+.highlight .sb{color:#dd1144}
+.highlight .sc{color:#dd1144}
+.highlight .sd{color:#dd1144}
+.highlight .s2{color:#dd1144}
+.highlight .se{color:#dd1144}
+.highlight .sh{color:#dd1144}
+.highlight .si{color:#dd1144}
+.highlight .sx{color:#dd1144}
+.highlight .sr{color:#009926}
+.highlight .s1{color:#dd1144}
+.highlight .ss{color:#990073}
+.highlight .bp{color:#999999}
+.highlight .vc{color:teal}
+.highlight .vg{color:teal}
+.highlight .vi{color:teal}
+.highlight .il{color:#009999}
+.highlight .gc{color:#999;background-color:#EAF2F5}
+</style><title>SubLimeTextUsersGuide</title></head><body><article class="markdown-body"><h1 id="sublime-text-4-users-guide">Sublime Text 4 Users&rsquo; Guide<a class="headerlink" href="#sublime-text-4-users-guide" title="Permanent link"></a></h1>
+<p><br> <br> <br> <br> <br> <br> <br> <br></p>
+<blockquote>
+<ul>
+<li><code>@author Tansan Man(tansan5150)</code>    </li>
+<li><code>@up to date 2023.01.03</code> </li>
+</ul>
+</blockquote>
+<p><br>
+<br>
+<a href="https://creativecommons.org/licenses/by/2.0/kr/"><img alt="Creative Commons Korea" src="https://ccl.cckorea.org/images/ico-cc.png" /></a><br />
+본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  </p>
+<h2 id="_1"><br><a class="headerlink" href="#_1" title="Permanent link"></a></h2>
+<p><br> </p>
+<h3 id="_2">목차<a class="headerlink" href="#_2" title="Permanent link"></a></h3>
+<p><br></p>
+<blockquote>
+<p>&nbsp; <a href="#1">1. 설치</a> <br />
+&nbsp; <a href="#2">2. 환경설정</a><br />
+&nbsp; <a href="#3">3. 기본 사용법</a><br />
+&nbsp; <a href="#4">4. 다중 선택, 세로 열 편집</a><br />
+&nbsp; <a href="#5">5. 개발 관련 기능</a><br />
+&nbsp; <a href="#6-sftp">6. SFTP 로 작업 하기</a><br />
+&nbsp; <a href="#7-plugin">7. Plugin 관리</a>   </p>
+</blockquote>
+<h2 id="_3"><br> <br> <br> <br><a class="headerlink" href="#_3" title="Permanent link"></a></h2>
+<p><br></p>
+<h3 id="1">1. 설치<a class="headerlink" href="#1" title="Permanent link"></a></h3>
+<h4 id="11">1.1 프로그램 설치<a class="headerlink" href="#11" title="Permanent link"></a></h4>
+<blockquote>
+<ol>
+<li><code>sublime_text_build_41ㅌXX_x64_setup.exe</code> 를 설치  </li>
+<li>설치 시 <code>Add to explorer context menu</code> 가 나오면 Check 해 준다(우측 클릭 문서열기 기능).</li>
+</ol>
+</blockquote>
+<h4 id="12-plugin">1.2 Plugin 설치<a class="headerlink" href="#12-plugin" title="Permanent link"></a></h4>
+<blockquote>
+<ol>
+<li>Sublime Text 를 실행 후 바로 종료 한다. Plugin 디렉토리는 최초 실행 후 생성된다. </li>
+<li>추가 플러그인 설치를 위해 <code>Installed Packages.zip</code> 와 <code>Packages.zip</code> 파일을 압축 해제 한다.  </li>
+<li><code>C:\Users\사번\AppData\Roaming\Sublime Text</code> 폴더에 <code>Installed Packages</code> 와 <code>Packages</code>  두 폴더를 삭제 한다.   </li>
+<li>압축 해제한 <code>Installed Packages</code> 와 <code>Packages</code> 폴더를 복사 한다.  </li>
+<li>만약 위 폴더에 <code>Sublime Text</code> 가 없는 경우 <code>C:\Users\master\AppData\Roaming\Sublime Text</code> 의 경로를 사용 한다.</li>
+</ol>
+</blockquote>
+<h4 id="13-license">1.3 License 등록<a class="headerlink" href="#13-license" title="Permanent link"></a></h4>
+<blockquote>
+<ol>
+<li>Help &gt; Enter License  메뉴를 실행 후 제공받은 License Key 내용을 모두 복사하여 붙여 넣는다.</li>
+<li>SFTP  Plugin License 등록: Command Palette <code>CTRL</code>+<code>SHIFT</code>+<code>P</code> &gt; sfl 입력 &gt; <code>SFTP: Enter License Key</code> 선택 후 하단에 생긴 License Key 입력 항목에 제공된 키를 붙여 넣는다.</li>
+</ol>
+</blockquote>
+<p><br><br></p>
+<h3 id="2">2. 환경 설정<a class="headerlink" href="#2" title="Permanent link"></a></h3>
+<h4 id="21-command-palette">2.1 Command Palette 에서 설치된 패키지 확인<a class="headerlink" href="#21-command-palette" title="Permanent link"></a></h4>
+<p>Sublime Text의 메뉴 기능 또는 설치된 플러그인 패키지의 관리, 플러그인 기능 사용 등 많은 것을 Commnad Palette 에서 할 수 있다. 예를 들면 SVN, GIT 으로 Checkout, Commit 또는 Clone 등을 할 때  Command Palette에서 한다.</p>
+<blockquote>
+<p><code>CTRL</code> + <code>SHIFT</code> + <code>P</code> : Command Palette 띄우기</p>
+</blockquote>
+<p>다음 예제를 통해 1번에서 복사하여 설치 한 플러그인 목록을 살펴보자. </p>
+<blockquote>
+<ol>
+<li>Command Palette 에서 다음을 입력한다 <code>pclp</code>   </li>
+<li>Package Control: List Packages 와 같이 입력 할 수 있으나 앞 글자만 입력 해도 자동완성 되는 편리한 특징이 있음    </li>
+<li><code>Package Control: List Packages</code> 가 보이면 선택, 설치된 패키지 목록이 보인다.</li>
+</ol>
+</blockquote>
+<p>이 중 <code>Package Control</code> 은 제작사에서 제공하는 Plugin 이며, 일반적으로 Sublime Text 를 설치 후 가장 먼저 설치해야 하는 필수 플러그인 이다. <code>Package Control</code>을 통해 외부 Plugin을 설치하고 관리 할 수 있다. 우리가 사용하는 업무망, 관리망은 인터넷이 되지 않는 환경 이므로 패키지를 인터넷 PC에서 옮겨서(복사) 설치 해야 한다. <code>1.2 Plugin 설치</code> 항목을 수행 했으면 이미 설치되어 있다.</p>
+<p><br></p>
+<h4 id="22-euc-kr-encoding">2.2 EUC-KR 한글 Encoding 관련 사항<a class="headerlink" href="#22-euc-kr-encoding" title="Permanent link"></a></h4>
+<p>Sublime Text는 EUC-KR Locale을 기본적으로 지원 하지 않는다. 따라서 이를 위해 <code>ConvertToUTF8</code> 플러그인의 설치가 필요하다. 2.1의 List Packages로 확인 해 보면 우리가 복사한 플러그인 모음에 이미 들어가 있다.   </p>
+<blockquote>
+<ol>
+<li>EUC-KR 설정: File &gt; Set File Encoding To &gt; Korean (EUC-KR)  </li>
+<li>EUC-KR로 다시 읽기: File &gt; Reload with Encoding &gt; Korean (EUC-KR)</li>
+</ol>
+</blockquote>
+<p>Sublime Text는 <code>File</code> 메뉴의 <code>Reopen with Encoding</code> 과 <code>Save with Encoding</code>을 통해 Locale 변환 기능을 제공한다. EUC-KR의 경우 기본 제공 기능이 아니므로 Plugin 설치 후 별도의 메뉴가 생긴다.</p>
+<p><br></p>
+<h4 id="23-optional">2.3 폰트 설치 (Optional)<a class="headerlink" href="#23-optional" title="Permanent link"></a></h4>
+<p>필요한 경우 설치본 디렉토리 내 fonts 폴더에 있는 폰트 중 원하는 폰트를 설치한다. Coding 관련 인기 인는 폰트들임.  </p>
+<ul>
+<li>나눔고딕 : 가변폭  </li>
+<li>나눔고딕코딩 : 고정폭  </li>
+<li>D2 Coding: 고정폭  </li>
+</ul>
+<p><br></p>
+<h4 id="24-theme-color-scheme">2.4 Theme 및 Color Scheme<a class="headerlink" href="#24-theme-color-scheme" title="Permanent link"></a></h4>
+<p>기본 적으로 Preferences 메뉴를 통해 할 수도 있지만 Command Palette 를 사용하면 편리하다.  </p>
+<ol>
+<li>
+<p>Editor 창  Text 색깔 표현 - <code>Monokai</code> 색상이 Default 이며 Sublime Text의 상징과도 같은 Color Scheme. <code>Mariana</code> 색상은 부드럽고 미려한 색상으로 인기가 많은 Color Scheme.</p>
+<blockquote>
+<p><code>CTRL</code>+<code>SHIFT</code>+<code>P</code> &gt; <code>usc</code> 입력 &gt; <code>UI:Select Color Scheme</code> 선택</p>
+</blockquote>
+</li>
+<li>
+<p>프로그램의 Color Theme 선택 - 시력 보호를 위한 다크모드 등을 선택 할 수 있다. </p>
+<blockquote>
+<p><code>CTRL</code>+<code>SHIFT</code>+<code>P</code> &gt; <code>ust</code> 정도 입력 &gt; <code>UI: Select Theme</code> 선택</p>
+</blockquote>
+</li>
+</ol>
+<p><br></p>
+<h4 id="25">2.5 환경 설정<a class="headerlink" href="#25" title="Permanent link"></a></h4>
+<p>Sublime Text의 전반적인 설정을 관리한다. </p>
+<blockquote>
+<p>메뉴에서 Preferences &gt; Settings<br />
+또는 Command Palette <code>CTRL</code>+<code>SHFT</code>+<code>P</code> &gt; <code>ps</code> 입력 &gt; <code>Preferences: Settings</code> 선택</p>
+</blockquote>
+<p><img alt="preferences-settings" src="./images/preference-settings.png" /></p>
+<p>처음에는 이러한 방식이 낯설 수도 있는데 익숙해 지면 매우 편리하다. 왼쪽에 열리는 창은 수정 불 가능한 Default 설정 이고 이 설정을 참고 하여 원하는 설정을 오른쪽 창에 json 형식으로 Overriding 하듯 복붙하고 수정해 주면 된다. 오른쪽 창의 항목을 빼면 즉시 원래 설정으로 되돌릴 수 있다.<br />
+아래의 //Font Settings 이하 부분을 복사하여 붙여넣고 필요 항목 수정 후 저장하면 즉시 저장 된다. 환경설정 파일 수정이 끝나면 <code>CTRL+W</code> 로 창을 닫으면 된다.  </p>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;ignored_packages&quot;</span><span class="p">:</span>
+    <span class="p">[</span>
+      <span class="s2">&quot;Vintage&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;theme&quot;</span><span class="p">:</span> <span class="s2">&quot;Default.sublime-theme&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;color_scheme&quot;</span><span class="p">:</span> <span class="s2">&quot;Monokai.sublime-color-scheme&quot;</span><span class="p">,</span>
+
+    <span class="err">//Font_Settings</span>
+    <span class="nt">&quot;font_face&quot;</span><span class="p">:</span> <span class="s2">&quot;나눔고딕&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;font_size&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+
+    <span class="err">//Editor_Settings</span>
+    <span class="nt">&quot;word_wrap&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;highlight_line&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;tab_size&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nt">&quot;translate_tabs_to_spaces&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;word_separators&quot;</span><span class="p">:</span> <span class="s2">&quot;./\\()\&quot;&#39;:,.;&lt;&gt;~!@#$%^&amp;*|+=[]{}`~?&quot;</span><span class="p">,</span>
+
+    <span class="err">//Settings_for_BraketHighlighter</span>
+    <span class="nt">&quot;match_brackets&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;match_brackets_content&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;match_brackets_square&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;match_brackets_braces&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;match_brackets_angle&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;match_tags&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;update_check&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>&ldquo;ignored_packages&rdquo; ~ &ldquo;color_scheme&rdquo; 은 자동 생성 항목 임.  </li>
+<li>Font 를 바꾸지 않는 경우 해당 항목은 제외 한다. 제공된 폰트 사용시 폰트 명은 아래와 같은 이름으로 설정 할 수 있다.<ul>
+<li>&ldquo;font_face&rdquo;:&rdquo;나눔고딕코딩&rdquo;, </li>
+<li>&ldquo;font_face&rdquo;:&rdquo;D2Coding&rdquo;, </li>
+</ul>
+</li>
+<li>&ldquo;word_separators&rdquo; 의 항목은 더블클릭으로 단어를 선택 했을 때의 경계를 의미한다. 예를들어 . 을 빼면 파일명 선택 시 확장자를 포함 한 번에 선택이 가능하다.  </li>
+<li>//Settings for BraketHighlighter 이하 항목은 Braket을 좀 더 잘 표시해 주는 Plugin인 BraketHighlighter의 설정이 기본 기능과 충돌이 나지 않게 하기 위한 설정이다. 그냥 그대로 넣어 주자.  </li>
+</ul>
+<p><br></p>
+<h4 id="26-chrome-htmljavascript">2.6 환경 설정 - Chrome 실행 설정(html/Javascript)<a class="headerlink" href="#26-chrome-htmljavascript" title="Permanent link"></a></h4>
+<p>html, javascript 등 웹 관련 작성 후 바로 확인 하기 위해 빌드 항목에 브라우저 항목을 추가 한다.<br />
+Chrome의 예 이며 Edge, IE 도 같은 방법으로 가능하다.    </p>
+<blockquote>
+<ol>
+<li>Build System -&gt; New Build System 선택</li>
+<li>다음과 같이 입력   </li>
+</ol>
+</blockquote>
+<pre><code>{  
+    "cmd": ["C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe","$file"]   
+}
+</code></pre>
+<blockquote>
+<ol start="3">
+<li>Chrome.sublime-build 로 저장</li>
+<li><code>CTRL</code>+<code>B</code> 로 실행 (처음만 <code>Chrome</code> 입력)</li>
+</ol>
+</blockquote>
+<p><br> <br></p>
+<h3 id="3">3. 기본 사용법<a class="headerlink" href="#3" title="Permanent link"></a></h3>
+<h4 id="31-side-bar">3.1 파일/프로젝트 탐색 Side Bar<a class="headerlink" href="#31-side-bar" title="Permanent link"></a></h4>
+<p>Side Bar에 작업 폴더를 등록하여 사용하면 편리하다.
+최초 실행시 메뉴에서 한번 실행 해 줘야 한다</p>
+<blockquote>
+<p>메뉴: <code>View</code> &gt; <code>Side Bar</code> &gt; <code>Show Side Bar</code><br />
+Side Bar: 보이기/숨기기: 이후 <code>CTRL</code>+<code>K</code>, <code>CTRL</code>+<code>B</code>  (<code>CTRL</code>을 누른채로 <code>K</code> , <code>B</code> 연속 입력) 사용 가능</p>
+</blockquote>
+<p>관리하고자 하는 폴더를 Drag 하여 Side Bar에 Drop 시킨다.</p>
+<blockquote>
+<p>참고:  예를 들면 <code>workdir</code> 이란 폴더를 만들고 Side Bar에 등록 한다.<br />
+ 이후 그 밑에 프로젝트 또는 업무별로 폴더를 추가 한다.<br />
+ 탐색기 또는 Sidebar 어디에서나 만들 수 있다.   </p>
+</blockquote>
+<p>이러한 모습이 되며, 최근 연 파일 및 작업 폴더 내 파일을 편리하게 탐색, 편집 할 수 있다.
+  <img alt="sidebar" src="./images/sidebar.png" /></p>
+<div class="highlight"><pre>  ※ [TIP] 특이한 기능: Sublime Text에서는 .png 등의 이미지 파일을 직접 열어 볼 수 있다.  
+</pre></div>
+
+<p><br></p>
+<h4 id="32">3.2 탭, 화면 조작<a class="headerlink" href="#32" title="Permanent link"></a></h4>
+<ol>
+<li>탭 이동 <ul>
+<li>탭이동(Historical): <code>CTRL</code>+<code>TAB</code> <ul>
+<li><code>CTRL</code> 을 누른채로 <code>TAB</code> 을 여러번 치면 바로직전, 전전, 전전전 탭으로 얼여본 순서에 따라 이동 </li>
+<li>키보드에서 손을 떼고 잠시 있은 후 다시 <code>CTRL</code>+<code>TAB</code>을 누르면 현재 Tab을 기준으로 전, 전전 순서로 동작  </li>
+</ul>
+</li>
+<li>탭이동(Linear): <code>CTRL</code>+<code>PGUP</code>/<code>PGDOWN</code></li>
+<li>탭이동(번호순): <code>ALT</code>+<code>숫자</code> (왼쪽탭부터 순서대로)<br />
+  <br></li>
+</ul>
+</li>
+<li>창 분할<ul>
+<li>창분할: <code>CTRL</code>+<code>탭클릭</code> (선택 한 탭 수 만큼 분할)</li>
+<li>창분할 해제: <code>CTRL</code>+<code>탭클릭</code> (이미 분할된 탭중 하나를 클릭)</li>
+<li>창분할(또 다른 방법): <code>ALT</code>+<code>SHIFT</code>+<code>2</code> (분할할 창 수) &gt; 원하는 탭을 오른쪽 빈분할 창으로 드래그</li>
+<li>창분할(또 다른 방법) 원복: <code>ALT</code>+<code>SHIFT</code>+<code>1</code> <br />
+  <br></li>
+</ul>
+</li>
+<li>화면 확대/축소<ul>
+<li>전체 화면 : <code>F11</code></li>
+<li>집중모드: <code>SHIFT</code>+<code>F11</code>  </li>
+<li>화면 확대/축소: <code>CTRL</code>+<code>-</code>/<code>+</code>  또는 <code>CTRL</code> +<code>마우스휠</code></li>
+</ul>
+</li>
+</ol>
+<p><br></p>
+<h4 id="33-editing">3.3 Editing 기본<a class="headerlink" href="#33-editing" title="Permanent link"></a></h4>
+<p>매우 자주 사용 하게 될 기능 으므로 확실하게 익혀두길 권장 합니다.</p>
+<ol>
+<li>Line 선택/이동  <ul>
+<li>한 줄 선택 : <code>CTRL</code>+<code>L</code> (계속 입력 시 다음 줄 선택)</li>
+<li>라인 위/아래로 이동 - 한 줄 or 블럭 : <code>CTRL</code>+<code>SHIFT</code>+<code>UP</code>/<code>DOWN</code> <br />
+<br></li>
+</ul>
+</li>
+<li>Line 추가/삭제/합치기    <ul>
+<li>아래로 한 라인 추가 : <code>CTRL</code>+<code>ENTER</code> (행 내 아무 곳에서나 사용 가능 하여 편리)   </li>
+<li>위로 한 라인 추가 : <code>CTRL</code>+<code>SHIFT</code>+<code>ENTER</code></li>
+<li>현재 라인 삭제 : <code>CTRL</code>+<code>SHIFT</code>+<code>K</code> </li>
+<li>현재 라인 바로 아래 복사 : <code>CTRL</code>+<code>SHIFT</code>+<code>D</code> </li>
+<li>한 줄로 합치기 : <code>CTRL+SHIFT+J</code> (바로 아랫줄과 합쳐짐)<br />
+<br></li>
+</ul>
+</li>
+<li>들여쓰기, 내어쓰기    <ul>
+<li>행 들여쓰기: 블럭 선택 후 <code>TAB</code> , 내어쓰기:  블럭 선택 후 <code>SHIFT</code>+<code>TAB</code> </li>
+<li>코드 들여쓰기/내어쓰기: <code>CTRL+L</code> 등으로 줄 선택 후 <code>TAB</code> / 줄 선택 후 <code>SHIFT+TAB</code> <br />
+<br></li>
+</ul>
+</li>
+<li>기타    <ul>
+<li>대소문자 변환 : 블럭 선택 후 <code>CTRL</code>+<code>K</code> -&gt; <code>U</code> 또는 <code>L</code>  (<code>CTRL</code>을 누른채로 <code>K</code> , <code>U</code> 연속 입력) </li>
+<li>Bracket, Brace 범위 안 선택: <code>CTRL</code>+<code>SHIFT</code>+<code>M</code> <br />
+<br></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>
+<p>실습 예제1: 한번에 5줄 복사하기</p>
+<blockquote>
+<ol>
+<li><code>CTRL</code>+<code>L</code> 을 5번눌러 5줄 선택   </li>
+<li><code>CTRL</code>+<code>SHIFT</code>+<code>D</code> 로 바로 아래 복사   </li>
+<li><code>CTRL</code>+<code>SHIFT</code>+<code>UP</code>/<code>DOWN</code> 으로 적정 위치 이동</li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>실습 예제2: 들여쓰기, 내어쓰기</p>
+<blockquote>
+<ol>
+<li><code>CTRL</code>+<code>L</code> 을 여러번 눌러 여러 줄 선택   </li>
+<li><code>TAB</code> 과 <code>SHIFT</code>+<code>TAB</code> 을 여러번 눌러 들여쓰기 내어쓰기 조정</li>
+<li><code>CTRL</code>+<code>K</code> -&gt; <code>U</code> 로 대문자로 모두 변환 </li>
+<li><code>CTRL</code>+<code>SHIFT</code>+<code>K</code>  로 삭제</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p><br></p>
+<h4 id="34">3.4. 검색 기능<a class="headerlink" href="#34" title="Permanent link"></a></h4>
+<p>UltraEdit 와 같은 구식 Editor 와 많은 차이가 나는 부분 중 하나가 편리한 검색 기능이다. 단축키 몇 개로 빠르고 편리한 찾기와 검색을 해 보자. </p>
+<h5 id="341">3.4.1 기본 검색 기능<a class="headerlink" href="#341" title="Permanent link"></a></h5>
+<ul>
+<li>찾기: <code>CTRL</code>+<code>F</code> (범위 검색, 대소문자 구분, 정규식 사용 등 가능)</li>
+<li>바꾸기: <code>CTRL</code>+<code>H</code>  </li>
+</ul>
+<h5 id="342-go-anything-ctrlp">3.4.2 Go Anything(어디로든 이동): <code>CTRL</code>+<code>P</code><a class="headerlink" href="#342-go-anything-ctrlp" title="Permanent link"></a></h5>
+<ul>
+<li>왼쪽 Side Bar에 등록 된 모든 폴더 내 특정 문서 나 소스를 열고 싶을 때 여기에 생각나는 대로 단어를 치면 된다.</li>
+<li>
+<p>예: ZcomStringUtilL.java 를 열어보고 싶을 때, 하지만 어디 있는지 찾기도 귀찮고 이름도 정확히 모르겠을 때, <code>CTRL</code>+<code>P</code> 를 누르고 <code>str</code> 정도 대충 입력하면 아주 쉽게 찾을 수 있다.  </p>
+<ul>
+<li>단어가 매칭되어 나오는 항목을 위,아래로 선택하면 화면에 실제 파일이 내용이 보여진다. 빠르게 훑어 볼 때 매우 유용.</li>
+<li>[Tip] 특정 확장자를 찾고 싶을 때 <code>.jsp</code> 와 같은 방식으로 사용하면 유용하다.
+<img alt="go_anything1" src="./images/go-anything1.png" /></li>
+</ul>
+</li>
+<li>
+<p><code>@단어</code> 로 Method, Function 또는 멤버 변수 찾기</p>
+<ul>
+<li>Javascript, jsp 또는 java 파일을 열었을 때 method 나 function 으로 이동 할 때 매우 유용. </li>
+<li>소스코드를 하나 열고, <code>@단어</code> 형식으로 단어에 이동하고자 하는 method나 function 명을 생각나는 대로 대충 쳐보자.</li>
+<li>위, 아래로 커서를 움직일 때 마다 해당 function 으로 빠르게 이동 한다.<br />
+<img alt="go_anything2" src="./images/go-anything2.png" /></li>
+</ul>
+</li>
+<li>
+<p><code>#단어</code> 로 문서 내 특정 단어 찾기  </p>
+<ul>
+<li>문서 내 특정 단어를 찾아 빠르게 이동 할 수 있다.</li>
+<li>예: <code>#바나나</code></li>
+</ul>
+</li>
+<li>
+<p><code>:숫자</code> 로 문서 내 Line 으로 이동 하기  </p>
+<ul>
+<li>문서 내 특정 Line 으로 빠르게 이동 할 수 있다.</li>
+<li>예: <code>:124</code> </li>
+</ul>
+</li>
+</ul>
+<h5 id="343-ctrlshiftf">3.4.3 디렉토리 안 모든 파일에서 단어 찾기: <code>CTRL</code>+<code>SHIFT</code>+<code>F</code><a class="headerlink" href="#343-ctrlshiftf" title="Permanent link"></a></h5>
+<ul>
+<li>
+<p>Unix/Linux의 find | grep 조합과 같은 기능이다. 특정 폴더를 지정하면 안에 있는 모든 파일에 대해 단어 검색을 할 수 있다.</p>
+<ul>
+<li><code>Where</code> 항목에 직접 적거나 우측 <code>...</code> 버튼을 클릭 &gt; <code>Add Folder</code> 하여 검색 시작 폴더를 지정 한다.  </li>
+<li><code>Find</code> 항목에 찾고자 하는 단어를 입력 한다.  </li>
+</ul>
+<p><img alt="find1" src="./images/find1.png" /></p>
+<ul>
+<li>검색 결과가 Find Results 탭에서 상세하게 나온다.
+<img alt="find1" src="./images/find2.png" /></li>
+</ul>
+</li>
+<li>
+<p>특정 확장자 파일만 검색을 하는 경우  </p>
+<ul>
+<li><code>...</code> 버튼 클릭 &gt; <code>Add Folder</code> &gt; <code>Add Include Filter</code>  &gt; 원하는 확장자로 변경</li>
+<li><code>Find</code> 항목에 정규식(Regex)을 사용 할 수 있다. 
+  <img alt="find1" src="./images/find3.png" /></li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<h5 id="344-command-palette-ctrlshiftp">3.4.4 Command Palette: <code>CTRL</code>+<code>SHIFT</code>+<code>P</code><a class="headerlink" href="#344-command-palette-ctrlshiftp" title="Permanent link"></a></h5>
+<ul>
+<li>Sublime Text 의 메뉴 또는 제공하는 기능 및 명령어를 실행 한다.  </li>
+</ul>
+<p><br><br></p>
+<h3 id="4">4. 다중 선택, 세로 열 편집<a class="headerlink" href="#4" title="Permanent link"></a></h3>
+<h4 id="41">4.1 다중 선택<a class="headerlink" href="#41" title="Permanent link"></a></h4>
+<p>다중 선택은 여러분의 단순 반복 작업 시간을 줄여 준다. 반복되는 같은 단어나 문장을 하나 하나 고치는 노가다는 개발자에게 죄악과도 같은 것 이다.</p>
+<ul>
+<li>단어 다중 선택: <code>CTRL</code>+<code>D</code> <ul>
+<li>현재 커서 위치 또는 더블클릭 또는 단어 범위를 직접 선택 후 <code>CTRL</code>+<code>D</code>   </li>
+<li><code>CTRL</code>+<code>D</code> 반복 입력 하여 필요 한 만큼 선택 한다.</li>
+</ul>
+</li>
+<li><code>CTRL</code>+<code>D</code> 단어 선택 해제: <code>CTRL</code>+<code>U</code><ul>
+<li>선택한 단어를 역순으로 하나씩 빼면서 선택 해제 한다. </li>
+</ul>
+</li>
+<li><code>CTRL</code>+<code>D</code>  연속선택 시  선택 제외: <code>CTRL</code>+<code>DK</code> (DK 연속 입력)</li>
+<li>다중선택(마우스): <code>CTRL</code>+<code>SHIFT</code>+<code>우측클릭</code>, 임의 위치 다중 선택 시 유용 </li>
+<li>다중선택(마우스) 빼기: <code>ALT</code>+<code>SHIFT</code>+<code>우측클릭</code></li>
+<li>특정 단어 전체 선택: <code>ALT</code>+<code>F3</code>    </li>
+<li>다중선택 전체 해제: <code>ESC</code>        </li>
+<li>다중선택 시 대소문자 구분: <code>CTRL</code>+<code>F</code> &gt; <code>ALT</code>+<code>C</code>  그 다음 <code>CTRL</code>+<code>D</code>를 연속해 선택 또는 <code>ALT</code>+<code>F3</code>  </li>
+<li>
+<p>실습 예제1: 모든 변수명 뒤에 111추가 하기</p>
+<blockquote>
+<ol>
+<li>java 소스코드를 하나 열어 자주 쓰이는 변수명 중 하나 에 커서를 위치 시킨다.</li>
+<li><code>ALT</code>+<code>F3</code> 을 눌러 전체 선택   </li>
+<li>우측 커서를 한번눌러 단어 마지막에 위치 후 111을 입력</li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>실습 예제2: 모든 변수명 중 몇 개 빼고 변경 하기</p>
+<blockquote>
+<ol>
+<li>자주 쓰이는 변수명 중 하나 에 커서를 위치 시킨다.   </li>
+<li><code>CTRL</code>+<code>D</code>  를 눌러 단어를 선택 한다.</li>
+<li><code>CTRL</code>+<code>DK</code> 를 눌러 그 다음 단어는 빼고 선택 한다.</li>
+<li>2~3 을 적절히 반복하여 부분적으로 단어 선택을 한다.    </li>
+<li>선택된 단어를 변경 한다.</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p><br></p>
+<h4 id="42">4.2 열(세로) 편집<a class="headerlink" href="#42" title="Permanent link"></a></h4>
+<p>문단의 시작 뿐만아니라 끝 부분만 커서를 위치 시켜 동시 편집이 매우 편리하다. 뿐만 아니라 어느정도 규칙성만 있다면 중간 부분의 서로 길이가 다른 열 편집도 가능 하다.</p>
+<ul>
+<li>세로열 선택(키보드): <code>CTRL</code>+<code>ALT</code>+<code>UP</code>/<code>DOWN</code> </li>
+<li>세로열 선택(마우스): <code>SHIFT</code>+<code>우클릭 드래그</code></li>
+<li>세로줄 또는 문장 마지막 편집: <code>CTRL</code>+<code>SHIFT</code>+<code>L</code> </li>
+<li>
+<p>실습 예제: 10 줄 선택 후 문장 마지막에 단어 추가 하기</p>
+<blockquote>
+<ol>
+<li>java 소스 또는 각 행의 끝 부분 길이가 다른 파일 하나를 연다</li>
+<li><code>CTRL</code>+<code>L</code> 을 10번 눌러 10줄 선택   </li>
+<li><code>CTRL</code>+<code>SHIFT</code>+<code>L</code>  를 누른 후 우측 커서를 누른다(반대로 최측을 누르면 문장 처음 선택).</li>
+<li>문장 끝에 단어를 추가 한다.</li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>참고: Code 들여쓰기를 위해 열 편집을 사용 할 수도 있지만 이 보다는 문장 선택 후 <code>TAB</code>과 <code>SHIFT</code>+<code>TAB</code>을 이용 하는 편이 더 쉽다. </p>
+</li>
+</ul>
+<p><br><br></p>
+<h3 id="5">5. 개발 관련 기능<a class="headerlink" href="#5" title="Permanent link"></a></h3>
+<h4 id="51-coding">5.1 Coding 관련 기능<a class="headerlink" href="#51-coding" title="Permanent link"></a></h4>
+<h5 id="511">5.1.1 자주 쓰는 기능<a class="headerlink" href="#511" title="Permanent link"></a></h5>
+<ul>
+<li>자동완성: <code>CTRL</code>+<code>SPACE</code> (자동완성 선택은 <code>TAB</code> 키 사용)</li>
+<li>블럭 주석/취소 : <code>CTRL</code>+<code>SHIFT</code>+<code>/</code></li>
+<li>한줄 주석/취소 : <code>CTRL</code>+<code>/</code></li>
+<li>코드 펴기/접기 : <code>CTRL</code>+<code>SHIFT</code>+<code>[</code>, <code>CTRL</code>+<code>SHIFT</code>+<code>]</code>   </li>
+<li>콘솔(하단) 열기 닫기: <code>CTRL</code>+ `</li>
+</ul>
+<h5 id="512">5.1.2 부가 기능<a class="headerlink" href="#512" title="Permanent link"></a></h5>
+<ul>
+<li>md문서 미리보기: <code>CTRL</code>+<code>B</code></li>
+<li>Hex Editor: <code>CTRL</code>+<code>SHIFT</code>+<code>H</code><ul>
+<li>Edit를 위해서는 Package Control 이용</li>
+<li>Byte 변경: HexViewer: <code>Show Hex Edit Panel</code> (hve)</li>
+<li>변경내용 저장: <code>HexViewer: Export Bin</code> (hvb)</li>
+</ul>
+</li>
+<li>node.js 실행: <code>ALT</code>+<code>R</code>    </li>
+</ul>
+<h5 id="513-sorting">5.1.3 열 Sorting 하기<a class="headerlink" href="#513-sorting" title="Permanent link"></a></h5>
+<ul>
+<li>오름차순 정렬(대소문자 구분 X):  <code>F9</code> (또는 <code>Command Palette</code> &gt; <code>Sort Lines</code>)</li>
+<li>오름차순 정렬(대소문자 구분 O):  <code>CTRL</code>+<code>F9</code> (또는 <code>Command Palette</code> &gt; <code>Sort Lines(Case Sensitive)</code>)</li>
+<li>내림차순 정렬: <code>Command Palette</code> &gt; <code>Permute Lines: Reverse</code></li>
+<li>랜덤 정렬:  <code>Command Palette</code> &gt; <code>Permute Lines: Shuffle</code></li>
+<li>중복 값 제거:  <code>Command Palette</code> &gt; <code>Permute Lines: Unique</code></li>
+</ul>
+<p><br>
+  - 실습 예제: Snippets(자동완성)을 이용한 html 작성  </p>
+<blockquote>
+<ol>
+<li><code>CTRL</code>+<code>N</code> 으로 빈 문서를 하나 만든 후 적절한 곳에 demo1.html 이란 이름으로 저장 한다.</li>
+<li>문서 상단에 html 입력 후 <code>ENTER</code> 대신 <code>TAB</code> 키를 입력</li>
+<li>title 이 있는 줄에서 <code>CTRL</code>+<code>ENTER</code> 로 줄 바꾸기 </li>
+<li>script 입력 후 <code>TAB</code></li>
+<li>body 또는 script를 적당히 채워 넣은 후 저장(할 거 없음 고민하지 말고 Hello World)</li>
+<li><code>CTRL</code>+<code>B</code>  를 눌러 브라우저에서 확인</li>
+</ol>
+</blockquote>
+<p><br></p>
+<h4 id="52-diff">5.2 파일 비교 - diff 기능<a class="headerlink" href="#52-diff" title="Permanent link"></a></h4>
+<ol>
+<li>
+<p>Editor 기본 제공 기능 - Unix 스타일 Diff 제공</p>
+<blockquote>
+<p>우측 Side Bar 에서 비교 할 파일 2개를 <code>SHIFT</code>+<code>좌측클릭</code> 선택 후 마우스 우측 클릭 하여  <code>Diff Files</code> 를 선택</p>
+</blockquote>
+</li>
+<li>
+<p>Plugin 을 사용한 Diff 기능</p>
+<blockquote>
+<ol>
+<li>비교할 두 문서가 탭에 열려 있어야 함</li>
+<li>현재 선택된(열려진) 탭과 다른 탭을 비교하는 방식: 비교 할 대상의 탭 위에 <code>우측클릭</code> &gt; <code>Compare with Active Tab</code> 선택</li>
+<li>비교대상 2개가 오른쪽으로 쏠려 나옴(버그) &gt; <code>확인</code> Popup을 닫고 &gt; <code>CTRL</code>+<code>SHIFT</code>+<code>1</code> (또는 오른쪽 2개 탭 중 하나를 드래그 하여 왼쪽 영역으로 이동)</li>
+<li>파일 비교 후  <code>ALT</code>+<code>W</code>로 창을 닫음</li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>Remote 파일과 PC Local 파일의 비교
+예를 들면 개발서버에 있는 파일과 PC에 있는 파일을 Plugin Diff 기능을 이용하여 편리하게 비교 할 수 있다.</p>
+<blockquote>
+<ol>
+<li>먼저 Local에 있는 파일을 Sublime Text에서 연다.</li>
+<li>열린 Local 파일의 화면에서 Command Palette <code>CTRL</code>+<code>SHIFT</code>+<code>P</code> &gt; <code>SFTP: Browse Remote Server…</code> (sbr 입력) 선택 후 원격 파일을 연다.  (<code>6. SFTP 로 작업 하기</code> 참조)</li>
+<li>두 탭 중 하나의 탭 위에 <code>우측클릭</code> &gt; <code>Compare with...</code> 선택</li>
+<li>현재 열려 있는 탭의 목록이 나오며, 비교할 또 다른 탭을 선택 한다.</li>
+<li>비교대상 2개가 오른쪽으로 쏠려 나옴 &gt; <code>확인</code> Popup을 닫고 &gt; <code>CTRL</code>+<code>SHIFT</code>+<code>1</code> (또는 마우스 드래그)</li>
+<li>파일 비교 후  <code>ALT</code>+<code>W</code>로 창을 닫음</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p><br></p>
+<h4 id="53-markdown-optional">5.3 Markdown 문서 작성 (Optional)<a class="headerlink" href="#53-markdown-optional" title="Permanent link"></a></h4>
+<p>지금 보고 있는 문서와 같은 형태의 문서를  Sublime Text에서 간단하고 빠르게 만들고 싶다면 markdown 을 이용해 다음과 같이 작성 할 수 있다.  </p>
+<ol>
+<li>
+<p>Preferences &gt; Package Settings &gt; Markdown Preview &gt;Settings 실행 후 User 에 다음 내용 추가.
+       새로 열린 문서에 다음을 입력한다. 
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;enable_mathjax&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;html_simple&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nt">&quot;browser&quot;</span><span class="p">:</span> <span class="s2">&quot;C:/Program Files (x86)/Google/Chrome/Application/chrome.exe&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;enable_autoreload&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">&quot;path_tempfile&quot;</span><span class="p">:</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;image_path_conversion&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;file_path_conversions&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;build_action&quot;</span><span class="p">:</span> <span class="s2">&quot;browser&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div></p>
+<blockquote>
+<ul>
+<li>&ldquo;browser&rdquo;: 기본 브라우저 Chrome 지정 예시  </li>
+<li>&ldquo;enable_autoreload&rdquo;: true 인 경우 F5를 사용하여 reload 가능  </li>
+<li>&ldquo;path_tempfile&rdquo;: 미리보기 시 html 임시 파일 위치, 위와 같이 지정 시 현재 폴더에 nn.html 과 같은 형태로 생성  </li>
+<li>&ldquo;image_path_conversion&rdquo;, &ldquo;file_path_conversions&rdquo;: &ldquo;none&rdquo; 지정 하지 않을 시 Windows의 Path 가 html 내 지정 됨  </li>
+<li>&ldquo;build_action&rdquo;:  browser 는 지정 browser에서  열리며 nn.html 파일 성성, save 는 .md 와 동일이름 .html 파일만 생성  </li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>기본 사용법</p>
+<blockquote>
+<ol>
+<li>저장 : markdown 문서 작성 후 .md 또는 .markdown 확장자로 저장   </li>
+<li>빌드 : <code>CTRL</code>+<code>B</code> - .html 파일이 생성 및 지정된 브라우저에서 열린다.  </li>
+<li>Refresh : 문서 수정  후 브라우저에서 <code>F5</code>  </li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p><br></p>
+<h4 id="54-binary-hexviewer-optional">5.4 Binary 수정 - HexViewer (Optional)<a class="headerlink" href="#54-binary-hexviewer-optional" title="Permanent link"></a></h4>
+<ol>
+<li>
+<p><code>Preference: Key Bindings</code> 의 우측 User 설정 변경 - 아래 내용 { } 단위 전체 추가
+<div class="highlight"><pre><span class="p">{</span> 
+    <span class="nt">&quot;keys&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;shift+ctrl+h&quot;</span><span class="p">],</span> 
+    <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;hex_viewer&quot;</span> 
+<span class="p">}</span> 
+</pre></div></p>
+</li>
+<li>
+<p>고정폭 폰트로 변경 : Preferences HexViewer Settings - User<br />
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;custom_font&quot;</span> <span class="p">:</span> <span class="s2">&quot;Lucida Sans Typewriter&quot;</span>
+<span class="p">}</span>
+</pre></div></p>
+</li>
+<li>
+<p>특정 문서를 저장 상태에서 <code>CTRL</code>+<code>SHIFT</code>+<code>H</code> 를 눌러 HexViewer 실행</p>
+</li>
+</ol>
+<p><br></p>
+<h4 id="56-node-js-optional">5.6 Node JS 개발 (Optional)<a class="headerlink" href="#56-node-js-optional" title="Permanent link"></a></h4>
+<ul>
+<li>NodeJs Windows 사전 설치(필수) </li>
+<li>Preferences &gt; Package Settings &gt; Nodejs 항목이 생성 확인       </li>
+<li>
+<p>Preferences &gt; Package Settings &gt; Nodejs &gt; Key Binding 변경
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;keys&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ctrl+shift+`&quot;</span><span class="p">],</span> 
+    <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;show_panel&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;panel&quot;</span><span class="p">:</span> <span class="s2">&quot;output.exec&quot;</span><span class="p">},</span>
+    <span class="nt">&quot;context&quot;</span><span class="p">:</span> <span class="p">[</span> 
+      <span class="p">{</span> <span class="nt">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;panel_visible&quot;</span><span class="p">,</span> <span class="nt">&quot;operand&quot;</span><span class="p">:</span> <span class="kc">false</span> <span class="p">}</span> 
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div></p>
+</li>
+<li>
+<p>Panel 에 한글 출력 Locale 설정: <code>Preferences</code> &gt; <code>Browse Packages</code> &gt; <code>Nodejs.sublime-build</code> &gt;  <code>"encoding": "euc-kr"</code> 또는 <code>utf-8</code>로 변경   </p>
+</li>
+<li>실행: <code>ALT</code>+<code>R</code> </li>
+</ul>
+<p><br><br></p>
+<h3 id="6-sftp">6. SFTP 로 작업 하기<a class="headerlink" href="#6-sftp" title="Permanent link"></a></h3>
+<p>Sublime Text는 Project 또는 폴더를 기반으로 서버 내용을 받아오거나 저장한 것을 Server에 쉽게 올리기 매우 편하게 되어 있다. 뿐만 아니라 UltraEdit 처럼 직접 서버에서 수정하는 기능도 제공 한다.</p>
+<h4 id="61-remote">6.1 Remote 파일 직접 수정 하기<a class="headerlink" href="#61-remote" title="Permanent link"></a></h4>
+<p>Sublime Text는 요즘 개발 툴의 트렌트에 맞게 마우스, 키보드 병행 작업 보다는 키보드로 모든 명령어를 빠르게 입력 할 수 있게 되어 있다. 따라서 sftp 문서를 편집 할 때도 Command Palette <code>CTRL</code>+<code>SHIFT</code>+<code>P</code> 중심으로 되어 있다.</p>
+<ol>
+<li>
+<p>서버 등록: Command Palette <code>CTRL</code>+<code>SHIFT</code>+<code>P</code> &gt; <code>SFTP: Setup Server...</code> 선택 (sfs 정도 입력) </p>
+<ul>
+<li>아래와 같은 문서가 untitled 로 생성 된다. </li>
+<li>노란색 표시 부분을 각자 맞게 변경한다.</li>
+<li>file/dir_permissions 는 개발서버 내 공동작업 권한없음 문제를 방지하기 위해 아래와 같이 설정을 권장<br />
+<img alt="sftp-edit-online1" src="./images/sftp-edit-online1.png" /></li>
+<li>저장하면 파일명을 물어보는데 경로를 바꾸지 말고 “devwas.json” 과 같이 hostname을 사용해 주거나 원하는 이름을 주면 된다. 단, <code>.json</code> 형식으로 저장해야 한다.</li>
+<li>저장 위치는 <code>C:\Users\사번\AppData\Roaming\Sublime Text\Packages\User\sftp_servers</code> 또는 <code>C:\Users\master\AppData\Roaming\Sublime Text\Packages\User\sftp_servers</code> 에 저장 된다. </li>
+<li>이 위치는 plugin 설치경로 내의 <code>\User\sftp_servers</code> 위치이다.</li>
+<li>추후 삭제 또는 서버 정보 변경(비번변경 등) 시 직접 수정 하여 저장 할 수 있다.  </li>
+</ul>
+<div class="highlight"><pre>[주의!] &quot;remote_path&quot; 지정 시 /home/www 와 같이 디렉토리 내 수 백개의 너무 많은 파일/디렉토리가 있는 경우 
+        `SFTP: Browse Remote Server` 실행 시 화면 표시 문제로 탐색 창이 나오지 않는다. 
+        /home/www/AsianPlatformWAS 와 같이 항목이 보다 적게 나오는 디렉토리로 지정해야 한다.
+</pre></div>
+
+</li>
+<li>
+<p>서버 접속 및 문서 열기  </p>
+<p>Command Palette <code>CTRL</code>+<code>SHIFT</code>+<code>P</code> &gt; sbr 정도 입력 &gt; <code>Browse Server...</code> 선택 
+<img alt="sftp-edit-online2" src="./images/sftp-edit-online2.png" /></p>
+</li>
+<li>
+<p>작업 할 서버 명을 선택 <br />
+<img alt="sftp-edit-online3" src="./images/sftp-edit-online3.png" />  </p>
+</li>
+<li>
+<p>파일 및 디렉토리 탐색  </p>
+<p>Home 디렉토리에 위치하게 되며, <code>Up a folder...</code>를 통해 직접 파일을 탐색 할 수 도 있고, 서버 IP가 나와 있는 제일 위 항목에 위치 후  Enter를 치면
+<img alt="sftp-edit-online4" src="./images/sftp-edit-online4.png" /></p>
+<p>다음과 같이 화면 아래에 표시되는 입력 창에서 Path를 직접 입력 할 수 있다.
+<img alt="sftp-edit-online5" src="./images/sftp-edit-online5.png" />
+<div class="highlight"><pre>[주의!] 디렉토리 내 수 백개의 너무 많은 항목이 있는 경우 표시 문제로 탐색 창이 나오지 않는다. 
+        이 경우 하단 Path 입력 창이 나오게 하여 보다 적은 항목이 나오는 디렉토리로 변경 한다.
+</pre></div></p>
+</li>
+<li>
+<p>편집 할 파일이 나오면 파일을 선택 후 <code>Enter</code> &gt; <code>Edit</code> 를 선택 한다.
+    <img alt="sftp-edit-online6" src="./images/sftp-edit-online6.png" />  </p>
+</li>
+</ol>
+<p>이제 수정하고 저장 하면 Remote 서버의 파일이 Local PC를 거치지 않고 바로 수정 된다. 이후 Editor를 종료 후 다시 열어도 Tab이 열려 있으면 바로 서버의 파일을 수정 할 수 있다.<br />
+  단, 서버의 Password 가 변경된 경우 열린 Tab에서 Error 가 발생하고 수정이 불 가능 하므로 1번에서 등록 한 json 파일에 변경 비번을 적용해야 한다. </p>
+<p><br></p>
+<h4 id="62-pc">6.2 PC 폴더를 기준으로 작업 하기<a class="headerlink" href="#62-pc" title="Permanent link"></a></h4>
+<ol>
+<li>Side Bar 에서 SFTP 사용을 원하는 디렉토리를 찾아 <code>우측클릭</code> &gt; <code>SFTP/FTP</code> &gt; <code>Map to Remote</code> 선택</li>
+<li><code>sftp-config.json</code> 파일이 해당 폴더에 생기며 다음 항목을 주로 편집 하게 된다.</li>
+</ol>
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;save_before_upload&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>   <span class="err">//</span> <span class="err">업로드</span> <span class="err">전</span> <span class="err">저장</span> <span class="err">필수</span> <span class="err">여부</span>
+    <span class="nt">&quot;upload_on_save&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>    <span class="err">//저장</span> <span class="err">시</span> <span class="err">자동</span> <span class="err">업로드</span> <span class="err">여부</span>
+
+    <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;10.33.110.118&quot;</span><span class="p">,</span>   
+    <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;adk9000000&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;22&quot;</span><span class="p">,</span>
+
+    <span class="nt">&quot;remote_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/home/users/kba9000651&quot;</span><span class="p">,</span>  <span class="err">//업로드</span> <span class="err">할</span> <span class="err">경로를</span> <span class="err">절대경로로</span> <span class="err">써</span> <span class="err">준다</span>
+
+    <span class="nt">&quot;file_permissions&quot;</span><span class="p">:</span> <span class="s2">&quot;664&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;dir_permissions&quot;</span><span class="p">:</span> <span class="s2">&quot;775&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+<ol start="3">
+<li>[Optional] 개발서버 인 경우 공동작업의 권한문제 방지를 위해 &ldquo;file_permissions&rdquo;, &ldquo;dir_permissions&rdquo;를 예제와 같이 Setting 해 주는 것을 권장.</li>
+<li>
+<p>빈 폴더에 서버의 파일 또는 디렉토리를 받을 때: <code>sftp-config.json</code>  파일이 열린 탭에서 &gt; Command Palette (<code>CTRL</code>+<code>ALT</code>+<code>P</code>) &gt; <code>SFTP: Browse Remote...</code> (sbr 입력) &gt;  원하는 Directory 또는 파일을 찾아 <code>Enter</code> &gt; <code>Folder Action</code>(폴더인 경우만) &gt; <code>Download</code></p>
+</li>
+<li>
+<p>[Optional] &ldquo;upload_on_save&rdquo;: false 일 시 Side Bar에서 우측 클릭 으로 수동 업로드를 할 수 있다. 자동인 경우 저장 즉시 Remote Path에 업로드 된다.</p>
+</li>
+<li>좌측 Side Bar 에서 우측 클릭 후 <code>Download Folder</code>, <code>Upload Folder</code> 및 <code>Download File</code>, <code>Upload File</code> 을 이용하여 폴더와 서버의 항목들을 개별 적으로 일치시킬 수 있다. </li>
+<li><code>Sync Remote -&gt; Local</code> 또는 반대의 기능을 사용 하여 디렉토리 전체를 서버와 Sync 시킬 수 있다.</li>
+</ol>
+<p><br><br></p>
+<h3 id="7-plugin">7. Plugin 관리<a class="headerlink" href="#7-plugin" title="Permanent link"></a></h3>
+<h4 id="71">7.1 플러그인 설치<a class="headerlink" href="#71" title="Permanent link"></a></h4>
+<p>플러그인 프로그램을 설치하기 위해서는 인터넷에 연결되어 있어야 하며 PackageControl 이 설치 되어 있어야 한다.   </p>
+<blockquote>
+<p>Command Palette (<code>CTRL</code>+<code>ALT</code>+<code>P</code>) &gt; Install Package Control   </p>
+</blockquote>
+<p>플러그인 설치 방법  </p>
+<blockquote>
+<p>Command Palette &gt; <code>Package Control: Install Package</code>  (<code>pcip</code> 입력)
+ 원하는 패키지명을 입력하여 선택 &gt; 최측 하단에 설치 Progress 및 상태가 표시됨  </p>
+</blockquote>
+<p>인터넷 연결이 불가능 한 환경에서는 인터넷이 가능 한 PC에 Sublime Text를 설치하여 수동으로 복사 하여 옮겨준다.  </p>
+<blockquote>
+<ol>
+<li>Sublime Text를 종료</li>
+<li><code>C:\Users\사용자명\AppData\Roaming\Sublime Text</code> 의 <code>Installed Packages</code> 와 <code>Packages</code> 폴더안에 추가된 플러그인 파일을 관리망 또는 업무망으로 복사</li>
+<li>Command Palette &gt; <code>Preferences: Package Control Settings</code> (<code>ppc</code>) 실행</li>
+<li>&ldquo;installed_packages&rdquo; 항목에 추가된 패키지 명을 추가 - 패키지 명은 인터넷 연결 PC의 것을 확인</li>
+</ol>
+</blockquote>
+<p><br></p>
+<h4 id="72">7.2 설치된 플러그인 목록 보기<a class="headerlink" href="#72" title="Permanent link"></a></h4>
+<p>어떤 플러그인이 설치 되어 있는지 목록을 보여 준다.  </p>
+<blockquote>
+<p>Command Palette (<code>CTRL</code>+<code>ALT</code>+<code>P</code>) &gt; <code>Package Control: List Packages</code> (<code>pcli</code> 입력)</p>
+</blockquote>
+<p><br></p>
+<h4 id="73-update">7.3 플러그인 관리 - 삭제 및 Update<a class="headerlink" href="#73-update" title="Permanent link"></a></h4>
+<blockquote>
+<p>삭제: Command Palette &gt; <code>Package Control: Remove Package</code>   (<code>pcrp</code> 입력) <br />
+ Update(인터넷 필요): Command Palette &gt; <code>Package Control: Upgrade Package</code>  (<code>pcup</code> 입력)   </p>
+</blockquote>
+<p><br></p>
+<h4 id="74">7.4 사전 제공 플러그인 목록<a class="headerlink" href="#74" title="Permanent link"></a></h4>
+<table>
+<thead>
+<tr>
+<th>Plugin 명</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Package Control</td>
+<td>Plugin 설치, 관리</td>
+</tr>
+<tr>
+<td>CovertToUTF8</td>
+<td>EUC-KR Locale 지원</td>
+</tr>
+<tr>
+<td>BracketHighlighter</td>
+<td>Bracket 표시 기능 확장</td>
+</tr>
+<tr>
+<td>SFTP</td>
+<td>SFTP 업로드 및 Sync 기능</td>
+</tr>
+<tr>
+<td>Compare Side-By-Side</td>
+<td>2개파일 비교(diff) 기능</td>
+</tr>
+<tr>
+<td>HexViewer</td>
+<td>Binary Data에 대한 편집, 조회</td>
+</tr>
+<tr>
+<td>Nodejs</td>
+<td>Nodejs 개발용</td>
+</tr>
+<tr>
+<td>MarkdownPreview</td>
+<td>Markdown 문서 작성 및 조회</td>
+</tr>
+</tbody>
+</table></article></body></html>

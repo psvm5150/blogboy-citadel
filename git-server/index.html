@@ -1,0 +1,1358 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>body {
+  max-width: 980px;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 45px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable,
+.markdown-body .highlighttable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr,
+.markdown-body .highlighttable {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite,
+.markdown-body .highlighttable pre,
+.markdown-body .highlighttable div.highlight {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td,
+.markdown-body .highlighttable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headerlink {
+  font: normal 400 16px fontawesome-mini;
+  vertical-align: middle;
+  margin-left: -16px;
+  float: left;
+  display: inline-block;
+  text-decoration: none;
+  opacity: 0;
+  color: #333;
+}
+
+.markdown-body .headerlink:focus {
+  outline: none;
+}
+
+.markdown-body h1 .headerlink {
+  margin-top: 0.8rem;
+}
+
+.markdown-body h2 .headerlink,
+.markdown-body h3 .headerlink {
+  margin-top: 0.6rem;
+}
+
+.markdown-body h4 .headerlink {
+  margin-top: 0.2rem;
+}
+
+.markdown-body h5 .headerlink,
+.markdown-body h6 .headerlink {
+  margin-top: 0;
+}
+
+.markdown-body .headerlink:hover,
+.markdown-body h1:hover .headerlink,
+.markdown-body h2:hover .headerlink,
+.markdown-body h3:hover .headerlink,
+.markdown-body h4:hover .headerlink,
+.markdown-body h5:hover .headerlink,
+.markdown-body h6:hover .headerlink {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 3px;
+}
+
+.markdown-body code:not(.highlight):not(.codehilite), .markdown-body samp {
+  background-color: rgba(0,0,0,0.04);
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite,
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+}
+
+.markdown-body .codehilite,
+.markdown-body .highlight,
+.markdown-body pre {
+  border-radius: 3px;
+}
+
+.markdown-body :not(.highlight) > pre {
+  background-color: #f7f7f7;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* MultiMarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px fontawesome-mini;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\e157';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+.markdown-body diagram-div, .markdown-body div.uml-sequence-diagram, .markdown-body, div.uml-flowchart {
+  overflow: auto;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><style>/*GitHub*/
+.highlight {background-color:#f7f7f7;color:#333333;}
+.highlight .hll {background-color:#ffffcc;}
+.highlight .c{color:#999988;font-style:italic}
+.highlight .err{color:#a61717;background-color:#e3d2d2}
+.highlight .k{font-weight:bold}
+.highlight .o{font-weight:bold}
+.highlight .cm{color:#999988;font-style:italic}
+.highlight .cp{color:#999999;font-weight:bold}
+.highlight .c1{color:#999988;font-style:italic}
+.highlight .cs{color:#999999;font-weight:bold;font-style:italic}
+.highlight .gd{color:#000000;background-color:#ffdddd}
+.highlight .ge{font-style:italic}
+.highlight .gr{color:#aa0000}
+.highlight .gh{color:#999999}
+.highlight .gi{color:#000000;background-color:#ddffdd}
+.highlight .go{color:#888888}
+.highlight .gp{color:#555555}
+.highlight .gs{font-weight:bold}
+.highlight .gu{color:#800080;font-weight:bold}
+.highlight .gt{color:#aa0000}
+.highlight .kc{font-weight:bold}
+.highlight .kd{font-weight:bold}
+.highlight .kn{font-weight:bold}
+.highlight .kp{font-weight:bold}
+.highlight .kr{font-weight:bold}
+.highlight .kt{color:#445588;font-weight:bold}
+.highlight .m{color:#009999}
+.highlight .s{color:#dd1144}
+.highlight .n{color:#333333}
+.highlight .na{color:teal}
+.highlight .nb{color:#0086b3}
+.highlight .nc{color:#445588;font-weight:bold}
+.highlight .no{color:teal}
+.highlight .ni{color:purple}
+.highlight .ne{color:#990000;font-weight:bold}
+.highlight .nf{color:#990000;font-weight:bold}
+.highlight .nn{color:#555555}
+.highlight .nt{color:navy}
+.highlight .nv{color:teal}
+.highlight .ow{font-weight:bold}
+.highlight .w{color:#bbbbbb}
+.highlight .mf{color:#009999}
+.highlight .mh{color:#009999}
+.highlight .mi{color:#009999}
+.highlight .mo{color:#009999}
+.highlight .sb{color:#dd1144}
+.highlight .sc{color:#dd1144}
+.highlight .sd{color:#dd1144}
+.highlight .s2{color:#dd1144}
+.highlight .se{color:#dd1144}
+.highlight .sh{color:#dd1144}
+.highlight .si{color:#dd1144}
+.highlight .sx{color:#dd1144}
+.highlight .sr{color:#009926}
+.highlight .s1{color:#dd1144}
+.highlight .ss{color:#990073}
+.highlight .bp{color:#999999}
+.highlight .vc{color:teal}
+.highlight .vg{color:teal}
+.highlight .vi{color:teal}
+.highlight .il{color:#009999}
+.highlight .gc{color:#999;background-color:#EAF2F5}
+</style><title>GitServer</title></head><body><article class="markdown-body"><h1 id="git-server">나만의 Git Server 만들기<a class="headerlink" href="#git-server" title="Permanent link"></a></h1>
+<p><br> <br> <br> <br> <br> <br> <br> <br></p>
+<blockquote>
+<ul>
+<li><code>@author Tansan Man(tansan5150)</code>    </li>
+<li><code>@up to date 2023.04.24</code> </li>
+</ul>
+</blockquote>
+<p><br>
+<br>
+<a href="https://creativecommons.org/licenses/by/2.0/kr/"><img alt="Creative Commons Korea" src="https://ccl.cckorea.org/images/ico-cc.png" /></a><br />
+본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  </p>
+<h2 id="_1"><br><a class="headerlink" href="#_1" title="Permanent link"></a></h2>
+<p><br> </p>
+<h3 id="_2">목차<a class="headerlink" href="#_2" title="Permanent link"></a></h3>
+<p><br></p>
+<blockquote>
+<p>&nbsp; <a href="#1">1. 개요</a> <br />
+&nbsp; <a href="#2">2. 인증서 설정</a> <br />
+&nbsp; <a href="#3-repository">3. 서버에 Repository 만들기</a> <br />
+&nbsp; <a href="#4-pc-git-project">4. PC에 Git Project 만들고 연결하기</a> <br />
+&nbsp; <a href="#5">5. 원격 저장소 관리</a><br />
+&nbsp; <a href="#sublime-text-git">[부록] Sublime Text 의 Git 연동</a>  </p>
+</blockquote>
+<h2 id="_3"><br> <br> <br> <br><a class="headerlink" href="#_3" title="Permanent link"></a></h2>
+<p><br></p>
+<h3 id="1">1. 개요<a class="headerlink" href="#1" title="Permanent link"></a></h3>
+<p>Git을 활용하여 다양한 개발 관련 업무에서 형상관리를 할 수 있다. Harvest 와는 다르게 빠르고 IDE나 Editor 와 같은 도구에 통합되어 있어  보다 편리하게 쓸 수 있다. 또한 인터넷에서 Reference를 쉽게 찾을 수 있으며 현 시점에서 사실상 형상관리의 표준 이라 할 수 있다. 그리고 우리도 차세대 업무에서 Git을 표준 형상관리 도구로 사용하게 될 것이다. </p>
+<p>하지만 사내에 Git Server가 따로 있지 않아 대부분 PC의 Local 환경에서만 사용 가능하여 협업 등 Git 의 많은 장점을 사용 할 수 없다. Git 은 빠르고 가벼우면서도 다양한 도구들을 가지고 있다. 특히 Linux에서는 Git Client를 설치 하는 것만으로도 신기하게도 이미 Git Server를 운영 할 수 있는 준비가 되어 있다.</p>
+<p>아무런 설치도 하지 않고 쉽게 내가 원하는 Git Server 저장소를 만들고 운영 해보자. 우리는 관리망에서 작업하므로 개발서버 <code>devwas-10.33.110.118</code> 에 계정만 있으면 할 수 있다. 원하면 협업도 할 수 있고 굳이 Gitlab 이나 Github를 사용하지 않고 Git Server의 기능을 쓸 수 있다.  </p>
+<p>본 문서에 기재된 Git Server 는 다음 목적으로 사용 시 매우 유용 하다. </p>
+<ul>
+<li>개인적으로 업무 관리하는 Source 등에 대해 형상관리 하고 싶다.</li>
+<li>팀 내 또는 소규모 프로젝트에서 형상관리 서버로 사용한다.</li>
+<li>Git / Git Flow 를 학습하거나 차세대 업무 등을 위해 테스트 한다.  </li>
+</ul>
+<p>Git 사용법 기초에 대한 내용은 본문서에서 다루지 않는다. 앞으로 Git 형상관리 기초에 대해 Quick Start 형식의 가이드를 작성할 예정이다. </p>
+<p><br> </p>
+<h3 id="2">2. 인증서 설정<a class="headerlink" href="#2" title="Permanent link"></a></h3>
+<ol>
+<li>
+<p>관리망 PC에 Git Client 설치<br />
+    Git Client 가 설치되지 않은 경우 관리망 PC에 아래 링크의 파일을 설치한다. 설치 3번째 페이지에 나오는 Default Editor 설정은 원하는 에디터로 하고 나머지 대부분은 기본값으로 설치해도 무방하다.  </p>
+<p><a href="./Git-2.40.0-64-bit.zip">Git-2.40.0-64bit</a>  </p>
+<p>설치 후 Git Bash 를 실행 시켜 다음 설정을 한다. 바로 하지 않으면 개발 도구 연동 시 에러가 뜨거나 문제를 발생 시킨다.
+<div class="highlight"><pre>git config --global user.name <span class="s2">&quot;안진모(9000651)&quot;</span>
+git config --global user.email <span class="s2">&quot;genemo.ahne@axa.co.kr&quot;</span>
+git config --global --list
+</pre></div></p>
+</li>
+<li>
+<p>PC에 인증서 만들기<br />
+    개발서버와 관리망 PC가 인증서로 연결되어 있지 않은 경우 아래 링크의 1장의 1~3번 절차에 따라 Local PC에 인증서를 생성 한다. 1장 4번 항목 이후  PPK 인증서는 본 과정에서 필요 없다.  </p>
+<p><a href="https://devlap.axa.co.kr/devdocs/cert">개발 도구 인증서 적용 가이드</a></p>
+</li>
+<li>
+<p>SSH config 파일 만들기  <br />
+    Windows의 사용자 home 디렉토리에 .ssh 파일을 만든다. 이미 만들어져 있는 경우 해당 디렉토리를 사용한다.<br />
+      예: <code>C:\사용자\master\.ssh</code> </p>
+<div class="highlight"><pre>home 디렉토리 확인:   
+  바탕화면 사용자명 폴더 &gt; 폴더 내 아무 디렉토리 우측클릭 &gt; 속성 &gt; 위치  
+  C:\Users\master 인지 C:\Users\사번  인지 확인 
+</pre></div>
+
+<p>plaintext 로 config 파일을 만들고 아래와 같이 작성한다.<br />
+예: <code>C:\사용자\master\.ssh\config</code> </p>
+<div class="highlight"><pre>HostkeyAlgorithms +ssh-rsa
+PubkeyAcceptedAlgorithms +ssh-rsa
+IdentityFile /c/workdir/.ssh/9000651_id_rsa
+</pre></div>
+
+<ul>
+<li>IdentityFile 에 PC에서 만든 개인키 위치와 이름을 기술 해 준다.</li>
+<li>C:\사용자\master\.ssh\id_rsa 란 이름으로 개인키가 있는 경우만 IdentityFile 설정을 생략 할 수 있다.</li>
+<li>IdentityFile 의 path 기술이 unix 스타일 처럼 되어 있다. 이는 Windows용 bash에서 사용되기 때문이다.  </li>
+</ul>
+</li>
+<li>
+<p>개발 서버에 공개키 넣기<br />
+    개발서버와 관리망 PC가 인증서로 연결되어 있지 않은 경우 아래 링크의 2장의 절차에 따라 PC에서 만든 공개키를 개발서버에 적용 한다. </p>
+<p><a href="https://devlap.axa.co.kr/devdocs/cert">개발 도구 인증서 적용 가이드</a></p>
+<p>그리고 협업하고자 하는 동료가 있다면 공개키를 받아 해당 계정에 동일한 방식으로 <code>authorized_keys</code> 에 추가 한다.</p>
+</li>
+</ol>
+<p><br> </p>
+<h3 id="3-repository">3. 서버에 Repository 만들기<a class="headerlink" href="#3-repository" title="Permanent link"></a></h3>
+<p>개발서버(<code>10.33.110.118</code>) 로 로그인 해 Git Repository 용으로 쓸 디렉토리를 만든다. 이 디렉토리에는 이제 여러 Git Project 가 들어 갈 수 있다. Repository 이름은 아무 이름이나 해도 상관 없다.  그리고 <code>git init --bare</code> 명령어를 사용해 Git Project 를 만든다.</p>
+<div class="highlight"><pre>mkdir repos
+<span class="nb">cd </span>repos
+git init --bare UltraCaptiongApp.git
+</pre></div>
+
+<p>성공하면 아래와 같이 나오면서 Git Project 가 만들어진다.</p>
+<div class="highlight"><pre><span class="o">[</span>kba9000651@devwas repos<span class="o">]</span><span class="nv">$ </span>git init --bare UltraCaptiongApp.git
+Initialized empty Git repository in /home/users/kba9000651/repos/UltraCaptiongApp.git/
+</pre></div>
+
+<p>자 이제 아래와 같은 형식의 origin 주소를 사용할 수 있다. Local Project 와 대응하는 원격지(remote) 를 origin 이라고 한다. 
+  <div class="highlight"><pre>ssh://kba9000651@10.33.110.118/home/users/kba9000651/repos/UltraCaptiongApp.git
+</pre></div></p>
+<p><br> 
+용어가 잘 이해가 안 간다면 아래와 같이 Harvest Workbench를 열고 비교해 보자. </p>
+<table>
+<thead>
+<tr>
+<th>용어</th>
+<th>Harvest</th>
+<th>Git</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repository</td>
+<td>scmsvr</td>
+<td>repos</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>AP_Local</td>
+<td>UltraCaptiongApp.git</td>
+</tr>
+<tr>
+<td>State/Branch</td>
+<td>변경작업, 긴급적용, 적용작업, 작업완료</td>
+<td>develop, hotfix, release, master</td>
+</tr>
+</tbody>
+</table>
+<p>생각보다 간단한 개념이다. 심지어 Repository, Project 는 Git 과 Harvest 가 동일한 용어를 사용하며, Branch 개념을 Harvest에서 State(단계) 로 표현한 부분만 다르다. 참고로 SVN(Subversion) 도 동일한 개념과 용어를 사용한다.     </p>
+<p><br> </p>
+<h3 id="4-pc-git-project">4. PC에 Git Project 만들고 연결하기<a class="headerlink" href="#4-pc-git-project" title="Permanent link"></a></h3>
+<p>형상관리하고자 하는 Eclipse/IntelliJ 프로젝트 또는 디렉토리를 정하고 Git Bash 를 실행 시킨다. 그런 후 아래와 같이 Git 형상관리 초기화 및 commit 을 수행한다. 특이한 것은 윈도우즈의 Path를 Unix 스타일의 Path로 변경하여 사용한다. <code>git init</code> 후 PC의 Local 에서 git 형상관리가 시작 된다.</p>
+<div class="highlight"><pre><span class="nb">cd</span> /c/workdir/UltraCaptiongApp
+git init
+git add .
+git commit -m <span class="s1">&#39;initial commit&#39;</span>
+</pre></div>
+
+<p>이제 origin 과 연결하자.<br />
+각 Project 는 대응하는 1개의 origin 만 가질 수 있다.  </p>
+<div class="highlight"><pre>git remote add origin ssh://kba9000651@10.33.110.118/home/users/kba9000651/repos/UltraCaptiongApp.git
+</pre></div>
+
+<p>현재 Project가 어떤 origin 을 바라보고 있는지 확인할 수 있다.</p>
+<div class="highlight"><pre><span class="nv">$ </span>git remote -v
+origin  kba9000651@10.33.110.118/home/users/kba9000651/repos/UltraCaptiongApp.git <span class="o">(</span>fetch<span class="o">)</span>
+origin  kba9000651@10.33.110.118/home/users/kba9000651/repos/UltraCaptiongApp.git <span class="o">(</span>push<span class="o">)</span>
+</pre></div>
+
+<p>Local Project의 내용을 원격지에 밀어넣자(push).</p>
+<div class="highlight"><pre><span class="nv">$ </span>git push origin master
+Enumerating objects: 5, <span class="k">done</span>.
+Counting objects: 100% <span class="o">(</span>5/5<span class="o">)</span>, <span class="k">done</span>.
+Delta compression using up to <span class="m">16</span> threads
+Compressing objects: 100% <span class="o">(</span>2/2<span class="o">)</span>, <span class="k">done</span>.
+Writing objects: 100% <span class="o">(</span>3/3<span class="o">)</span>, <span class="m">253</span> bytes <span class="p">|</span> 126.00 KiB/s, <span class="k">done</span>.
+Total <span class="m">3</span> <span class="o">(</span>delta 1<span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta 0<span class="o">)</span>, pack-reused 0
+To ssh://10.33.110.118/home/users/kba9000651/repos/UltraCaptiongApp.git
+   e78ebe3..920c76c  master -&gt; master
+</pre></div>
+
+<p>끝이다.<br />
+<br>
+이제 <code>변경 &gt; git add &gt; git commit &gt; git push</code> 를 무한 반복 하여 형상관리 하면 된다.<br />
+이해를 돕기 위해 명령어로 설명 하였으나 대부분의 IDE나 Sublime Text와 같은 Editor 에서는 Git 과 연동이 가능하여 Tool 내 단축키나 메뉴로 명령어 대신 편리하게 사용이 가능하며, Git 변경상태에 대해서도 실시간으로 표시된다.  </p>
+<p><br> </p>
+<h3 id="5">5. 원격 저장소 관리<a class="headerlink" href="#5" title="Permanent link"></a></h3>
+<ol>
+<li>
+<p>대상 origin 변경<br />
+  PC의 bash 에서 아래와 같이 remove 로 삭제했다가 <code>git remote add</code> 명령어를 사용 한다.<br />
+  <div class="highlight"><pre><span class="nb">cd</span> /c/workdir/UltraCaptiongApp
+git remote remove origin
+git remote add origin ssh://kba9000651@10.33.110.118/home/users/kba9000651/repos/UltraCaptiongApp.git
+git remote -v
+</pre></div></p>
+</li>
+<li>
+<p>origin 내 저장소 삭제<br />
+  <div class="highlight"><pre>rm -rf ./UltraCaptiongApp.git 
+</pre></div></p>
+<blockquote>
+<p>더 이상의 자세한 설명은 생략 한다.</p>
+</blockquote>
+</li>
+<li>
+<p>origin 백업 <br />
+  개발서버의 이전, 다른 계정/서버로 Project를 이전 또는 서버 장애에 대비 등 여러 목적으로 원격지 origin 의 백업 이 필요 할 수 있다. 특히 프로젝트가 시작되면 이 과정을 스케쥴링 가능한 도구로 자동화 하여 관리하면 보다 효율적이다. 
+  <div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /C/workdir/tmp/backup
+
+<span class="nv">$ </span>git clone --mirror ssh://kba9000651@10.33.110.118/home/users/kba9000651/repos/UltraCaptiongApp.git
+Cloning into bare repository <span class="s1">&#39;UltraCaptiongApp.git&#39;</span>...
+remote: Counting objects: 33, <span class="k">done</span>.
+remote: Compressing objects: 100% <span class="o">(</span>31/31<span class="o">)</span>, <span class="k">done</span>.
+remote: Total <span class="m">33</span> <span class="o">(</span>delta 6<span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta 0<span class="o">)</span>
+Receiving objects: 100% <span class="o">(</span>33/33<span class="o">)</span>, 644.15 KiB <span class="p">|</span> 7.40 MiB/s, <span class="k">done</span>.
+Resolving deltas: 100% <span class="o">(</span>6/6<span class="o">)</span>, <span class="k">done</span>.
+</pre></div></p>
+</li>
+<li>
+<p>origin 복구 <br />
+  아래 예제는 PC에 백업 된  <code>UltraCaptiongApp.git</code> 을 new_repos 위치로 옯기는 예제 이다.<br />
+  옮길 곳의 Repository 에 bare project 를 먼저 만들어야 한다.
+  <div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>new_repos/
+<span class="nv">$ </span>git init --bare UltraCaptiongApp.git
+Initialized empty Git repository in /home/users/kba9000651/new_repos/UltraCaptiongApp.git/
+</pre></div>
+  그런 후 아래와 같이 PC에서 <code>new_repos</code> 로 origin을 변경 한 후 백업 된 Project 를 push 한다.
+  <div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /C/workdir/tmp/backup/gitdemo.git 
+
+<span class="nv">$ </span>git remote <span class="nb">set</span>-url --push origin ssh://kba9000651@10.33.110.118/home/users/kba9000651/new_repos/UltraCaptiongApp.git
+
+<span class="nv">$ </span>git remote -v
+origin  ssh://kba9000651@10.33.110.118/home/users/kba9000651/new_repos/UltraCaptiongApp.git <span class="o">(</span>fetch<span class="o">)</span>
+origin  ssh://kba9000651@10.33.110.118/home/users/kba9000651/new_repos/UltraCaptiongApp.git <span class="o">(</span>push<span class="o">)</span>
+
+<span class="nv">$ </span>git push --mirror
+Enumerating objects: 33, <span class="k">done</span>.
+Counting objects: 100% <span class="o">(</span>33/33<span class="o">)</span>, <span class="k">done</span>.
+Delta compression using up to <span class="m">16</span> threads
+Compressing objects: 100% <span class="o">(</span>25/25<span class="o">)</span>, <span class="k">done</span>.
+Writing objects: 100% <span class="o">(</span>33/33<span class="o">)</span>, 644.15 KiB <span class="p">|</span> 37.89 MiB/s, <span class="k">done</span>.
+Total <span class="m">33</span> <span class="o">(</span>delta 6<span class="o">)</span>, reused <span class="m">33</span> <span class="o">(</span>delta 6<span class="o">)</span>, pack-reused 0
+To ssh://10.33.110.118/home/users/kba9000651/new_repos/UltraCaptiongApp.git
+ * <span class="o">[</span>new branch<span class="o">]</span>      master -&gt; master
+</pre></div></p>
+</li>
+</ol>
+<p><br> </p>
+<h3 id="sublime-text-git">[부록] Sublime Text 의 Git 연동<a class="headerlink" href="#sublime-text-git" title="Permanent link"></a></h3>
+<ol>
+<li>
+<p>Plugin 설치<br />
+    Sublime Text의 Git 연동을 위해 아래 파일을 받아 압축을 해제 한다.<br />
+<a href="./SublimeGit.zip">SublimeGit-1.0.37</a></p>
+<p><code>SublimeGit.sublime-package</code> 파일을 다음 위치에 복사한다. <br />
+<div class="highlight"><pre>C:\Users\master\AppData\Roaming\Sublime Text\Installed Packages
+또는 C:\Users\사번\AppData\Roaming\Sublime Text\Installed Packages
+</pre></div></p>
+</li>
+<li>
+<p>Plugin 설정
+    메뉴: <code>Preferences &gt; Package Settings &gt; SublimeGit &gt; Settings - User</code> </p>
+<p>원하는 Charater Set 및 실패 시 대안으로 찾을 Set을 지정 후 저장
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;fallback_encodings&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;euc-kr&quot;</span><span class="p">,</span> <span class="s2">&quot;cp949&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div></p>
+</li>
+<li>
+<p>형상관리 연동<br />
+<code>C:\workdir\UltraCaptiongApp</code> 에 형상관리를 시작 하는 것을 전제 한다.<br />
+    아무 폴더나 만들고 파일 몇 개를 넣은 후 테스트 해 보자. </p>
+<p><code>CTRL+SHIFT+P &gt; Git: init</code> 
+<div class="highlight"><pre>Directory: C:\workdir\UltraCaptiongApp 
+</pre></div></p>
+<p>왼쪽 사이드 바에 UltraCaptiongApp 디렉토리 및 파일에 ○ 표시가 되어 있다. 이것은 형상관리가 연동 되었음을 의미 한다.</p>
+</li>
+<li>
+<p>Local Git 에 Commit  <br />
+    UltraCaptiongApp 파일을 하나 열고 그 화면에서 명령을 실행 한다.  </p>
+<p><code>CTRL+SHIFT+P &gt;  Git: Quick Add &gt; Add All Files</code><br />
+Side Bar의 아이콘이 Staging 영역 아이콘으로 변경된다.</p>
+<p><code>CTRL+SHIFT+P &gt;  Git: Commit</code><br />
+새로 열린 Commit 화면에서 Commit Message 를 입력하고 저장하고 닫는다.  왼쪽 사이드 바에 아이콘이 없어진 것을 확인 할 수 있다.  </p>
+</li>
+<li>
+<p>origin 설정 및 push<br />
+<code>CTRL+SHIFT+P &gt; Git: Add Remote</code> 
+     <div class="highlight"><pre>Name: origin
+Url: ssh://kba9000651@10.33.110.118/home/users/kba9000651/new_repos/UltraCaptiongApp.git
+</pre></div>
+     입력 후 상단에 <code>origin 연결 주소</code> &gt; <code>Show</code> 선택 하면 하단 콘솔에서 성공 여부를 알 수 있다.</p>
+<p>만약 실패하거나 잘 못 입력 했으면  <code>CTRL+SHIFT+P &gt;  Git: Remote</code> 명령으로 현재 origin을 선택 한 뒤 삭제하거나 수정 할 수 있다.</p>
+<p><code>CTRL+SHIFT+P &gt;  Git: Push</code><br />
+ <div class="highlight"><pre>Remote Branch: master   
+</pre></div></p>
+</li>
+</ol></article></body></html>

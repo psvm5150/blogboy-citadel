@@ -193,5 +193,4 @@ Line 추가는 현재 커서를 기준으로 위/아래에 추가하며, Line �
 
 ### [참고] 전체 단축키 모음
 
-- [Windows](./resources/ReferenceCard.pdf)
-- [MacOS](./resources/ReferenceCardForMac.pdf)
+- [Windows, Linux & MacOS](https://resources.jetbrains.com/storage/products/intellij-idea/docs/IntelliJIDEA_ReferenceCard.pdf)

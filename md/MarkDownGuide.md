@@ -55,7 +55,7 @@ MS Office로 복잡한 문서를 만들어야 할 때도 있지만 여튼 개인
 #### 1.2 Markdown 작성 도구
 마크다운 문서를 작성하는 도구는 여러 가지가 있으며, 심지어 휴대폰에서도 작성 가능한 도구가 있을 정도다. 하지만 가장 추천 하는 도구는 Sublime Text 에서 작성 하는 것을 추천 한다. 일단 Editor 의 기본 기능이 뛰어나고 플러그인으로 실시간 Browser 확인 및 배포까지 가능 하다. 물론 IntelliJ Idea 나 Eclipse 등에서 작성하는 것도 좋은 방법이다. 단 Eclipse 는 버전에 따라 plugin 설치가 필요 할 수 있다.
 
-* 참고: [Sublime Text 4 마크다운 설정](https://devlap.axa.co.kr/devdocs/sltext/#53-markdown-optional)  
+* 참고: [Sublime Text 4 마크다운 설정](https://tansan5150.github.io/sltext/#53-markdown-optional)  
 
 
 <br>

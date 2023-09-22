@@ -30,7 +30,7 @@ DevDocs
 <br>
 ### Spring Boot 
 --------------------------------------
-### [Spring Boot Project 시작 하기 - 관리망](https://tansan5150.github.io/spring-init/)
+### [폐쇄망에서 Spring Boot Project 시작 하기](https://tansan5150.github.io/spring-init/)
 ### [Spring Boot Swagger 적용 Guide](https://tansan5150.github.io/swagger/)
 <br>
 ### 변경 관리(SCM)

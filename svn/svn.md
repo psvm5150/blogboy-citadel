@@ -2,12 +2,13 @@ Subversion(SVN) 형상관리 Guide
 ===================  
 <br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `author by 안진모`    
-  >   * `up to date 2023.06.29` 
+  >   * `@author Tansan Man(tansan5150)`    
+  >   * `@up to date 2023.06.29` 
     
 <br>
 <br>
-  Copyright ⓒ2023 AXA General Insurance Korea Co.,Ltd. All Right Reserved.
+[![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
+본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
 <br>  
 --------------------------------------

@@ -2,12 +2,13 @@ Sublime Text 4 Users' Guide
 ===================  
 <br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `author by 안진모`    
-  >   * `up to date 2023.01.03` 
+  >   * `@author Tansan Man(tansan5150)`    
+  >   * `@up to date 2023.01.03` 
     
 <br>
 <br>
-  Copyright ⓒ2022 AXA General Insurance Korea Co.,Ltd. All Right Reserved.
+[![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
+본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
 <br>
 --------------------------------------
@@ -29,7 +30,7 @@ Sublime Text 4 Users' Guide
 
 ### 1. 설치   
 #### 1.1 프로그램 설치  
->  1. `sublime_text_build_4152_x64_setup.exe` 를 설치  
+>  1. `sublime_text_build_41ㅌXX_x64_setup.exe` 를 설치  
 >  2. 설치 시 `Add to explorer context menu` 가 나오면 Check 해 준다(우측 클릭 문서열기 기능).
 
 #### 1.2 Plugin 설치

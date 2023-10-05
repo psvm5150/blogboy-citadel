@@ -1,1 +1,10 @@
 .[Dd][Ss]_[Ss]tore
+.[Bb][Aa][Kk]
+.[Oo][Ll][Dd]
+_[0-9]{4,8}
+.[0-9]{4,8}
+[Bb]ak
+[Bb]ackup
+.[Ll][Oo][Gg]
+[Tt]emp
+tmp

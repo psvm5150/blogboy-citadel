@@ -2,8 +2,8 @@ IntelliJ IDEA Ultimate 2022.1  Users' Guide
 ===================  
 <br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `author by 안진모`    
-  >   * `up to date 2022.09.06` 
+  >   * `@author Tansan Man(tansan5150)`    
+  >   * `@up to date 2022.09.06` 
     
 <br>
 <br>

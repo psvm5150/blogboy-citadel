@@ -34,6 +34,11 @@ async function loadMarkdown(filePath) {
         const html = marked.parse(markdown);
         contentDiv.innerHTML = `<div class="markdown-body">${html}</div>`;
 
+        // 아래 코드 추가 : 코드블록에 하이라이팅 적용
+        document.querySelectorAll('.markdown-body pre code').forEach((el) => {
+            hljs.highlightElement(el);
+        });
+
         // 기본 처리만
         updateDocumentTitle(contentDiv);
         fixImagePaths(filePath);

@@ -18,9 +18,9 @@ body {
     padding: 0 24px;
 }
 
-/* Header */
+/* Header - 하단과 같은 색상으로 변경 */
 .header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #2c3e50;
     color: white;
     padding: 32px 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -36,11 +36,11 @@ body {
     left: 0;
     font-size: 1.2rem;
     font-weight: 700;
-    color: #2c3e50;
-    background: rgba(255, 255, 255, 0.95);
+    color: white;
+    background: rgba(102, 126, 234, 0.9);
     padding: 8px 16px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
 }
 
@@ -135,6 +135,14 @@ body {
     transform: translateX(4px);
 }
 
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 80px 0;
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
 /* Footer */
 .footer {
     background: #2c3e50;
@@ -165,14 +173,6 @@ body {
     text-decoration: none;
     color: white;
     transform: translateY(-2px);
-}
-
-/* Loading State */
-.loading {
-    text-align: center;
-    padding: 80px 0;
-    color: #6c757d;
-    font-size: 1.1rem;
 }
 
 /* Responsive Design */

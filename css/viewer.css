@@ -458,3 +458,67 @@ body {
         color: #7d8590;
     }
 }
+/* 기본 (라이트) 스타일은 기존 github-markdown-light.min.css 가 적용됨 */
+
+/* 다크모드: github-markdown-dark 스타일과 highlight.js 다크 스타일 추가 */
+body.darkmode {
+    background: #222 !important;
+}
+
+body.darkmode .markdown-body {
+    /* 공식 다크 테마 불러오기 대신 여기선 일부 주요 색상만 빠르게 맞춥니다 */
+    color: #c9d1d9;
+    background-color: #222;
+}
+
+body.darkmode .markdown-body pre,
+body.darkmode .markdown-body code {
+    background-color: #161b22 !important;
+    color: #c9d1d9;
+}
+
+body.darkmode .markdown-body blockquote {
+    color: #8b949e;
+}
+
+body.darkmode .markdown-body table th,
+body.darkmode .markdown-body table td {
+    background-color: #161b22;
+}
+
+body.darkmode .markdown-body a {
+    color: #58a6ff;
+}
+
+body.darkmode .markdown-body hr {
+    border-color: #444;
+}
+
+/* highlight.js 다크 스타일 */
+body.darkmode .hljs {
+    background: #161b22 !important;
+    color: #c9d1d9 !important;
+}
+
+/* 헤더, 푸터도 어둡게 */
+body.darkmode .header,
+body.darkmode .footer {
+    background: #181a1b !important;
+    color: #ddd;
+}
+
+/* 다크모드 버튼 스타일 */
+#darkmode-toggle {
+    background: #27282b;
+    color: #f3f3f3;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 0.4em 1.2em;
+    cursor: pointer;
+    margin-left: 1em;
+    font-size: 0.95em;
+    transition: background 0.2s;
+}
+#darkmode-toggle:hover {
+    background: #222;
+}

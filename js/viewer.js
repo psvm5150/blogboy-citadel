@@ -120,3 +120,36 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 });
+
+// ... 기존 코드 이후 하단에 추가
+
+// 다크모드 상태 저장 및 토글
+function setDarkMode(on) {
+    if (on) {
+        document.body.classList.add('darkmode');
+        localStorage.setItem('md_darkmode', '1');
+        document.getElementById('darkmode-toggle').innerText = '☀️ 라이트모드';
+    } else {
+        document.body.classList.remove('darkmode');
+        localStorage.setItem('md_darkmode', '0');
+        document.getElementById('darkmode-toggle').innerText = '🌙 다크모드';
+    }
+}
+function bindDarkModeButton() {
+    const btn = document.getElementById('darkmode-toggle');
+    if (!btn) return;
+    btn.onclick = () => {
+        setDarkMode(!document.body.classList.contains('darkmode'));
+    };
+}
+
+// 페이지 진입 시 다크모드 유지
+document.addEventListener('DOMContentLoaded', () => {
+    // 저장된 선호도 반영
+    if (localStorage.getItem('md_darkmode') === '1') {
+        setDarkMode(true);
+    } else {
+        setDarkMode(false);
+    }
+    bindDarkModeButton();
+});

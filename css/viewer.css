@@ -20,7 +20,7 @@ body {
 
 /* Header */
 .header {
-    background: #2c3e50;
+    background: #24292f;
     color: white;
     padding: 16px 0;
     box-shadow: 0 1px 0 rgba(27,31,36,0.15);
@@ -48,7 +48,7 @@ body {
 }
 
 .home-button {
-    background: rgba(255, 255, 255, 0.15);
+    background: #238636;
     color: white;
     padding: 8px 16px;
     border-radius: 6px;
@@ -56,12 +56,11 @@ body {
     font-weight: 500;
     font-size: 14px;
     transition: all 0.2s ease;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(240,246,252,0.1);
 }
 
 .home-button:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: #2ea043;
     text-decoration: none;
     color: white;
 }
@@ -155,7 +154,7 @@ body {
     color: white;
 }
 
-/* Main Content - GitHub 스타일 적용 */
+/* Main Content - 완전 GitHub 스타일 */
 .main-content {
     background: #ffffff;
     padding: 32px 0;
@@ -170,7 +169,7 @@ body {
     margin: 0;
 }
 
-/* GitHub Markdown Body 스타일 */
+/* GitHub Markdown Body 완전 스타일 */
 .markdown-body {
     box-sizing: border-box;
     min-width: 200px;
@@ -179,6 +178,10 @@ body {
     padding: 45px;
     background: #ffffff;
     border-radius: 6px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    word-wrap: break-word;
 }
 
 /* 로딩 및 에러 상태 */
@@ -275,13 +278,13 @@ body {
     position: absolute;
     top: 8px;
     right: 12px;
-    font-size: 12px;
+    background: rgba(175, 184, 193, 0.2);
     color: #656d76;
-    background: #f6f8fa;
+    font-size: 12px;
+    font-weight: 500;
     padding: 2px 6px;
     border-radius: 3px;
     text-transform: uppercase;
-    font-weight: 600;
 }
 
 .markdown-body pre {
@@ -330,29 +333,64 @@ body {
     background-color: #ffebe9;
 }
 
+/* 이미지 에러 스타일 */
+.image-error {
+    background: #fff8dc;
+    border: 1px solid #d1ecf1;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+    text-align: center;
+    color: #0c5460;
+    font-size: 14px;
+}
+
+.image-error small {
+    display: block;
+    margin-top: 4px;
+    opacity: 0.7;
+    font-size: 12px;
+    word-break: break-all;
+}
+
+/* GitHub 스타일 이미지 */
+.markdown-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(27,31,36,0.12);
+    margin: 16px 0;
+}
+
+/* GitHub 스타일 체크박스 */
+.markdown-body .task-list-item {
+    list-style: none;
+}
+
+.markdown-body .task-list-item-checkbox {
+    margin: 0 0.2em 0.25em -1.6em;
+    vertical-align: middle;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 0 16px;
+        padding: 0 12px;
+    }
+
+    .markdown-body {
+        padding: 24px;
+        font-size: 14px;
     }
 
     .header-content {
         flex-direction: column;
         gap: 12px;
-        align-items: stretch;
+        text-align: center;
     }
 
-    .header-controls {
-        justify-content: center;
-    }
-
-    .markdown-body {
-        padding: 32px 16px;
-    }
-
-    .loading,
-    .error {
-        padding: 60px 16px;
+    .header h1 {
+        font-size: 1.1rem;
     }
 
     .language-dropdown {
@@ -368,7 +406,7 @@ body {
 
 @media (max-width: 480px) {
     .markdown-body {
-        padding: 24px 12px;
+        padding: 16px;
     }
 
     .header h1 {

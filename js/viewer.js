@@ -1,9 +1,8 @@
-// URL 파라미터에서 파일 경로와 언어 가져오기
+// URL 파라미터에서 파일 경로 가져오기
 function getUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
     return {
-        file: urlParams.get('file'),
-        lang: urlParams.get('lang') || 'ko'
+        file: urlParams.get('file')
     };
 }
 
@@ -57,6 +56,11 @@ async function loadMarkdown(filePath) {
 
         // GitHub 스타일 체크박스 처리
         processTaskLists();
+
+        // 목차 생성 (선택사항)
+        generateTableOfContents();
+
+        console.log('✅ 문서 로드 완료:', filePath);
 
     } catch (error) {
         console.error('Error loading markdown:', error);
@@ -126,7 +130,7 @@ function fixImagePaths(filePath) {
             
             // 이미지 로드 성공 시
             img.onload = function() {
-                console.log(`Image loaded successfully:`, newSrc);
+                console.log(`✅ Image loaded successfully:`, newSrc);
             };
         }
     });
@@ -157,12 +161,13 @@ function updateDocumentTitle(contentDiv) {
 // 에러 표시
 function showError(contentDiv, filePath, errorMessage) {
     contentDiv.innerHTML = `
-        <div class="error">
-            <h2>❌ 문서를 불러올 수 없습니다</h2>
-            <p><strong>파일 경로:</strong> ${filePath}</p>
-            <p><strong>오류:</strong> ${errorMessage}</p>
-            <br>
-            <a href="/" class="home-button">🏠 홈으로 돌아가기</a>
+        <div class="error" style="text-align: center; padding: 48px 24px; color: #24292f;">
+            <h2 style="color: #cf222e; margin-bottom: 16px;">❌ 문서를 불러올 수 없습니다</h2>
+            <p style="margin-bottom: 8px;"><strong>파일 경로:</strong> <code>${filePath}</code></p>
+            <p style="margin-bottom: 32px;"><strong>오류:</strong> ${errorMessage}</p>
+            <a href="/" class="home-button" style="display: inline-block; background: #238636; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500;">
+                🏠 홈으로 돌아가기
+            </a>
         </div>
     `;
 }
@@ -184,6 +189,26 @@ function enhanceCodeBlocks() {
             const language = languageMatch[1];
             const pre = block.parentElement;
             pre.setAttribute('data-language', language);
+            
+            // 언어 라벨 추가
+            if (!pre.querySelector('.code-language')) {
+                const label = document.createElement('div');
+                label.className = 'code-language';
+                label.textContent = language;
+                label.style.cssText = `
+                    position: absolute;
+                    top: 8px;
+                    right: 8px;
+                    background: rgba(0,0,0,0.1);
+                    color: #656d76;
+                    padding: 2px 6px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+                `;
+                pre.style.position = 'relative';
+                pre.appendChild(label);
+            }
         }
     });
 }
@@ -222,8 +247,12 @@ function makeTablesResponsive() {
         if (!table.parentElement.classList.contains('table-wrapper')) {
             const wrapper = document.createElement('div');
             wrapper.className = 'table-wrapper';
-            wrapper.style.overflowX = 'auto';
-            wrapper.style.marginBottom = '16px';
+            wrapper.style.cssText = `
+                overflow-x: auto;
+                margin-bottom: 16px;
+                border: 1px solid #d0d7de;
+                border-radius: 6px;
+            `;
             
             table.parentNode.insertBefore(wrapper, table);
             wrapper.appendChild(table);
@@ -239,15 +268,57 @@ function processExternalLinks() {
         if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
             link.setAttribute('target', '_blank');
             link.setAttribute('rel', 'noopener noreferrer');
+            
+            // 외부 링크 아이콘 추가
+            if (!link.querySelector('.external-link-icon')) {
+                const icon = document.createElement('span');
+                icon.className = 'external-link-icon';
+                icon.innerHTML = ' ↗';
+                icon.style.cssText = `
+                    color: #656d76;
+                    font-size: 0.8em;
+                    margin-left: 2px;
+                `;
+                link.appendChild(icon);
+            }
         }
     });
 }
 
-// 언어 선택기 초기화
-function initializeLanguageSelector() {
-    const container = document.getElementById('languageSelectorContainer');
-    if (container && typeof i18n !== 'undefined') {
-        container.innerHTML = i18n.createLanguageSelector();
+// 목차 생성 (옵션)
+function generateTableOfContents() {
+    const headings = document.querySelectorAll('.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4, .markdown-body h5, .markdown-body h6');
+    
+    if (headings.length > 3) { // 헤딩이 3개 이상일 때만 목차 생성
+        const toc = document.createElement('div');
+        toc.className = 'table-of-contents';
+        toc.style.cssText = `
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 24px 0;
+            position: relative;
+        `;
+        
+        let tocHTML = '<h4 style="margin-top: 0; color: #24292f;">📋 목차</h4><ul style="margin-bottom: 0; padding-left: 20px;">';
+        
+        headings.forEach((heading, index) => {
+            const level = parseInt(heading.tagName.substring(1));
+            const text = heading.textContent;
+            const id = `heading-${index}`;
+            heading.id = id;
+            
+            const indent = (level - 1) * 16;
+            tocHTML += `<li style="margin-left: ${indent}px; margin-bottom: 4px;"><a href="#${id}" style="text-decoration: none; color: #0969da;">${text}</a></li>`;
+        });
+        
+        tocHTML += '</ul>';
+        toc.innerHTML = tocHTML;
+        
+        // 첫 번째 헤딩 앞에 목차 삽입
+        const firstHeading = headings[0];
+        firstHeading.parentNode.insertBefore(toc, firstHeading);
     }
 }
 
@@ -255,29 +326,29 @@ function initializeLanguageSelector() {
 document.addEventListener('DOMContentLoaded', () => {
     const params = getUrlParameters();
     
-    // URL 파라미터의 언어로 설정
-    if (params.lang && typeof i18n !== 'undefined' && params.lang !== i18n.getCurrentLanguage()) {
-        i18n.setLanguage(params.lang);
-    }
-    
-    // 언어 선택기 초기화
-    initializeLanguageSelector();
-    
     if (params.file) {
+        console.log('📖 로딩 중:', params.file);
         loadMarkdown(params.file);
     } else {
         const contentDiv = document.getElementById('content');
-        const noFileTitle = typeof i18n !== 'undefined' ? i18n.t('viewer.error.no-file') : '❌ 파일 경로가 지정되지 않았습니다';
-        const noFileDesc = typeof i18n !== 'undefined' ? i18n.t('viewer.error.no-file-desc') : '올바른 파일 경로를 URL 파라미터로 제공해주세요.';
-        const homeButton = typeof i18n !== 'undefined' ? i18n.t('viewer.home-button') : '홈으로 돌아가기';
-        
         contentDiv.innerHTML = `
-            <div class="error">
-                <h2>${noFileTitle}</h2>
-                <p>${noFileDesc}</p>
-                <br>
-                <a href="/" class="home-button">${homeButton}</a>
+            <div class="error" style="text-align: center; padding: 48px 24px; color: #24292f;">
+                <h2 style="color: #cf222e; margin-bottom: 16px;">❌ 파일 경로가 지정되지 않았습니다</h2>
+                <p style="margin-bottom: 32px;">올바른 파일 경로를 URL 파라미터로 제공해주세요.</p>
+                <a href="/" class="home-button" style="display: inline-block; background: #238636; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500;">
+                    🏠 홈으로 돌아가기
+                </a>
             </div>
         `;
+    }
+});
+
+// 스크롤 시 헤더 그림자 효과
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.header');
+    if (window.scrollY > 10) {
+        header.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+    } else {
+        header.style.boxShadow = 'none';
     }
 });

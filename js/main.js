@@ -1,4 +1,4 @@
-// 실제 존재하는 문서 목록 (정적)
+// 실제 존재하는 문서 목록 (정적) - 실제 파일명으로 수정
 const documentCategories = {
     'editor': {
         title: '📝 에디터 & 마크다운',
@@ -9,37 +9,23 @@ const documentCategories = {
     'ide': {
         title: '💡 IDE & 개발도구',
         files: [
-            { name: 'README.md', title: 'IntelliJ IDEA 가이드', path: 'posts/idea/README.md' },
-            { name: 'README.md', title: 'IntelliJ 단축키', path: 'posts/idea-shortcuts/README.md' }
+            { name: 'IntelliJIdeaUsersGuide.md', title: 'IntelliJ IDEA 사용자 가이드', path: 'posts/idea/IntelliJIdeaUsersGuide.md' },
+            { name: 'shortcuts.md', title: 'IntelliJ 단축키', path: 'posts/idea-shortcuts/shortcuts.md' }
         ]
     },
     'framework': {
         title: '🌱 프레임워크 & 라이브러리',
         files: [
-            { name: 'README.md', title: 'Spring 초기화 가이드', path: 'posts/spring-init/README.md' }
+            { name: 'SpringInitializrGuide.md', title: 'Spring 초기화 가이드', path: 'posts/spring-init/SpringInitializrGuide.md' }
         ]
     },
     'tools': {
         title: '🔧 도구 & 유틸리티',
         files: [
-            { name: 'README.md', title: 'SLText 가이드', path: 'posts/sltext/README.md' },
-            { name: 'README.md', title: 'SLText 단축키', path: 'posts/sltext-shortcuts/README.md' },
-            { name: 'README.md', title: 'Swagger 설정', path: 'posts/swagger/README.md' }
-        ]
-    },
-    'server': {
-        title: '🌐 서버 & 인프라',
-        files: [
-            { name: 'README.md', title: 'Git 서버 설정', path: 'posts/git-server/README.md' },
-            { name: 'README.md', title: 'SVN 가이드', path: 'posts/svn/README.md' }
-        ]
-    },
-    'security': {
-        title: '🔐 보안 & 인증',
-        files: [
-            { name: 'README.md', title: '인증서 관리', path: 'posts/cert/README.md' }
+            { name: 'SubLimeTextUsersGuide.md', title: 'SublimeText 사용자 가이드', path: 'posts/sltext/SubLimeTextUsersGuide.md' }
         ]
     }
+    // 나머지 카테고리들도 실제 파일이 있는지 확인 후 추가
 };
 
 // 문서 목록 로드
@@ -102,7 +88,7 @@ function createCategorySection(title, files) {
     `;
 }
 
-// GitHub API로 실제 파일 목록 가져오기 (백업 함수)
+// GitHub API로 실제 파일 목록 가져오기 (자동화된 해결책)
 async function loadDocumentsFromGitHub() {
     const postsContainer = document.getElementById('postsContainer');
     
@@ -128,7 +114,7 @@ async function loadDocumentsFromGitHub() {
                             .filter(file => file.name.endsWith('.md') && file.name !== 'demo1.md')
                             .map(file => ({
                                 name: file.name,
-                                title: file.name.replace('.md', '').replace(/[-_]/g, ' '),
+                                title: convertToReadableTitle(file.name),
                                 path: `posts/${category}/${file.name}`
                             }));
 
@@ -154,8 +140,8 @@ async function loadDocumentsFromGitHub() {
             'idea': '💡 IntelliJ IDEA',
             'idea-shortcuts': '⚡ IDEA 단축키',
             'spring-init': '🌱 Spring 초기화',
-            'sltext': '📄 SLText',
-            'sltext-shortcuts': '⚡ SLText 단축키',
+            'sltext': '📄 SublimeText',
+            'sltext-shortcuts': '⚡ SublimeText 단축키',
             'swagger': '🔗 Swagger',
             'git-server': '🌐 Git 서버',
             'svn': '🔄 SVN',
@@ -180,6 +166,16 @@ async function loadDocumentsFromGitHub() {
     }
 }
 
+// 파일명을 읽기 쉬운 제목으로 변환하는 함수
+function convertToReadableTitle(filename) {
+    return filename
+        .replace('.md', '')
+        .replace(/([A-Z])/g, ' $1')  // CamelCase를 공백으로 분리
+        .replace(/^./, str => str.toUpperCase())  // 첫 글자 대문자
+        .replace(/[-_]/g, ' ')  // 하이픈과 언더스코어를 공백으로
+        .trim();
+}
+
 // 초기화
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing document loader...');
@@ -187,10 +183,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 먼저 정적 문서 목록 로드
     loadDocuments();
     
-    // 실제 GitHub API 사용해보고 싶으면 아래 주석 해제
-    // setTimeout(() => {
-    //     loadDocumentsFromGitHub();
-    // }, 2000);
+    // GitHub API로 자동으로 실제 파일 목록 가져오기 (추천)
+    setTimeout(() => {
+        loadDocumentsFromGitHub();
+    }, 1000);
 });
 
 // 페이지 가시성 변경 시 재로드 (선택사항)

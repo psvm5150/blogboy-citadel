@@ -1,4 +1,3 @@
-// URL 파라미터에서 파일 경로 가져오기
 function getUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
     return {
@@ -109,16 +108,30 @@ function showError(contentDiv, filePath, errorMessage) {
 
 // 다크모드 상태 저장 및 토글
 function setDarkMode(on) {
+    // 전환 버튼 텍스트, class 처리 기존과 동일
     if (on) {
         document.body.classList.add('darkmode');
         localStorage.setItem('md_darkmode', '1');
         const toggle = document.getElementById('darkmode-toggle');
         if (toggle) toggle.innerText = '☀️ 라이트모드';
+
+        // 마크다운&하이라이트 다크 스타일 활성화
+        document.getElementById('md-light').disabled = true;
+        document.getElementById('md-dark').disabled = false;
+        document.getElementById('highlight-light').disabled = true;
+        document.getElementById('highlight-dark').disabled = false;
+
     } else {
         document.body.classList.remove('darkmode');
         localStorage.setItem('md_darkmode', '0');
         const toggle = document.getElementById('darkmode-toggle');
         if (toggle) toggle.innerText = '🌙 다크모드';
+
+        // 무조건 라이트 스타일만 활성화
+        document.getElementById('md-light').disabled = false;
+        document.getElementById('md-dark').disabled = true;
+        document.getElementById('highlight-light').disabled = false;
+        document.getElementById('highlight-dark').disabled = true;
     }
 }
 

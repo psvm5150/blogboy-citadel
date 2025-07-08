@@ -273,3 +273,65 @@ html {
 .darkmode .markdown-body blockquote a:hover {
     color: #79c0ff;
 }
+
+/* 다크모드 토글 예시 : body.darkmode 클래스가 붙었다고 가정 */
+body.darkmode .markdown-body {
+    background: #181c20;
+    color: #c9d1d9;
+}
+
+body.darkmode .markdown-body pre,
+body.darkmode .markdown-body code,
+body.darkmode .markdown-body pre code,
+body.darkmode .hljs {
+    background: #181a20 !important;  /* 더 어두운 그레이 */
+    border-radius: 8px;
+    border: 1px solid #24262b;
+    box-shadow: 0 2px 8px rgba(20,30,40,0.18);
+}
+
+body.darkmode .markdown-body code {
+    background: #282e33 !important;
+    color: #8ec07c;
+    padding: 0.18em 0.4em;
+    border-radius: 4px;
+}
+
+body.darkmode .markdown-body pre code {
+    color: #d1d5da !important;
+    background: none !important; /* pre가 이미 배경 */
+    padding: 0;
+    border-radius: 0;
+    font-size: 1em;
+}
+
+/* Syntax highlight: 밝은 색에 파스텔톤 강조 */
+body.darkmode .hljs-comment   { color: #8b949e; }
+body.darkmode .hljs-keyword   { color: #ff7b72; }
+body.darkmode .hljs-string    { color: #a5d6ff; }
+body.darkmode .hljs-number    { color: #fbc57a; }
+body.darkmode .hljs-title,
+body.darkmode .hljs-section   { color: #d2a8ff; }
+body.darkmode .hljs-variable  { color: #ffa657; }
+body.darkmode .hljs-function  { color: #7ee787; }
+
+/* 스크롤바도 밝게 */
+body.darkmode .markdown-body pre {
+    scrollbar-color: #424a53 #181c20;
+    scrollbar-width: thin;
+}
+body.darkmode .markdown-body pre::-webkit-scrollbar {
+    height: 8px;
+    background: #181c20;
+}
+body.darkmode .markdown-body pre::-webkit-scrollbar-thumb {
+    background: #33373c;
+    border-radius: 4px;
+}
+
+/* 다크 라이트 자동 반전 예방 */
+body.darkmode .hljs,
+body.darkmode .markdown-body code,
+body.darkmode .markdown-body pre {
+    filter: invert(0) !important;
+}

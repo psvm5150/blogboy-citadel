@@ -1,31 +1,13 @@
 Markdown으로 문서작업 쉽게 하기 
 ===================  
-<br> <br> <br> <br> <br> <br> <br> <br>
+ <br>
   
   >   * `@author Tansan Man(tansan5150)`    
   >   * `@up to date 2023.05.16` 
     
 <br>
-<br>
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
-
-<br>  
---------------------------------------
-<br>  
-
-### 목차
-<br>
-  > &nbsp; [1. 개요](#1)   
-  > &nbsp; [2. 제목 과 본문 쓰기](#2)   
-  > &nbsp; [3. 순서 및 열거 목록](#3)   
-  > &nbsp; [4. 강조 하기, 예제 설명 및 Code Block](#4-code-block)   
-  > &nbsp; [5. Link 걸기](#5-link)  
-  > &nbsp; [6. 꼭 필요 하지 않은 기능들](#6)  
-
-  <br> <br> <br> <br>
---------------------------------------
-
 
 <br>
 

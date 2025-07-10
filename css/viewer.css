@@ -53,6 +53,9 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.3s;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
 }
 
 .darkmode-toggle:hover {
@@ -68,6 +71,9 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
 }
 
 .home-button:hover {
@@ -112,7 +118,7 @@ body {
 }
 
 .footer p {
-    margin: 0.5rem 0;
+    margin-bottom: 16px;
     color: #6c757d;
 }
 
@@ -214,6 +220,31 @@ body {
 
 .darkmode .footer p {
     color: #7d8590;
+}
+
+/* Footer home button styling for better visibility in light mode */
+.footer .home-button {
+    background: #667eea;
+    color: white;
+    border: 2px solid #667eea;
+}
+
+.footer .home-button:hover {
+    background: #5a67d8;
+    border-color: #5a67d8;
+    color: white;
+}
+
+/* Dark mode footer home button */
+.darkmode .footer .home-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.darkmode .footer .home-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .darkmode .loading {

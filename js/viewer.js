@@ -329,6 +329,9 @@ function bindDarkModeButton() {
 async function applyViewerConfigLabels() {
     const config = await loadViewerConfig();
 
+    // 문서 타이틀
+    document.title = config.page_title;
+
     // 헤더 제목
     const headerTitle = document.querySelector('.header h1');
     if (headerTitle) {

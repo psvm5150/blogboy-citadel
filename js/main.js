@@ -186,6 +186,9 @@ function updateSearchStats(searchTerm = '', visibleCount = null) {
 
 // 메인 페이지 라벨 적용
 function applyMainConfigLabels() {
+    // 문서 타이틀
+    document.title = mainConfig.site_title;
+
     // 사이트 타이틀 (좌상단)
     const siteTitle = document.querySelector('.site-title');
     if (siteTitle) {

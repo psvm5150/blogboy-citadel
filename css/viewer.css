@@ -53,9 +53,10 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.3s;
-    height: auto;
+    height: 40px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
 }
 
 .darkmode-toggle:hover {
@@ -71,9 +72,11 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s;
-    height: auto;
+    font-size: 0.9rem;
+    height: 40px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
 }
 
 .home-button:hover {
@@ -378,6 +381,7 @@ body {
     .home-button {
         font-size: 0.8rem;
         padding: 0.4rem 0.8rem;
+        height: 36px;
     }
 
     .markdown-body {

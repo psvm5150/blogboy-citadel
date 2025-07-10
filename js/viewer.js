@@ -20,7 +20,10 @@ async function loadViewerConfig() {
             default_theme: "light",
             show_theme_toggle: true,
             page_title: "Main Max: Fury Load",
-            copyright_text: "© 2025 tansan5150.github.io. All rights reserved."
+            copyright_text: "© 2025 tansan5150.github.io. All rights reserved.",
+            home_button_label: "🏠 홈으로",
+            dark_mode_button_label: "🌙 다크모드",
+            light_mode_button_label: "☀️ 라이트모드"
         };
     }
 }
@@ -65,7 +68,7 @@ async function loadMarkdown(filePath) {
 
     } catch (error) {
         console.error('Error loading markdown:', error);
-        showError(contentDiv, filePath, error.message);
+        await showError(contentDiv, filePath, error.message);
     }
 }
 
@@ -268,26 +271,31 @@ async function updateDocumentTitle(contentDiv) {
 }
 
 // 에러 표시
-function showError(contentDiv, filePath, errorMessage) {
+async function showError(contentDiv, filePath, errorMessage) {
+    const config = await loadViewerConfig();
+    const homeLabel = config.home_button_label || "🏠 홈으로";
+
     contentDiv.innerHTML = `
         <div style="text-align: center; padding: 48px 24px;">
             <h2>❌ 문서를 불러올 수 없습니다</h2>
             <p><strong>파일:</strong> ${filePath}</p>
             <p><strong>오류:</strong> ${errorMessage}</p>
             <br>
-            <a href="/">🏠 홈으로 돌아가기</a>
+            <a href="/">${homeLabel} 돌아가기</a>
         </div>
     `;
 }
 
 // 다크모드 상태 저장 및 토글
-function setDarkMode(on) {
+async function setDarkMode(on) {
+    const config = await loadViewerConfig();
+
     // 전환 버튼 텍스트, class 처리 기존과 동일
     if (on) {
         document.body.classList.add('darkmode');
         localStorage.setItem('md_darkmode', '1');
         const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = '☀️ 라이트모드';
+        if (toggle) toggle.innerText = config.light_mode_button_label || '☀️ 라이트모드';
 
         // 마크다운&하이라이트 다크 스타일 활성화
         document.getElementById('md-light').disabled = true;
@@ -299,7 +307,7 @@ function setDarkMode(on) {
         document.body.classList.remove('darkmode');
         localStorage.setItem('md_darkmode', '0');
         const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = '🌙 다크모드';
+        if (toggle) toggle.innerText = config.dark_mode_button_label || '🌙 다크모드';
 
         // 무조건 라이트 스타일만 활성화
         document.getElementById('md-light').disabled = false;
@@ -332,6 +340,14 @@ async function applyViewerConfigLabels() {
     if (copyrightText) {
         copyrightText.textContent = config.copyright_text;
     }
+
+    // 홈 버튼 라벨 (헤더와 푸터 모두)
+    const homeButtons = document.querySelectorAll('.home-button');
+    homeButtons.forEach(button => {
+        if (config.home_button_label) {
+            button.textContent = config.home_button_label;
+        }
+    });
 }
 
 // 페이지 로드
@@ -363,7 +379,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         isDarkMode = config.default_theme === 'dark';
     }
 
-    setDarkMode(isDarkMode);
+    await setDarkMode(isDarkMode);
     bindDarkModeButton();
 
     // 뷰어 라벨 적용
@@ -372,13 +388,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (params.file) {
         loadMarkdown(params.file);
     } else {
+        const homeLabel = config.home_button_label || "🏠 홈으로";
         const contentDiv = document.getElementById('content');
         contentDiv.innerHTML = `
             <div style="text-align: center; padding: 48px 24px;">
                 <h2>❌ 파일 경로가 지정되지 않았습니다</h2>
                 <p>올바른 파일 경로를 URL 파라미터로 제공해주세요.</p>
                 <br>
-                <a href="/">🏠 홈으로 돌아가기</a>
+                <a href="/">${homeLabel} 돌아가기</a>
             </div>
         `;
     }

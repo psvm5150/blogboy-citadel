@@ -18,7 +18,9 @@ async function loadMainConfig() {
             main_subtitle: "You will code eternal, shiny and RESTful!",
             site_url: "/",
             copyright_text: "© 2025 tansan5150.github.io. All rights reserved.",
-            show_document_count: true
+            show_document_count: true,
+            show_home_button: true,
+            home_button_label: "🏠 홈"
         };
     }
 }
@@ -217,6 +219,19 @@ function applyMainConfigLabels() {
     const copyrightText = document.querySelector('.footer p');
     if (copyrightText) {
         copyrightText.textContent = mainConfig.copyright_text;
+    }
+
+    // 홈 버튼 표시/숨김 및 라벨
+    const homeButton = document.querySelector('.footer .home-button');
+    if (homeButton) {
+        if (mainConfig.show_home_button) {
+            homeButton.style.display = '';
+            if (mainConfig.home_button_label) {
+                homeButton.textContent = mainConfig.home_button_label;
+            }
+        } else {
+            homeButton.style.display = 'none';
+        }
     }
 }
 

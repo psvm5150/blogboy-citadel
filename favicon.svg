@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#1a1a1a" rx="4"/>
+  
+  <!-- Left angle bracket < -->
+  <path d="M12 8 L6 16 L12 24" stroke="#10b981" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Right angle bracket > -->
+  <path d="M20 8 L26 16 L20 24" stroke="#10b981" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Forward slash / -->
+  <path d="M18 8 L14 24" stroke="#06d6a0" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>

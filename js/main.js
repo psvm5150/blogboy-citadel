@@ -1,63 +1,32 @@
-// 정적 문서 목록 - 실제 파일명으로 정확히 수정
-const documentCategories = {
-    'markdown': {
-        title: '📝 마크다운 & 문서작성',
-        files: [
-            { title: 'MarkDown 완벽 가이드', path: 'posts/md/MarkDownGuide.md' },
-        ]
-    },
-    'editor': {
-        title: '⌨️ 에디터 & 텍스트 편집',
-        files: [
-            { title: 'Vi/Vim 완벽 사용법', path: 'posts/vi/vi-vim-guide.md' },
-            { title: 'SublimeText 사용자 가이드', path: 'posts/sltext/SubLimeTextUsersGuide.md' },
-            { title: 'SublimeText 단축키 모음', path: 'posts/sltext-shortcuts/shortcusts.md' }
-        ]
-    },
-    'ide': {
-        title: '💡 IDE & 개발환경',
-        files: [
-            { title: 'IntelliJ IDEA 사용자 가이드', path: 'posts/idea/IntelliJIdeaUsersGuide.md' },
-            { title: 'IntelliJ IDEA 단축키 모음', path: 'posts/idea-shortcuts/shortcuts.md' }
-        ]
-    },
-    'framework': {
-        title: '🌱 프레임워크 & 개발도구',
-        files: [
-            { title: 'Spring Initializr 가이드', path: 'posts/spring-init/SpringInitializrGuide.md' }
-        ]
-    },
-    'security': {
-        title: '🔐 보안 & 인증서',
-        files: [
-            { title: '인증서 생성 및 관리 가이드', path: 'posts/cert/cert.md' }
-        ]
-    },
-    'vcs': {
-        title: '🔄 버전 관리 시스템',
-        files: [
-            { title: 'Git 서버 구축 가이드', path: 'posts/git-server/GitServer.md' },
-            { title: 'Subversion 완벽 가이드', path: 'posts/svn/SubversionGuide.md' }
-        ]
-    },
-    'api': {
-        title: '📄 API & 문서화',
-        files: [
-            { title: 'Swagger API 문서화 가이드', path: 'posts/swagger/swagger-guide.md' }
-        ]
+let documentCategories = {};
+
+// toc.json 파일 로드
+async function loadToc() {
+    try {
+        const response = await fetch('./toc.json');
+        if (!response.ok) {
+            throw new Error(`Failed to load toc.json: ${response.status}`);
+        }
+        documentCategories = await response.json();
+        console.log('TOC loaded successfully');
+    } catch (error) {
+        console.error('Error loading TOC:', error);
+        throw error;
     }
-};
+}
 
 // 문서 목록 로드
-function loadDocuments() {
+async function loadDocuments() {
     const postsContainer = document.getElementById('postsContainer');
     
     if (!postsContainer) {
-        console.error('postsContainer element not found!');
+        console.error('postsContainer element not found');
         return;
     }
 
     try {
+        await loadToc();
+        
         let html = '';
         
         for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
@@ -67,18 +36,18 @@ function loadDocuments() {
         }
 
         if (html === '') {
-            postsContainer.innerHTML = '<div class="loading">📭 표시할 문서가 없습니다.</div>';
+            postsContainer.innerHTML = '<div class="loading">표시할 문서가 없습니다.</div>';
         } else {
             postsContainer.innerHTML = html;
             
             const totalDocs = Object.values(documentCategories)
                 .reduce((total, category) => total + category.files.length, 0);
-            console.log(`총 ${totalDocs}개 문서 로드됨`);
+            console.log(`Total ${totalDocs} documents loaded`);
         }
 
     } catch (error) {
         console.error('Error loading documents:', error);
-        postsContainer.innerHTML = '<div class="loading">❌ 문서 목록을 불러오는데 실패했습니다.</div>';
+        postsContainer.innerHTML = '<div class="loading">문서 목록을 불러오는데 실패했습니다.</div>';
     }
 }
 
@@ -87,7 +56,7 @@ function createCategorySection(title, files) {
     const fileList = files
         .map(file => `
             <li class="post-item">
-                <a href="viewer.html?file=${encodeURIComponent(file.path)}" class="post-link">
+                <a href="viewer.html?file=posts/${file.path}" class="post-link">
                     ${file.title}
                 </a>
             </li>

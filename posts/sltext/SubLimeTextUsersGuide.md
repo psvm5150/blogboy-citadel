@@ -2,11 +2,11 @@ Sublime Text 4 Users' Guide
 ===================  
 <br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `@author Tansan Man(tansan5150)`    
-  >   * `@up to date 2023.01.03` 
+  > `@author Tansan Man(tansan5150)`    
+  > `@up to date 2023.01.03` 
     
 <br>
-<br>
+
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
@@ -14,19 +14,6 @@ Sublime Text 4 Users' Guide
 --------------------------------------
 
 <br> 
-### 목차
-<br>
-  > &nbsp; [1. 설치](#1)   
-  > &nbsp; [2. 환경설정](#2)  
-  > &nbsp; [3. 기본 사용법](#3)  
-  > &nbsp; [4. 다중 선택, 세로 열 편집](#4)  
-  > &nbsp; [5. 개발 관련 기능](#5)  
-  > &nbsp; [6. SFTP 로 작업 하기](#6-sftp)  
-  > &nbsp; [7. Plugin 관리](#7-plugin)   
-
-  <br> <br> <br> <br>
---------------------------------------
-  <br>
 
 ### 1. 설치   
 #### 1.1 프로그램 설치  

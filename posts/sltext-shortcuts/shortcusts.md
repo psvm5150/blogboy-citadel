@@ -6,27 +6,14 @@ Sublime Text 4 자주쓰는 단축키 모음
   >   * `@up to date 2023.09.05 ` 
     
 <br>
-<br>
+
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
-
 
 <br>
 --------------------------------------
 
 <br> 
-### 목차
-<br>
-  > &nbsp; [1. Editor 화면 기능](#1-editor)   
-  > &nbsp; [2. 찾기, 검색 및 바꾸기](#2)   
-  > &nbsp; [3. Editor 편집 - 기본](#3-editor-)   
-  > &nbsp; [4. Editor 편집 - 다중선택, 세로열](#4-editor-)   
-  > &nbsp; [5. Editor 편집 - 라인정렬](#5-editor-)   
-  > &nbsp; [6. 개발 관련](#6)   
-
-  <br> <br> <br> <br>
---------------------------------------
-  <br>
 
 ### 1. Editor 화면 기능
 | 기능 | 단축키|비고 |

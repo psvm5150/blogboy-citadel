@@ -5,6 +5,24 @@ function getUrlParameters() {
     };
 }
 
+// 뷰어 설정 로드
+async function loadViewerConfig() {
+    try {
+        const response = await fetch('./properties/viewer-config.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.warn('Failed to load viewer config, using defaults:', error);
+        return {
+            showTableOfContents: true,
+            defaultTheme: "light",
+            showThemeToggle: true
+        };
+    }
+}
+
 // GitHub raw 파일 로드
 async function loadMarkdown(filePath) {
     const contentDiv = document.getElementById('content');
@@ -40,7 +58,7 @@ async function loadMarkdown(filePath) {
 
         // 기본 처리
         updateDocumentTitle(contentDiv);
-        generateTableOfContents(contentDiv, markdown);
+        await generateTableOfContents(contentDiv, markdown);
         fixImagePaths(filePath);
 
     } catch (error) {
@@ -87,17 +105,47 @@ function fixImagePaths(filePath) {
 }
 
 // 자동 목차 생성
-function generateTableOfContents(contentDiv, markdown) {
+async function generateTableOfContents(contentDiv, markdown) {
+    // 설정 로드
+    const config = await loadViewerConfig();
+
+    // 목차 표시가 비활성화된 경우 생성하지 않음
+    if (!config.showTableOfContents) {
+        return;
+    }
+
     // 마크다운에서 헤딩 추출 (# 스타일과 underline 스타일 모두 지원)
     const headings = [];
     const lines = markdown.split('\n');
+    let inCodeBlock = false;
+    let inQuoteBlock = false;
 
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
+        const line = lines[i];
+        const trimmedLine = line.trim();
         const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : '';
 
-        // # 스타일 헤딩 처리
-        const hashMatch = line.match(/^(#{1,6})\s+(.+)$/);
+        // 코드 블록 상태 확인
+        if (trimmedLine.startsWith('```')) {
+            inCodeBlock = !inCodeBlock;
+            continue;
+        }
+
+        // 코드 블록 안에 있으면 헤딩 무시
+        if (inCodeBlock) {
+            continue;
+        }
+
+        // 인용구 블록 상태 확인 (> 로 시작하는 라인)
+        inQuoteBlock = trimmedLine.startsWith('>');
+
+        // 인용구 블록 안에 있으면 헤딩 무시
+        if (inQuoteBlock) {
+            continue;
+        }
+
+        // # 스타일 헤딩 처리 (오직 #, ##, ### 만 허용)
+        const hashMatch = trimmedLine.match(/^(#{1,3})\s+(.+)$/);
         if (hashMatch) {
             const level = hashMatch[1].length;
             const text = hashMatch[2].trim();
@@ -118,19 +166,19 @@ function generateTableOfContents(contentDiv, markdown) {
             }
         }
         // underline 스타일 헤딩 처리 (= 는 h1, - 는 h2)
-        else if (line && nextLine) {
+        else if (trimmedLine && nextLine) {
             if (nextLine.match(/^=+$/)) {
                 // 첫 번째 underline 헤딩을 메인 타이틀로 처리
                 if (headings.length === 0) {
                     headings.push({
                         level: 1,
-                        text: line,
+                        text: trimmedLine,
                         isMainTitle: true
                     });
                 } else {
                     headings.push({
                         level: 1,
-                        text: line,
+                        text: trimmedLine,
                         isMainTitle: false
                     });
                 }
@@ -139,13 +187,13 @@ function generateTableOfContents(contentDiv, markdown) {
                 if (headings.length === 0) {
                     headings.push({
                         level: 2,
-                        text: line,
+                        text: trimmedLine,
                         isMainTitle: true
                     });
                 } else {
                     headings.push({
                         level: 2,
-                        text: line,
+                        text: trimmedLine,
                         isMainTitle: false
                     });
                 }
@@ -267,15 +315,35 @@ function bindDarkModeButton() {
 }
 
 // 페이지 로드
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const params = getUrlParameters();
 
-    // 저장된 다크모드 선호도 반영
-    if (localStorage.getItem('md_darkmode') === '1') {
-        setDarkMode(true);
-    } else {
-        setDarkMode(false);
+    // 설정 로드
+    const config = await loadViewerConfig();
+
+    // 테마 토글 버튼 표시/숨김 처리
+    const themeToggleBtn = document.getElementById('darkmode-toggle');
+    if (themeToggleBtn) {
+        if (config.showThemeToggle) {
+            themeToggleBtn.style.display = '';
+        } else {
+            themeToggleBtn.style.display = 'none';
+        }
     }
+
+    // 테마 설정 적용 (localStorage 우선, 없으면 config 기본값 사용)
+    const savedTheme = localStorage.getItem('md_darkmode');
+    let isDarkMode;
+
+    if (savedTheme !== null) {
+        // 저장된 설정이 있으면 우선 사용
+        isDarkMode = savedTheme === '1';
+    } else {
+        // 저장된 설정이 없으면 config의 기본값 사용
+        isDarkMode = config.defaultTheme === 'dark';
+    }
+
+    setDarkMode(isDarkMode);
     bindDarkModeButton();
 
     if (params.file) {

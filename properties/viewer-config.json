@@ -1,5 +1,7 @@
 {
-  "showTableOfContents": true,
-  "defaultTheme": "light",
-  "showThemeToggle": true
+  "show_table_of_contents": true,
+  "default_theme": "light",
+  "show_theme_toggle": true,
+  "page_title": "Main Max: Fury Load",
+  "copyright_text": "© 2025 tansan5150.github.io. All rights reserved."
 }

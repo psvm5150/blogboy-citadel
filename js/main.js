@@ -1,4 +1,27 @@
 let documentCategories = {};
+let mainConfig = {};
+
+// main-config.json 파일 로드
+async function loadMainConfig() {
+    try {
+        const response = await fetch('properties/main-config.json');
+        if (!response.ok) {
+            throw new Error(`Failed to load main-config.json: ${response.status}`);
+        }
+        mainConfig = await response.json();
+        console.log('Main config loaded successfully');
+    } catch (error) {
+        console.warn('Failed to load main config, using defaults:', error);
+        mainConfig = {
+            site_title: "tansan5150.github.io",
+            main_title: "Main Max: Fury Load",
+            main_subtitle: "You will code eternal, shiny and RESTful!",
+            site_url: "/",
+            copyright_text: "© 2025 tansan5150.github.io. All rights reserved.",
+            show_document_count: true
+        };
+    }
+}
 
 // toc.json 파일 로드
 async function loadToc() {
@@ -18,17 +41,18 @@ async function loadToc() {
 // 문서 목록 로드
 async function loadDocuments() {
     const postsContainer = document.getElementById('postsContainer');
-    
+
     if (!postsContainer) {
         console.error('postsContainer element not found');
         return;
     }
 
     try {
+        await loadMainConfig();
         await loadToc();
-        
+
         let html = '';
-        
+
         for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
             if (categoryInfo.files && categoryInfo.files.length > 0) {
                 html += createCategorySection(categoryInfo.title, categoryInfo.files);
@@ -39,7 +63,7 @@ async function loadDocuments() {
             postsContainer.innerHTML = '<div class="loading">❌ 표시할 문서가 없습니다.</div>';
         } else {
             postsContainer.innerHTML = html;
-            
+
             const totalDocs = Object.values(documentCategories)
                 .reduce((total, category) => total + category.files.length, 0);
             console.log(`Total ${totalDocs} documents loaded`);
@@ -63,11 +87,14 @@ function createCategorySection(title, files) {
         `)
         .join('');
 
+    const countDisplay = mainConfig.show_document_count ? 
+        `<div class="category-count">${files.length}개</div>` : '';
+
     return `
         <div class="category-section">
             <div class="category-header">
                 <div class="category-title">${title}</div>
-                <div class="category-count">${files.length}개</div>
+                ${countDisplay}
             </div>
             <div class="category-body">
                 <ul class="post-list">
@@ -81,7 +108,7 @@ function createCategorySection(title, files) {
 // 검색 기능
 function initializeSearch() {
     const searchContainer = document.querySelector('.main-content .container');
-    
+
     if (searchContainer) {
         const searchHTML = `
             <div class="search-container" style="margin-bottom: 32px;">
@@ -90,13 +117,13 @@ function initializeSearch() {
                 <div id="searchStats" style="margin-top: 8px; font-size: 14px; color: #656d76;"></div>
             </div>
         `;
-        
+
         const postsContainer = document.getElementById('postsContainer');
         postsContainer.insertAdjacentHTML('beforebegin', searchHTML);
-        
+
         const searchInput = document.getElementById('documentSearch');
         searchInput.addEventListener('input', handleSearch);
-        
+
         updateSearchStats();
     }
 }
@@ -106,34 +133,36 @@ function handleSearch(event) {
     const searchTerm = event.target.value.toLowerCase();
     const allCategories = document.querySelectorAll('.category-section');
     let totalVisible = 0;
-    
+
     allCategories.forEach(category => {
         const posts = category.querySelectorAll('.post-item');
         let hasVisiblePosts = false;
-        
+
         posts.forEach(post => {
             const title = post.querySelector('.post-link').textContent.toLowerCase();
             const isVisible = title.includes(searchTerm);
-            
+
             post.style.display = isVisible ? 'block' : 'none';
             if (isVisible) {
                 hasVisiblePosts = true;
                 totalVisible++;
             }
         });
-        
+
         category.style.display = hasVisiblePosts ? 'block' : 'none';
-        
+
         const categoryCount = category.querySelector('.category-count');
-        const visibleCount = Array.from(posts).filter(post => 
-            post.style.display !== 'none'
-        ).length;
-        
-        if (hasVisiblePosts) {
-            categoryCount.textContent = searchTerm ? `${visibleCount}개` : `${posts.length}개`;
+        if (categoryCount && mainConfig.show_document_count) {
+            const visibleCount = Array.from(posts).filter(post => 
+                post.style.display !== 'none'
+            ).length;
+
+            if (hasVisiblePosts) {
+                categoryCount.textContent = searchTerm ? `${visibleCount}개` : `${posts.length}개`;
+            }
         }
     });
-    
+
     updateSearchStats(searchTerm, totalVisible);
 }
 
@@ -141,15 +170,53 @@ function handleSearch(event) {
 function updateSearchStats(searchTerm = '', visibleCount = null) {
     const searchStats = document.getElementById('searchStats');
     if (!searchStats) return;
-    
+
     const totalDocs = Object.values(documentCategories)
         .reduce((total, category) => total + category.files.length, 0);
-    
+
     if (searchTerm) {
         const actualVisible = visibleCount !== null ? visibleCount : totalDocs;
         searchStats.textContent = `"${searchTerm}" 검색 결과: ${actualVisible}개 문서`;
     } else {
         searchStats.textContent = `총 ${totalDocs}개 문서 (${Object.keys(documentCategories).length}개 카테고리)`;
+    }
+}
+
+// 메인 페이지 라벨 적용
+function applyMainConfigLabels() {
+    // 사이트 타이틀 (좌상단)
+    const siteTitle = document.querySelector('.site-title');
+    if (siteTitle) {
+        siteTitle.textContent = mainConfig.site_title;
+    }
+
+    // 메인 제목
+    const mainTitle = document.querySelector('.header-main h1');
+    if (mainTitle) {
+        mainTitle.textContent = mainConfig.main_title;
+    }
+
+    // 메인 부제목
+    const mainSubtitle = document.querySelector('.header-main p');
+    if (mainSubtitle) {
+        mainSubtitle.textContent = mainConfig.main_subtitle;
+    }
+
+    // 사이트 URL (좌상단 링크로 만들기)
+    if (siteTitle && !siteTitle.parentElement.href) {
+        // 사이트 타이틀을 링크로 감싸기
+        const link = document.createElement('a');
+        link.href = mainConfig.site_url;
+        link.style.textDecoration = 'none';
+        link.style.color = 'inherit';
+        siteTitle.parentElement.insertBefore(link, siteTitle);
+        link.appendChild(siteTitle);
+    }
+
+    // 저작권 텍스트
+    const copyrightText = document.querySelector('.footer p');
+    if (copyrightText) {
+        copyrightText.textContent = mainConfig.copyright_text;
     }
 }
 
@@ -164,7 +231,7 @@ function initializeKeyboardShortcuts() {
                 searchInput.select();
             }
         }
-        
+
         if (e.key === 'Escape') {
             const searchInput = document.getElementById('documentSearch');
             if (searchInput && searchInput.value) {
@@ -176,9 +243,10 @@ function initializeKeyboardShortcuts() {
 }
 
 // 초기화
-document.addEventListener('DOMContentLoaded', () => {
-    loadDocuments();
-    
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadDocuments();
+    applyMainConfigLabels();
+
     setTimeout(() => {
         initializeSearch();
         initializeKeyboardShortcuts();

@@ -16,9 +16,11 @@ async function loadViewerConfig() {
     } catch (error) {
         console.warn('Failed to load viewer config, using defaults:', error);
         return {
-            showTableOfContents: true,
-            defaultTheme: "light",
-            showThemeToggle: true
+            show_table_of_contents: true,
+            default_theme: "light",
+            show_theme_toggle: true,
+            page_title: "Main Max: Fury Load",
+            copyright_text: "© 2025 tansan5150.github.io. All rights reserved."
         };
     }
 }
@@ -57,7 +59,7 @@ async function loadMarkdown(filePath) {
         });
 
         // 기본 처리
-        updateDocumentTitle(contentDiv);
+        await updateDocumentTitle(contentDiv);
         await generateTableOfContents(contentDiv, markdown);
         fixImagePaths(filePath);
 
@@ -110,7 +112,7 @@ async function generateTableOfContents(contentDiv, markdown) {
     const config = await loadViewerConfig();
 
     // 목차 표시가 비활성화된 경우 생성하지 않음
-    if (!config.showTableOfContents) {
+    if (!config.show_table_of_contents) {
         return;
     }
 
@@ -257,10 +259,11 @@ async function generateTableOfContents(contentDiv, markdown) {
 }
 
 // 문서 제목 업데이트
-function updateDocumentTitle(contentDiv) {
+async function updateDocumentTitle(contentDiv) {
+    const config = await loadViewerConfig();
     const firstH1 = contentDiv.querySelector('h1');
     if (firstH1) {
-        document.title = `${firstH1.textContent} - Main Max: Fury Load`;
+        document.title = `${firstH1.textContent} - ${config.page_title}`;
     }
 }
 
@@ -314,6 +317,23 @@ function bindDarkModeButton() {
     };
 }
 
+// 뷰어 페이지 라벨 적용
+async function applyViewerConfigLabels() {
+    const config = await loadViewerConfig();
+
+    // 헤더 제목
+    const headerTitle = document.querySelector('.header h1');
+    if (headerTitle) {
+        headerTitle.textContent = config.page_title;
+    }
+
+    // 저작권 텍스트
+    const copyrightText = document.querySelector('.footer p');
+    if (copyrightText) {
+        copyrightText.textContent = config.copyright_text;
+    }
+}
+
 // 페이지 로드
 document.addEventListener('DOMContentLoaded', async () => {
     const params = getUrlParameters();
@@ -324,7 +344,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 테마 토글 버튼 표시/숨김 처리
     const themeToggleBtn = document.getElementById('darkmode-toggle');
     if (themeToggleBtn) {
-        if (config.showThemeToggle) {
+        if (config.show_theme_toggle) {
             themeToggleBtn.style.display = '';
         } else {
             themeToggleBtn.style.display = 'none';
@@ -340,11 +360,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         isDarkMode = savedTheme === '1';
     } else {
         // 저장된 설정이 없으면 config의 기본값 사용
-        isDarkMode = config.defaultTheme === 'dark';
+        isDarkMode = config.default_theme === 'dark';
     }
 
     setDarkMode(isDarkMode);
     bindDarkModeButton();
+
+    // 뷰어 라벨 적용
+    await applyViewerConfigLabels();
 
     if (params.file) {
         loadMarkdown(params.file);

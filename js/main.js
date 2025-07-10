@@ -3,7 +3,7 @@ let documentCategories = {};
 // toc.json 파일 로드
 async function loadToc() {
     try {
-        const response = await fetch('./toc.json');
+        const response = await fetch('./properties/toc.json');
         if (!response.ok) {
             throw new Error(`Failed to load toc.json: ${response.status}`);
         }
@@ -36,7 +36,7 @@ async function loadDocuments() {
         }
 
         if (html === '') {
-            postsContainer.innerHTML = '<div class="loading">표시할 문서가 없습니다.</div>';
+            postsContainer.innerHTML = '<div class="loading">❌ 표시할 문서가 없습니다.</div>';
         } else {
             postsContainer.innerHTML = html;
             
@@ -47,7 +47,7 @@ async function loadDocuments() {
 
     } catch (error) {
         console.error('Error loading documents:', error);
-        postsContainer.innerHTML = '<div class="loading">문서 목록을 불러오는데 실패했습니다.</div>';
+        postsContainer.innerHTML = '<div class="loading">❌ 문서 목록을 불러오는데 실패했습니다.</div>';
     }
 }
 

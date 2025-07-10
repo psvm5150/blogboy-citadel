@@ -3,7 +3,7 @@ let documentCategories = {};
 // toc.json 파일 로드
 async function loadToc() {
     try {
-        const response = await fetch('./properties/toc.json');
+        const response = await fetch('/properties/toc.json');
         if (!response.ok) {
             throw new Error(`Failed to load toc.json: ${response.status}`);
         }

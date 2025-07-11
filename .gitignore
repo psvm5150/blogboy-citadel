@@ -8,6 +8,7 @@
 .[Ll][Oo][Gg]
 [Tt]emp/
 tmp/
+node_modules/
 
 # IntelliJ IDEA
 .idea/

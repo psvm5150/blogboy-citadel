@@ -1,0 +1,31 @@
+{
+  "name": "tansan5150-github-io",
+  "version": "1.0.0",
+  "description": "Development documentation and guides collection",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -c-1",
+    "dev": "npx live-server --port=8000",
+    "deploy": "git add . && git commit -m 'Deploy updates' && git push origin main"
+  },
+  "keywords": [
+    "documentation",
+    "guides",
+    "markdown",
+    "github-pages"
+  ],
+  "author": "tansan5150",
+  "license": "CC-BY-2.0",
+  "homepage": "https://tansan5150.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tansan5150/tansan5150.github.io.git"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "marked": "^9.1.6"
+  }
+}

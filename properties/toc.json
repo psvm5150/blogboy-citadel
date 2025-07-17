@@ -4,7 +4,8 @@
     "files": [
       {
         "title": "MarkDown 완벽 가이드",
-        "path": "md/MarkDownGuide.md"
+        "path": "md/MarkDownGuide.md",
+        "disable_auto_toc": true
       }
     ]
   },

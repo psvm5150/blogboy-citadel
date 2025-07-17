@@ -28,6 +28,45 @@ async function loadViewerConfig() {
     }
 }
 
+// TOC 설정 로드
+async function loadTocConfig() {
+    try {
+        const response = await fetch('./properties/toc.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.warn('Failed to load toc config:', error);
+        return {};
+    }
+}
+
+// 현재 문서의 disable_auto_toc 설정 확인
+async function isAutoTocDisabled(filePath) {
+    try {
+        const tocConfig = await loadTocConfig();
+        
+        // posts/ 접두사 제거
+        const normalizedPath = filePath.startsWith('posts/') ? filePath.substring(6) : filePath;
+        
+        // 모든 카테고리에서 해당 파일 찾기
+        for (const [categoryKey, categoryInfo] of Object.entries(tocConfig)) {
+            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const file = categoryInfo.files.find(f => f.path === normalizedPath);
+                if (file && file.disable_auto_toc === true) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    } catch (error) {
+        console.warn('Error checking auto toc setting:', error);
+        return false;
+    }
+}
+
 // GitHub raw 파일 로드
 async function loadMarkdown(filePath) {
     const contentDiv = document.getElementById('content');
@@ -63,7 +102,7 @@ async function loadMarkdown(filePath) {
 
         // 기본 처리
         await updateDocumentTitle(contentDiv);
-        await generateTableOfContents(contentDiv, markdown);
+        await generateTableOfContents(contentDiv, markdown, filePath);
         fixImagePaths(filePath);
 
     } catch (error) {
@@ -110,12 +149,17 @@ function fixImagePaths(filePath) {
 }
 
 // 자동 목차 생성
-async function generateTableOfContents(contentDiv, markdown) {
+async function generateTableOfContents(contentDiv, markdown, filePath) {
     // 설정 로드
     const config = await loadViewerConfig();
 
     // 목차 표시가 비활성화된 경우 생성하지 않음
     if (!config.show_table_of_contents) {
+        return;
+    }
+
+    // 현재 문서의 disable_auto_toc 설정 확인
+    if (await isAutoTocDisabled(filePath)) {
         return;
     }
 

@@ -1,8 +1,69 @@
+let mainConfig = {};
+
 function getUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
     return {
         file: urlParams.get('file')
     };
+}
+
+// 경로 정규화 함수 - 다양한 형태의 경로를 일관된 형태로 변환
+function normalizePath(path) {
+    if (!path) return 'posts/';
+    
+    // 문자열로 변환
+    path = String(path);
+    
+    // 앞뒤 공백 제거
+    path = path.trim();
+    
+    // 빈 문자열이면 기본값 반환
+    if (!path) return 'posts/';
+    
+    // "./" 시작 제거
+    if (path.startsWith('./')) {
+        path = path.substring(2);
+    }
+    
+    // 시작 "/" 제거
+    if (path.startsWith('/')) {
+        path = path.substring(1);
+    }
+    
+    // 파일명인지 확인 (확장자가 있는지 체크)
+    const hasExtension = /\.[a-zA-Z0-9]+$/.test(path);
+    
+    // 파일명이 아닌 경우에만 끝에 "/" 추가
+    if (!hasExtension && !path.endsWith('/')) {
+        path += '/';
+    }
+    
+    return path;
+}
+
+// main-config.json 파일 로드
+async function loadMainConfig() {
+    try {
+        const response = await fetch('./properties/main-config.json');
+        if (!response.ok) {
+            throw new Error(`Failed to load main-config.json: ${response.status}`);
+        }
+        mainConfig = await response.json();
+        console.log('Main config loaded successfully in viewer');
+    } catch (error) {
+        console.warn('Failed to load main config in viewer, using defaults:', error);
+        mainConfig = {
+            site_title: "tansan5150.github.io",
+            main_title: "Main Max: Fury Load",
+            main_subtitle: "You will code eternal, shiny and RESTful!",
+            site_url: "/",
+            copyright_text: "© 2025 tansan5150.github.io. All rights reserved.",
+            show_document_count: true,
+            show_home_button: true,
+            home_button_label: "🏠 홈",
+            document_root: "posts/"
+        };
+    }
 }
 
 // 뷰어 설정 로드
@@ -47,8 +108,9 @@ async function isAutoTocDisabled(filePath) {
     try {
         const tocConfig = await loadTocConfig();
         
-        // posts/ 접두사 제거
-        const normalizedPath = filePath.startsWith('posts/') ? filePath.substring(6) : filePath;
+        // document_root 접두사 제거
+        const documentRoot = normalizePath(mainConfig.document_root);
+        const normalizedPath = filePath.startsWith(documentRoot) ? filePath.substring(documentRoot.length) : filePath;
         
         // 모든 카테고리에서 해당 파일 찾기
         for (const [categoryKey, categoryInfo] of Object.entries(tocConfig)) {
@@ -72,6 +134,8 @@ async function loadMarkdown(filePath) {
     const contentDiv = document.getElementById('content');
 
     try {
+        // 먼저 main config를 로드해야 함
+        await loadMainConfig();
         const response = await fetch(`https://raw.githubusercontent.com/tansan5150/tansan5150.github.io/main/${filePath}`);
 
         if (!response.ok) {
@@ -401,7 +465,8 @@ async function applyViewerConfigLabels() {
 document.addEventListener('DOMContentLoaded', async () => {
     const params = getUrlParameters();
 
-    // 설정 로드
+    // 설정 로드 (main config와 viewer config 모두)
+    await loadMainConfig();
     const config = await loadViewerConfig();
 
     // 테마 토글 버튼 표시/숨김 처리

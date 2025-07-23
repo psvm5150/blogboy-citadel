@@ -5,7 +5,8 @@
       {
         "title": "MarkDown 완벽 가이드",
         "path": "md/MarkDownGuide.md",
-        "disable_auto_toc": true
+        "disable_auto_toc": true,
+        "modified_date": "2025-07-09"
       }
     ]
   },
@@ -14,15 +15,18 @@
     "files": [
       {
         "title": "Vi/Vim 완벽 사용법",
-        "path": "vi/ViQuickStart.md"
+        "path": "vi/ViQuickStart.md",
+        "modified_date": "2025-07-08"
       },
       {
         "title": "SublimeText 사용자 가이드",
-        "path": "sltext/SubLimeTextUsersGuide.md"
+        "path": "sltext/SubLimeTextUsersGuide.md",
+        "modified_date": "2025-07-11"
       },
       {
         "title": "SublimeText 단축키 모음",
-        "path": "sltext-shortcuts/shortcusts.md"
+        "path": "sltext-shortcuts/shortcusts.md",
+        "modified_date": "2025-07-11"
       }
     ]
   },
@@ -31,11 +35,13 @@
     "files": [
       {
         "title": "IntelliJ IDEA 사용자 가이드",
-        "path": "idea/IntelliJIdeaUsersGuide.md"
+        "path": "idea/IntelliJIdeaUsersGuide.md",
+        "modified_date": "2025-07-08"
       },
       {
         "title": "IntelliJ IDEA 단축키 모음",
-        "path": "idea-shortcuts/shortcuts.md"
+        "path": "idea-shortcuts/shortcuts.md",
+        "modified_date": "2025-07-08"
       }
     ]
   },
@@ -44,7 +50,8 @@
     "files": [
       {
         "title": "Spring Initializr 가이드",
-        "path": "spring-init/SpringInitializrGuide.md"
+        "path": "spring-init/SpringInitializrGuide.md",
+        "modified_date": "2025-07-08"
       }
     ]
   },
@@ -53,7 +60,8 @@
     "files": [
       {
         "title": "인증서 생성 및 관리 가이드",
-        "path": "cert/cert.md"
+        "path": "cert/cert.md",
+        "modified_date": "2025-07-08"
       }
     ]
   },
@@ -62,11 +70,13 @@
     "files": [
       {
         "title": "Git 서버 구축 가이드",
-        "path": "git-server/GitServer.md"
+        "path": "git-server/GitServer.md",
+        "modified_date": "2025-07-08"
       },
       {
         "title": "Subversion 완벽 가이드",
-        "path": "svn/SubversionGuide.md"
+        "path": "svn/svn.md",
+        "modified_date": "2025-07-08"
       }
     ]
   },
@@ -75,7 +85,8 @@
     "files": [
       {
         "title": "Swagger API 문서화 가이드",
-        "path": "swagger/swagger-guide.md"
+        "path": "swagger/swagger.md",
+        "modified_date": "2025-07-08"
       }
     ]
   }

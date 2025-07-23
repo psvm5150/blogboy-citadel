@@ -1,6 +1,40 @@
 let documentCategories = {};
 let mainConfig = {};
 
+// 경로 정규화 함수 - 다양한 형태의 경로를 일관된 형태로 변환
+function normalizePath(path) {
+    if (!path) return 'posts/';
+    
+    // 문자열로 변환
+    path = String(path);
+    
+    // 앞뒤 공백 제거
+    path = path.trim();
+    
+    // 빈 문자열이면 기본값 반환
+    if (!path) return 'posts/';
+    
+    // "./" 시작 제거
+    if (path.startsWith('./')) {
+        path = path.substring(2);
+    }
+    
+    // 시작 "/" 제거
+    if (path.startsWith('/')) {
+        path = path.substring(1);
+    }
+    
+    // 파일명인지 확인 (확장자가 있는지 체크)
+    const hasExtension = /\.[a-zA-Z0-9]+$/.test(path);
+    
+    // 파일명이 아닌 경우에만 끝에 "/" 추가
+    if (!hasExtension && !path.endsWith('/')) {
+        path += '/';
+    }
+    
+    return path;
+}
+
 // main-config.json 파일 로드
 async function loadMainConfig() {
     try {
@@ -77,16 +111,38 @@ async function loadDocuments() {
     }
 }
 
+// 파일이 "new" 표시를 받을지 확인하는 함수
+function shouldShowNewIndicator(modifiedDate) {
+    if (!mainConfig.show_new_indicator || !modifiedDate) {
+        return false;
+    }
+    
+    const fileDate = new Date(modifiedDate);
+    const currentDate = new Date();
+    const daysDiff = Math.floor((currentDate - fileDate) / (1000 * 60 * 60 * 24));
+    
+    return daysDiff <= mainConfig.new_display_days;
+}
+
+// "new" 표시 HTML 생성
+function createNewIndicator() {
+    return '<span class="new-indicator">new</span>';
+}
+
 // 카테고리 섹션 생성
 function createCategorySection(title, files) {
+    const documentRoot = normalizePath(mainConfig.document_root);
     const fileList = files
-        .map(file => `
+        .map(file => {
+            const newIndicator = shouldShowNewIndicator(file.modified_date) ? createNewIndicator() : '';
+            return `
             <li class="post-item">
-                <a href="viewer.html?file=posts/${file.path}" class="post-link">
-                    ${file.title}
+                <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
+                    ${file.title}${newIndicator}
                 </a>
             </li>
-        `)
+        `;
+        })
         .join('');
 
     const countDisplay = mainConfig.show_document_count ? 

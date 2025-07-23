@@ -37,26 +37,12 @@ function normalizePath(path) {
 
 // main-config.json 파일 로드
 async function loadMainConfig() {
-    try {
-        const response = await fetch('properties/main-config.json');
-        if (!response.ok) {
-            throw new Error(`Failed to load main-config.json: ${response.status}`);
-        }
-        mainConfig = await response.json();
-        console.log('Main config loaded successfully');
-    } catch (error) {
-        console.warn('Failed to load main config, using defaults:', error);
-        mainConfig = {
-            site_title: "tansan5150.github.io",
-            main_title: "Main Max: Fury Load",
-            main_subtitle: "You will code eternal, shiny and RESTful!",
-            site_url: "/",
-            copyright_text: "© 2025 tansan5150.github.io. All rights reserved.",
-            show_document_count: true,
-            show_home_button: true,
-            home_button_label: "🏠 홈"
-        };
+    const response = await fetch('properties/main-config.json');
+    if (!response.ok) {
+        throw new Error(`Failed to load main-config.json: ${response.status}`);
     }
+    mainConfig = await response.json();
+    console.log('Main config loaded successfully');
 }
 
 // toc.json 파일 로드

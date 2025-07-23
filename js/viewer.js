@@ -43,50 +43,21 @@ function normalizePath(path) {
 
 // main-config.json 파일 로드
 async function loadMainConfig() {
-    try {
-        const response = await fetch('./properties/main-config.json');
-        if (!response.ok) {
-            throw new Error(`Failed to load main-config.json: ${response.status}`);
-        }
-        mainConfig = await response.json();
-        console.log('Main config loaded successfully in viewer');
-    } catch (error) {
-        console.warn('Failed to load main config in viewer, using defaults:', error);
-        mainConfig = {
-            site_title: "tansan5150.github.io",
-            main_title: "Main Max: Fury Load",
-            main_subtitle: "You will code eternal, shiny and RESTful!",
-            site_url: "/",
-            copyright_text: "© 2025 tansan5150.github.io. All rights reserved.",
-            show_document_count: true,
-            show_home_button: true,
-            home_button_label: "🏠 홈",
-            document_root: "posts/"
-        };
+    const response = await fetch('./properties/main-config.json');
+    if (!response.ok) {
+        throw new Error(`Failed to load main-config.json: ${response.status}`);
     }
+    mainConfig = await response.json();
+    console.log('Main config loaded successfully in viewer');
 }
 
 // 뷰어 설정 로드
 async function loadViewerConfig() {
-    try {
-        const response = await fetch('./properties/viewer-config.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.json();
-    } catch (error) {
-        console.warn('Failed to load viewer config, using defaults:', error);
-        return {
-            show_table_of_contents: true,
-            default_theme: "light",
-            show_theme_toggle: true,
-            page_title: "Main Max: Fury Load",
-            copyright_text: "© 2025 tansan5150.github.io. All rights reserved.",
-            home_button_label: "🏠 홈으로",
-            dark_mode_button_label: "🌙 다크모드",
-            light_mode_button_label: "☀️ 라이트모드"
-        };
+    const response = await fetch('./properties/viewer-config.json');
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
+    return await response.json();
 }
 
 // TOC 설정 로드
@@ -98,7 +69,7 @@ async function loadTocConfig() {
         }
         return await response.json();
     } catch (error) {
-        console.warn('Failed to load toc config:', error);
+        console.error('Failed to load toc config:', error);
         return {};
     }
 }
@@ -124,7 +95,7 @@ async function isAutoTocDisabled(filePath) {
         
         return false;
     } catch (error) {
-        console.warn('Error checking auto toc setting:', error);
+        console.error('Error checking auto toc setting:', error);
         return false;
     }
 }
@@ -136,7 +107,12 @@ async function loadMarkdown(filePath) {
     try {
         // 먼저 main config를 로드해야 함
         await loadMainConfig();
-        const response = await fetch(`https://raw.githubusercontent.com/tansan5150/tansan5150.github.io/main/${filePath}`);
+        
+        // base_content_url이 있으면 사용하고, 없으면 상대 경로 사용
+        const fetchUrl = mainConfig.base_content_url ? 
+            `${mainConfig.base_content_url}/${filePath}` : 
+            filePath;
+        const response = await fetch(fetchUrl);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -186,25 +162,50 @@ function fixImagePaths(filePath) {
         if (originalSrc && !originalSrc.startsWith('http://') && !originalSrc.startsWith('https://')) {
             let newSrc;
 
-            if (originalSrc.startsWith('./')) {
-                const relativePath = originalSrc.substring(2);
-                newSrc = `https://raw.githubusercontent.com/tansan5150/tansan5150.github.io/main/${baseDir}/${relativePath}`;
-            } else if (originalSrc.startsWith('../')) {
-                const pathParts = baseDir.split('/');
-                const relativeParts = originalSrc.split('/');
+            if (mainConfig.base_content_url) {
+                // base_content_url이 있는 경우 기존 로직 사용
+                if (originalSrc.startsWith('./')) {
+                    const relativePath = originalSrc.substring(2);
+                    newSrc = `${mainConfig.base_content_url}/${baseDir}/${relativePath}`;
+                } else if (originalSrc.startsWith('../')) {
+                    const pathParts = baseDir.split('/');
+                    const relativeParts = originalSrc.split('/');
 
-                for (const part of relativeParts) {
-                    if (part === '..') {
-                        pathParts.pop();
-                    } else if (part !== '.') {
-                        pathParts.push(part);
+                    for (const part of relativeParts) {
+                        if (part === '..') {
+                            pathParts.pop();
+                        } else if (part !== '.') {
+                            pathParts.push(part);
+                        }
                     }
+                    newSrc = `${mainConfig.base_content_url}/${pathParts.join('/')}`;
+                } else if (originalSrc.startsWith('/')) {
+                    newSrc = `${mainConfig.base_content_url}${originalSrc}`;
+                } else {
+                    newSrc = `${mainConfig.base_content_url}/${baseDir}/${originalSrc}`;
                 }
-                newSrc = `https://raw.githubusercontent.com/tansan5150/tansan5150.github.io/main/${pathParts.join('/')}`;
-            } else if (originalSrc.startsWith('/')) {
-                newSrc = `https://raw.githubusercontent.com/tansan5150/tansan5150.github.io/main${originalSrc}`;
             } else {
-                newSrc = `https://raw.githubusercontent.com/tansan5150/tansan5150.github.io/main/${baseDir}/${originalSrc}`;
+                // base_content_url이 없는 경우 상대 경로 사용
+                if (originalSrc.startsWith('./')) {
+                    const relativePath = originalSrc.substring(2);
+                    newSrc = `${baseDir}/${relativePath}`;
+                } else if (originalSrc.startsWith('../')) {
+                    const pathParts = baseDir.split('/');
+                    const relativeParts = originalSrc.split('/');
+
+                    for (const part of relativeParts) {
+                        if (part === '..') {
+                            pathParts.pop();
+                        } else if (part !== '.') {
+                            pathParts.push(part);
+                        }
+                    }
+                    newSrc = pathParts.join('/');
+                } else if (originalSrc.startsWith('/')) {
+                    newSrc = originalSrc.substring(1); // 절대 경로를 상대 경로로 변환
+                } else {
+                    newSrc = `${baseDir}/${originalSrc}`;
+                }
             }
 
             img.setAttribute('src', newSrc);

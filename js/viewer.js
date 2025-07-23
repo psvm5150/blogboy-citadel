@@ -108,10 +108,8 @@ async function loadMarkdown(filePath) {
         // 먼저 main config를 로드해야 함
         await loadMainConfig();
         
-        // base_content_url이 있으면 사용하고, 없으면 상대 경로 사용
-        const fetchUrl = mainConfig.base_content_url ? 
-            `${mainConfig.base_content_url}/${filePath}` : 
-            filePath;
+        // 상대 경로 사용
+        const fetchUrl = filePath;
         const response = await fetch(fetchUrl);
 
         if (!response.ok) {
@@ -162,50 +160,26 @@ function fixImagePaths(filePath) {
         if (originalSrc && !originalSrc.startsWith('http://') && !originalSrc.startsWith('https://')) {
             let newSrc;
 
-            if (mainConfig.base_content_url) {
-                // base_content_url이 있는 경우 기존 로직 사용
-                if (originalSrc.startsWith('./')) {
-                    const relativePath = originalSrc.substring(2);
-                    newSrc = `${mainConfig.base_content_url}/${baseDir}/${relativePath}`;
-                } else if (originalSrc.startsWith('../')) {
-                    const pathParts = baseDir.split('/');
-                    const relativeParts = originalSrc.split('/');
+            // 상대 경로 사용
+            if (originalSrc.startsWith('./')) {
+                const relativePath = originalSrc.substring(2);
+                newSrc = `${baseDir}/${relativePath}`;
+            } else if (originalSrc.startsWith('../')) {
+                const pathParts = baseDir.split('/');
+                const relativeParts = originalSrc.split('/');
 
-                    for (const part of relativeParts) {
-                        if (part === '..') {
-                            pathParts.pop();
-                        } else if (part !== '.') {
-                            pathParts.push(part);
-                        }
+                for (const part of relativeParts) {
+                    if (part === '..') {
+                        pathParts.pop();
+                    } else if (part !== '.') {
+                        pathParts.push(part);
                     }
-                    newSrc = `${mainConfig.base_content_url}/${pathParts.join('/')}`;
-                } else if (originalSrc.startsWith('/')) {
-                    newSrc = `${mainConfig.base_content_url}${originalSrc}`;
-                } else {
-                    newSrc = `${mainConfig.base_content_url}/${baseDir}/${originalSrc}`;
                 }
+                newSrc = pathParts.join('/');
+            } else if (originalSrc.startsWith('/')) {
+                newSrc = originalSrc.substring(1); // 절대 경로를 상대 경로로 변환
             } else {
-                // base_content_url이 없는 경우 상대 경로 사용
-                if (originalSrc.startsWith('./')) {
-                    const relativePath = originalSrc.substring(2);
-                    newSrc = `${baseDir}/${relativePath}`;
-                } else if (originalSrc.startsWith('../')) {
-                    const pathParts = baseDir.split('/');
-                    const relativeParts = originalSrc.split('/');
-
-                    for (const part of relativeParts) {
-                        if (part === '..') {
-                            pathParts.pop();
-                        } else if (part !== '.') {
-                            pathParts.push(part);
-                        }
-                    }
-                    newSrc = pathParts.join('/');
-                } else if (originalSrc.startsWith('/')) {
-                    newSrc = originalSrc.substring(1); // 절대 경로를 상대 경로로 변환
-                } else {
-                    newSrc = `${baseDir}/${originalSrc}`;
-                }
+                newSrc = `${baseDir}/${originalSrc}`;
             }
 
             img.setAttribute('src', newSrc);

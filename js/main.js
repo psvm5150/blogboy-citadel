@@ -1,5 +1,6 @@
 let documentCategories = {};
 let mainConfig = {};
+let currentViewMode = 'category'; // 기본값, 설정에 따라 초기화 시 변경됨
 
 // 경로 정규화 함수 - 다양한 형태의 경로를 일관된 형태로 변환
 function normalizePath(path) {
@@ -73,27 +74,46 @@ async function loadDocuments() {
         await loadMainConfig();
         await loadToc();
 
-        let html = '';
+        // default_view_filter 설정에 따라 초기 뷰 모드 설정
+        if (mainConfig.default_view_filter === 'all') {
+            currentViewMode = 'all';
+        } else {
+            currentViewMode = 'category';
+        }
 
+        renderDocuments();
+
+    } catch (error) {
+        console.error('Error loading documents:', error);
+        postsContainer.innerHTML = '<div class="loading">❌ 문서 목록을 불러오는데 실패했습니다.</div>';
+    }
+}
+
+// 현재 뷰 모드에 따라 문서 렌더링
+function renderDocuments() {
+    const postsContainer = document.getElementById('postsContainer');
+    let html = '';
+
+    if (currentViewMode === 'all') {
+        // 전체보기 모드
+        html = createAllViewSection();
+    } else {
+        // 분류보기 모드 (기본)
         for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
             if (categoryInfo.files && categoryInfo.files.length > 0) {
                 html += createCategorySection(categoryInfo.title, categoryInfo.files);
             }
         }
+    }
 
-        if (html === '') {
-            postsContainer.innerHTML = '<div class="loading">❌ 표시할 문서가 없습니다.</div>';
-        } else {
-            postsContainer.innerHTML = html;
+    if (html === '') {
+        postsContainer.innerHTML = '<div class="loading">❌ 표시할 문서가 없습니다.</div>';
+    } else {
+        postsContainer.innerHTML = html;
 
-            const totalDocs = Object.values(documentCategories)
-                .reduce((total, category) => total + category.files.length, 0);
-            console.log(`Total ${totalDocs} documents loaded`);
-        }
-
-    } catch (error) {
-        console.error('Error loading documents:', error);
-        postsContainer.innerHTML = '<div class="loading">❌ 문서 목록을 불러오는데 실패했습니다.</div>';
+        const totalDocs = Object.values(documentCategories)
+            .reduce((total, category) => total + category.files.length, 0);
+        console.log(`Total ${totalDocs} documents loaded in ${currentViewMode} mode`);
     }
 }
 
@@ -149,6 +169,62 @@ function createCategorySection(title, files) {
     `;
 }
 
+// 전체보기 모드로 문서 목록 생성
+function createAllViewSection() {
+    const documentRoot = normalizePath(mainConfig.document_root);
+    
+    // 모든 문서를 하나의 배열로 평면화하고 카테고리 정보 추가
+    const allFiles = [];
+    for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
+        if (categoryInfo.files && categoryInfo.files.length > 0) {
+            categoryInfo.files.forEach(file => {
+                allFiles.push({
+                    ...file,
+                    categoryTitle: categoryInfo.title
+                });
+            });
+        }
+    }
+    
+    // 수정일 기준으로 정렬 (최신순)
+    allFiles.sort((a, b) => {
+        const dateA = new Date(a.modified_date || '1970-01-01');
+        const dateB = new Date(b.modified_date || '1970-01-01');
+        return dateB - dateA; // 내림차순 (최신이 위로)
+    });
+    
+    const fileList = allFiles
+        .map(file => {
+            const newIndicator = shouldShowNewIndicator(file.modified_date) ? createNewIndicator() : '';
+            const categoryName = `<span class="category-name">${file.categoryTitle}</span>`;
+            return `
+            <li class="post-item">
+                <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
+                    ${file.title}${newIndicator}${categoryName}
+                </a>
+            </li>
+        `;
+        })
+        .join('');
+
+    // 전체보기에서는 show_document_count 설정과 상관없이 카운트를 표시하지 않음
+    const countDisplay = '';
+
+    return `
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-title">📚 전체 문서</div>
+                ${countDisplay}
+            </div>
+            <div class="category-body">
+                <ul class="post-list">
+                    ${fileList}
+                </ul>
+            </div>
+        </div>
+    `;
+}
+
 // 검색 기능
 function initializeSearch() {
     const searchContainer = document.querySelector('.main-content .container');
@@ -158,12 +234,18 @@ function initializeSearch() {
             <div class="search-container" style="margin-bottom: 32px;">
                 <input type="text" id="documentSearch" placeholder="🔍 문서 검색..." 
                        style="width: 100%; padding: 12px 16px; border: 1px solid #d0d7de; border-radius: 6px; font-size: 16px; outline: none; box-sizing: border-box;">
-                <div id="searchStats" style="margin-top: 8px; font-size: 14px; color: #656d76;"></div>
             </div>
         `;
 
-        const postsContainer = document.getElementById('postsContainer');
-        postsContainer.insertAdjacentHTML('beforebegin', searchHTML);
+        const contentWrapper = document.querySelector('.content-wrapper');
+        contentWrapper.insertAdjacentHTML('beforebegin', searchHTML);
+
+        // 검색 통계를 view-controls에 추가
+        const viewControls = document.querySelector('.view-controls');
+        if (viewControls) {
+            const searchStatsHTML = `<div id="searchStats" style="font-size: 14px; color: #656d76; margin-right: 16px; align-self: center;"></div>`;
+            viewControls.insertAdjacentHTML('afterbegin', searchStatsHTML);
+        }
 
         const searchInput = document.getElementById('documentSearch');
         searchInput.addEventListener('input', handleSearch);
@@ -280,6 +362,36 @@ function applyMainConfigLabels() {
     }
 }
 
+// 뷰 모드 컨트롤 초기화
+function initializeViewModeControls() {
+    const viewModeSelect = document.getElementById('viewModeSelect');
+    const viewControls = document.querySelector('.view-controls');
+    
+    if (viewModeSelect) {
+        // show_view_filter 설정에 따라 뷰 필터 표시/숨김
+        if (mainConfig.show_view_filter === false) {
+            viewModeSelect.style.display = 'none';
+        } else {
+            viewModeSelect.style.display = '';
+            
+            // 뷰 필터가 표시되는 경우에만 이벤트 리스너 추가
+            viewModeSelect.addEventListener('change', (e) => {
+                currentViewMode = e.target.value;
+                renderDocuments();
+                
+                // 검색이 활성화되어 있다면 다시 적용
+                const searchInput = document.getElementById('documentSearch');
+                if (searchInput && searchInput.value) {
+                    searchInput.dispatchEvent(new Event('input'));
+                }
+            });
+        }
+        
+        // 초기값 설정 (currentViewMode는 이미 loadDocuments에서 설정됨)
+        viewModeSelect.value = currentViewMode;
+    }
+}
+
 // 키보드 단축키
 function initializeKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
@@ -308,6 +420,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     applyMainConfigLabels();
 
     setTimeout(() => {
+        initializeViewModeControls();
         initializeSearch();
         initializeKeyboardShortcuts();
     }, 100);

@@ -9,5 +9,7 @@
   "home_button_label": "🏠 홈",
   "document_root": "posts/",
   "show_new_indicator": true,
-  "new_display_days": 15
+  "new_display_days": 15,
+  "show_view_filter": true,
+  "default_view_filter": "category"
 }

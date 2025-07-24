@@ -26,8 +26,16 @@
 
     <main class="main-content">
         <div class="container">
-            <div class="posts-container" id="postsContainer">
-                <div class="loading">📚 문서 목록을 불러오는 중...</div>
+            <div class="content-wrapper">
+                <div class="view-controls">
+                    <select id="viewModeSelect" class="view-mode-select">
+                        <option value="category">분류보기</option>
+                        <option value="all">전체보기</option>
+                    </select>
+                </div>
+                <div class="posts-container" id="postsContainer">
+                    <div class="loading">📚 문서 목록을 불러오는 중...</div>
+                </div>
             </div>
         </div>
     </main>

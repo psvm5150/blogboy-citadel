@@ -81,7 +81,7 @@ async function loadDocuments() {
             currentViewMode = 'category';
         }
 
-        renderDocuments();
+        await renderDocuments();
 
     } catch (error) {
         console.error('Error loading documents:', error);
@@ -90,40 +90,83 @@ async function loadDocuments() {
 }
 
 // 현재 뷰 모드에 따라 문서 렌더링
-function renderDocuments() {
+async function renderDocuments() {
     const postsContainer = document.getElementById('postsContainer');
+    
+    // 로딩 표시
+    postsContainer.innerHTML = '<div class="loading">📄 문서 목록을 불러오는 중...</div>';
+    
     let html = '';
 
-    if (currentViewMode === 'all') {
-        // 전체보기 모드
-        html = createAllViewSection();
-    } else {
-        // 분류보기 모드 (기본)
-        for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
-            if (categoryInfo.files && categoryInfo.files.length > 0) {
-                html += createCategorySection(categoryInfo.title, categoryInfo.files);
+    try {
+        if (currentViewMode === 'all') {
+            // 전체보기 모드
+            html = await createAllViewSection();
+        } else {
+            // 분류보기 모드 (기본)
+            const sectionPromises = [];
+            for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
+                if (categoryInfo.files && categoryInfo.files.length > 0) {
+                    sectionPromises.push(createCategorySection(categoryInfo.title, categoryInfo.files));
+                }
+            }
+            const sections = await Promise.all(sectionPromises);
+            html = sections.join('');
+        }
+
+        if (html === '') {
+            postsContainer.innerHTML = '<div class="loading">❌ 표시할 문서가 없습니다.</div>';
+        } else {
+            postsContainer.innerHTML = html;
+
+            const totalDocs = Object.values(documentCategories)
+                .reduce((total, category) => total + category.files.length, 0);
+            console.log(`Total ${totalDocs} documents loaded in ${currentViewMode} mode`);
+        }
+    } catch (error) {
+        console.error('Error rendering documents:', error);
+        postsContainer.innerHTML = '<div class="loading">❌ 문서 목록을 렌더링하는데 실패했습니다.</div>';
+    }
+}
+
+// 서버에서 파일의 수정 날짜를 가져오는 함수
+async function getFileModifiedDate(filePath) {
+    try {
+        const documentRoot = normalizePath(mainConfig.document_root);
+        const fullPath = documentRoot + filePath;
+        
+        const response = await fetch(fullPath, { method: 'HEAD' });
+        if (response.ok) {
+            const lastModified = response.headers.get('Last-Modified');
+            if (lastModified) {
+                return new Date(lastModified);
             }
         }
-    }
-
-    if (html === '') {
-        postsContainer.innerHTML = '<div class="loading">❌ 표시할 문서가 없습니다.</div>';
-    } else {
-        postsContainer.innerHTML = html;
-
-        const totalDocs = Object.values(documentCategories)
-            .reduce((total, category) => total + category.files.length, 0);
-        console.log(`Total ${totalDocs} documents loaded in ${currentViewMode} mode`);
+        
+        // HEAD 요청이 실패하면 GET 요청으로 시도하고 응답 헤더 확인
+        const getResponse = await fetch(fullPath);
+        if (getResponse.ok) {
+            const lastModified = getResponse.headers.get('Last-Modified');
+            if (lastModified) {
+                return new Date(lastModified);
+            }
+        }
+        
+        // 서버에서 날짜를 가져올 수 없으면 현재 날짜 반환 (new 표시 안함)
+        return new Date('1970-01-01');
+    } catch (error) {
+        console.warn(`Failed to get modified date for ${filePath}:`, error);
+        return new Date('1970-01-01');
     }
 }
 
 // 파일이 "new" 표시를 받을지 확인하는 함수
-function shouldShowNewIndicator(modifiedDate) {
-    if (!mainConfig.show_new_indicator || !modifiedDate) {
+async function shouldShowNewIndicator(filePath) {
+    if (!mainConfig.show_new_indicator) {
         return false;
     }
     
-    const fileDate = new Date(modifiedDate);
+    const fileDate = await getFileModifiedDate(filePath);
     const currentDate = new Date();
     const daysDiff = Math.floor((currentDate - fileDate) / (1000 * 60 * 60 * 24));
     
@@ -136,20 +179,24 @@ function createNewIndicator() {
 }
 
 // 카테고리 섹션 생성
-function createCategorySection(title, files) {
+async function createCategorySection(title, files) {
     const documentRoot = normalizePath(mainConfig.document_root);
-    const fileList = files
-        .map(file => {
-            const newIndicator = shouldShowNewIndicator(file.modified_date) ? createNewIndicator() : '';
-            return `
+    
+    // 각 파일에 대해 비동기적으로 new indicator 확인
+    const fileListPromises = files.map(async (file) => {
+        const showNew = await shouldShowNewIndicator(file.path);
+        const newIndicator = showNew ? createNewIndicator() : '';
+        return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
                     ${file.title}${newIndicator}
                 </a>
             </li>
         `;
-        })
-        .join('');
+    });
+    
+    const fileListArray = await Promise.all(fileListPromises);
+    const fileList = fileListArray.join('');
 
     const countDisplay = mainConfig.show_document_count ? 
         `<div class="category-count">${files.length}개</div>` : '';
@@ -170,7 +217,7 @@ function createCategorySection(title, files) {
 }
 
 // 전체보기 모드로 문서 목록 생성
-function createAllViewSection() {
+async function createAllViewSection() {
     const documentRoot = normalizePath(mainConfig.document_root);
     
     // 모든 문서를 하나의 배열로 평면화하고 카테고리 정보 추가
@@ -186,26 +233,38 @@ function createAllViewSection() {
         }
     }
     
-    // 수정일 기준으로 정렬 (최신순)
-    allFiles.sort((a, b) => {
-        const dateA = new Date(a.modified_date || '1970-01-01');
-        const dateB = new Date(b.modified_date || '1970-01-01');
-        return dateB - dateA; // 내림차순 (최신이 위로)
+    // 각 파일의 서버 수정일을 가져와서 정렬용 데이터 준비
+    const filesWithDates = await Promise.all(
+        allFiles.map(async (file) => {
+            const modifiedDate = await getFileModifiedDate(file.path);
+            return {
+                ...file,
+                serverModifiedDate: modifiedDate
+            };
+        })
+    );
+    
+    // 서버 수정일 기준으로 정렬 (최신순)
+    filesWithDates.sort((a, b) => {
+        return b.serverModifiedDate - a.serverModifiedDate; // 내림차순 (최신이 위로)
     });
     
-    const fileList = allFiles
-        .map(file => {
-            const newIndicator = shouldShowNewIndicator(file.modified_date) ? createNewIndicator() : '';
-            const categoryName = `<span class="category-name">${file.categoryTitle}</span>`;
-            return `
+    // 각 파일에 대해 비동기적으로 new indicator 확인
+    const fileListPromises = filesWithDates.map(async (file) => {
+        const showNew = await shouldShowNewIndicator(file.path);
+        const newIndicator = showNew ? createNewIndicator() : '';
+        const categoryName = `<span class="category-name">${file.categoryTitle}</span>`;
+        return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
                     ${file.title}${newIndicator}${categoryName}
                 </a>
             </li>
         `;
-        })
-        .join('');
+    });
+    
+    const fileListArray = await Promise.all(fileListPromises);
+    const fileList = fileListArray.join('');
 
     // 전체보기에서는 show_document_count 설정과 상관없이 카운트를 표시하지 않음
     const countDisplay = '';
@@ -375,9 +434,9 @@ function initializeViewModeControls() {
             viewModeSelect.style.display = '';
             
             // 뷰 필터가 표시되는 경우에만 이벤트 리스너 추가
-            viewModeSelect.addEventListener('change', (e) => {
+            viewModeSelect.addEventListener('change', async (e) => {
                 currentViewMode = e.target.value;
-                renderDocuments();
+                await renderDocuments();
                 
                 // 검색이 활성화되어 있다면 다시 적용
                 const searchInput = document.getElementById('documentSearch');

@@ -245,9 +245,8 @@ function initializeSearch() {
 
     if (searchContainer) {
         const searchHTML = `
-            <div class="search-container" style="margin-bottom: 32px;">
-                <input type="text" id="documentSearch" placeholder="${t('lbl_document_search')}" 
-                       style="width: 100%; padding: 12px 16px; border: 1px solid #d0d7de; border-radius: 6px; font-size: 16px; outline: none; box-sizing: border-box;">
+            <div class="search-container">
+                <input type="text" id="documentSearch" placeholder="${t('lbl_document_search')}">
             </div>
         `;
 
@@ -434,6 +433,30 @@ function initializeKeyboardShortcuts() {
     });
 }
 
+// 다크모드 상태 저장 및 토글
+async function setDarkMode(on) {
+    // 전환 버튼 텍스트, class 처리
+    if (on) {
+        document.body.classList.add('darkmode');
+        sessionStorage.setItem('theme_mode', 'dark');
+        const toggle = document.getElementById('darkmode-toggle');
+        if (toggle) toggle.innerText = t('btn_light_mode');
+    } else {
+        document.body.classList.remove('darkmode');
+        sessionStorage.setItem('theme_mode', 'light');
+        const toggle = document.getElementById('darkmode-toggle');
+        if (toggle) toggle.innerText = t('btn_dark_mode');
+    }
+}
+
+function bindDarkModeButton() {
+    const btn = document.getElementById('darkmode-toggle');
+    if (!btn) return;
+    btn.onclick = () => {
+        setDarkMode(!document.body.classList.contains('darkmode'));
+    };
+}
+
 // i18n 적용 함수
 function applyI18nTranslations() {
     const elements = document.querySelectorAll('[data-i18n]');
@@ -461,6 +484,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     await loadDocuments();
     applyMainConfigLabels();
+
+    // 테마 토글 버튼 표시/숨김 처리
+    const themeToggleBtn = document.getElementById('darkmode-toggle');
+    if (themeToggleBtn) {
+        if (mainConfig.show_theme_toggle) {
+            themeToggleBtn.style.display = '';
+        } else {
+            themeToggleBtn.style.display = 'none';
+        }
+    }
+
+    // 테마 설정 적용 (sessionStorage 우선, 없으면 config 기본값 사용)
+    const sessionTheme = sessionStorage.getItem('theme_mode');
+    let isDarkMode;
+    
+    if (sessionTheme) {
+        // 세션에 저장된 테마가 있으면 사용
+        isDarkMode = sessionTheme === 'dark';
+    } else {
+        // 세션에 저장된 테마가 없으면 config 기본값 사용
+        isDarkMode = mainConfig.default_theme === 'dark';
+    }
+
+    await setDarkMode(isDarkMode);
+    bindDarkModeButton();
 
     setTimeout(() => {
         initializeViewModeControls();

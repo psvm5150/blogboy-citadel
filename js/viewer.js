@@ -330,7 +330,7 @@ async function setDarkMode(on) {
     // 전환 버튼 텍스트, class 처리 기존과 동일
     if (on) {
         document.body.classList.add('darkmode');
-        localStorage.setItem('md_darkmode', '1');
+        sessionStorage.setItem('theme_mode', 'dark');
         const toggle = document.getElementById('darkmode-toggle');
         if (toggle) toggle.innerText = t('btn_light_mode');
 
@@ -342,7 +342,7 @@ async function setDarkMode(on) {
 
     } else {
         document.body.classList.remove('darkmode');
-        localStorage.setItem('md_darkmode', '0');
+        sessionStorage.setItem('theme_mode', 'light');
         const toggle = document.getElementById('darkmode-toggle');
         if (toggle) toggle.innerText = t('btn_dark_mode');
 
@@ -426,15 +426,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // 테마 설정 적용 (localStorage 우선, 없으면 config 기본값 사용)
-    const savedTheme = localStorage.getItem('md_darkmode');
+    // 테마 설정 적용 (sessionStorage 우선, 없으면 config 기본값 사용)
+    const sessionTheme = sessionStorage.getItem('theme_mode');
     let isDarkMode;
-
-    if (savedTheme !== null) {
-        // 저장된 설정이 있으면 우선 사용
-        isDarkMode = savedTheme === '1';
+    
+    if (sessionTheme) {
+        // 세션에 저장된 테마가 있으면 사용
+        isDarkMode = sessionTheme === 'dark';
     } else {
-        // 저장된 설정이 없으면 config의 기본값 사용
+        // 세션에 저장된 테마가 없으면 config 기본값 사용
         isDarkMode = config.default_theme === 'dark';
     }
 

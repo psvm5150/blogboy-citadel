@@ -11,6 +11,8 @@
   "show_new_indicator": true,
   "new_display_days": 15,
   "show_document_date": true,
+  "show_theme_toggle": true,
+  "default_theme": "light",
   "copyright_text": "© 2025 tansan5150.github.io. All rights reserved.",
   "show_home_button": true,
   "site_locale": "default"

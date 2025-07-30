@@ -6,6 +6,9 @@
 // Global configuration object shared across modules
 let mainConfig = {};
 
+// Global i18n object for translations
+let i18nData = {};
+
 /**
  * Path normalization function - converts various path formats to consistent format
  * @param {string} path - The path to normalize
@@ -166,4 +169,52 @@ async function getFileModifiedDate(filePath) {
         console.warn(`Failed to get modified date for ${filePath}:`, error);
         return new Date('1970-01-01');
     }
+}
+
+/**
+ * Load i18n data for the specified language
+ * @param {string} language - Language code (ko, en, es)
+ * @param {string} basePath - Base path for the i18n files (optional, defaults to current directory)
+ * @returns {Promise<Object>} - Promise that resolves to the loaded i18n data
+ */
+async function loadI18nData(language = 'ko', basePath = '') {
+    const i18nPath = basePath ? `${basePath}/properties/i18n/${language}.json` : `properties/i18n/${language}.json`;
+    
+    try {
+        const response = await fetch(i18nPath);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${language}.json: ${response.status}`);
+        }
+        
+        i18nData = await response.json();
+        console.log(`I18n data loaded successfully for language: ${language}`);
+        return i18nData;
+    } catch (error) {
+        console.error(`Error loading i18n data for ${language}:`, error);
+        // Fallback to Korean if other language fails
+        if (language !== 'ko') {
+            console.log('Falling back to Korean language');
+            return await loadI18nData('ko', basePath);
+        }
+        throw error;
+    }
+}
+
+/**
+ * Get translated text for the given key
+ * @param {string} key - The i18n key
+ * @param {Object} params - Parameters for template substitution (optional)
+ * @returns {string} - Translated text or the key if not found
+ */
+function t(key, params = {}) {
+    let text = i18nData[key] || key;
+    
+    // Replace template parameters
+    if (params && typeof text === 'string') {
+        Object.keys(params).forEach(param => {
+            text = text.replace(`{${param}}`, params[param]);
+        });
+    }
+    
+    return text;
 }

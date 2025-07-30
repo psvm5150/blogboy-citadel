@@ -310,15 +310,15 @@ async function updateDocumentTitle(contentDiv) {
 // 에러 표시
 async function showError(contentDiv, filePath, errorMessage) {
     const config = await loadViewerConfig();
-    const homeLabel = config.home_button_label || "🏠 홈으로";
+    const homeLabel = t('btn_home_viewer');
 
     contentDiv.innerHTML = `
         <div style="text-align: center; padding: 48px 24px;">
-            <h2>❌ 문서를 불러올 수 없습니다</h2>
-            <p><strong>파일:</strong> ${filePath}</p>
-            <p><strong>오류:</strong> ${errorMessage}</p>
+            <h2>${t('msg_error_load_document')}</h2>
+            <p><strong>${t('lbl_file')}</strong> ${filePath}</p>
+            <p><strong>${t('lbl_error')}</strong> ${errorMessage}</p>
             <br>
-            <a href="/">${homeLabel} 돌아가기</a>
+            <a href="/">${homeLabel} ${t('lbl_back')}</a>
         </div>
     `;
 }
@@ -332,7 +332,7 @@ async function setDarkMode(on) {
         document.body.classList.add('darkmode');
         localStorage.setItem('md_darkmode', '1');
         const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = config.light_mode_button_label || '☀️ 라이트모드';
+        if (toggle) toggle.innerText = t('btn_light_mode');
 
         // 마크다운&하이라이트 다크 스타일 활성화
         document.getElementById('md-light').disabled = true;
@@ -344,7 +344,7 @@ async function setDarkMode(on) {
         document.body.classList.remove('darkmode');
         localStorage.setItem('md_darkmode', '0');
         const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = config.dark_mode_button_label || '🌙 다크모드';
+        if (toggle) toggle.innerText = t('btn_dark_mode');
 
         // 무조건 라이트 스타일만 활성화
         document.getElementById('md-light').disabled = false;
@@ -384,15 +384,26 @@ async function applyViewerConfigLabels() {
     // 홈 버튼 라벨 (헤더와 푸터 모두)
     const homeButtons = document.querySelectorAll('.home-button');
     homeButtons.forEach(button => {
-        if (config.home_button_label) {
-            button.textContent = config.home_button_label;
-        }
+        button.textContent = t('btn_home_viewer');
+    });
+}
+
+// i18n 적용 함수
+function applyI18nTranslations() {
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        element.textContent = t(key);
     });
 }
 
 // 페이지 로드
 document.addEventListener('DOMContentLoaded', async () => {
     const params = getUrlParameters();
+
+    // Load i18n data first
+    await loadI18nData('ko'); // Default to Korean, can be made configurable later
+    applyI18nTranslations();
 
     // 설정 로드 (main config와 viewer config 모두)
     await loadMainConfig('.');
@@ -429,14 +440,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (params.file) {
         loadMarkdown(params.file);
     } else {
-        const homeLabel = config.home_button_label || "🏠 홈으로";
+        const homeLabel = t('btn_home_viewer');
         const contentDiv = document.getElementById('content');
         contentDiv.innerHTML = `
             <div style="text-align: center; padding: 48px 24px;">
-                <h2>❌ 파일 경로가 지정되지 않았습니다</h2>
-                <p>올바른 파일 경로를 URL 파라미터로 제공해주세요.</p>
+                <h2>${t('msg_error_no_file_path')}</h2>
+                <p>${t('msg_error_provide_file_path')}</p>
                 <br>
-                <a href="/">${homeLabel} 돌아가기</a>
+                <a href="/">${homeLabel} ${t('lbl_back')}</a>
             </div>
         `;
     }

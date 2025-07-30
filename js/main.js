@@ -40,7 +40,7 @@ async function loadDocuments() {
 
     } catch (error) {
         console.error('Error loading documents:', error);
-        postsContainer.innerHTML = '<div class="loading">❌ 문서 목록을 불러오는데 실패했습니다.</div>';
+        postsContainer.innerHTML = `<div class="loading">${t('msg_failed_load_documents')}</div>`;
     }
 }
 
@@ -49,7 +49,7 @@ async function renderDocuments() {
     const postsContainer = document.getElementById('postsContainer');
     
     // 로딩 표시
-    postsContainer.innerHTML = '<div class="loading">📄 문서 목록을 불러오는 중...</div>';
+    postsContainer.innerHTML = `<div class="loading">${t('msg_loading_documents')}</div>`;
     
     let html = '';
 
@@ -70,7 +70,7 @@ async function renderDocuments() {
         }
 
         if (html === '') {
-            postsContainer.innerHTML = '<div class="loading">❌ 표시할 문서가 없습니다.</div>';
+            postsContainer.innerHTML = `<div class="loading">${t('msg_no_documents')}</div>`;
         } else {
             postsContainer.innerHTML = html;
 
@@ -80,7 +80,7 @@ async function renderDocuments() {
         }
     } catch (error) {
         console.error('Error rendering documents:', error);
-        postsContainer.innerHTML = '<div class="loading">❌ 문서 목록을 렌더링하는데 실패했습니다.</div>';
+        postsContainer.innerHTML = `<div class="loading">${t('msg_failed_render_documents')}</div>`;
     }
 }
 
@@ -124,7 +124,7 @@ function createDateTimeDisplay(modifiedDate) {
 
 // "new" 표시 HTML 생성
 function createNewIndicator() {
-    return '<span class="new-indicator">new</span>';
+    return `<span class="new-indicator">${t('lbl_new_indicator')}</span>`;
 }
 
 // 카테고리 섹션 생성
@@ -151,7 +151,7 @@ async function createCategorySection(title, files) {
     const fileList = fileListArray.join('');
 
     const countDisplay = mainConfig.show_document_count ? 
-        `<div class="category-count">${files.length}개</div>` : '';
+        `<div class="category-count">${files.length}${t('lbl_document_count')}</div>` : '';
 
     return `
         <div class="category-section">
@@ -225,7 +225,7 @@ async function createAllViewSection() {
     return `
         <div class="category-section">
             <div class="category-header">
-                <div class="category-title">📚 전체 문서</div>
+                <div class="category-title">${t('lbl_all_documents')}</div>
                 ${countDisplay}
             </div>
             <div class="category-body">
@@ -244,7 +244,7 @@ function initializeSearch() {
     if (searchContainer) {
         const searchHTML = `
             <div class="search-container" style="margin-bottom: 32px;">
-                <input type="text" id="documentSearch" placeholder="🔍 문서 검색..." 
+                <input type="text" id="documentSearch" placeholder="${t('lbl_document_search')}" 
                        style="width: 100%; padding: 12px 16px; border: 1px solid #d0d7de; border-radius: 6px; font-size: 16px; outline: none; box-sizing: border-box;">
             </div>
         `;
@@ -296,7 +296,7 @@ function handleSearch(event) {
             ).length;
 
             if (hasVisiblePosts) {
-                categoryCount.textContent = searchTerm ? `${visibleCount}개` : `${posts.length}개`;
+                categoryCount.textContent = searchTerm ? `${visibleCount}${t('lbl_document_count')}` : `${posts.length}${t('lbl_document_count')}`;
             }
         }
     });
@@ -314,9 +314,12 @@ function updateSearchStats(searchTerm = '', visibleCount = null) {
 
     if (searchTerm) {
         const actualVisible = visibleCount !== null ? visibleCount : totalDocs;
-        searchStats.textContent = `"${searchTerm}" 검색 결과: ${actualVisible}개 문서`;
+        searchStats.textContent = `"${searchTerm}" ${t('lbl_search_result')}: ${actualVisible}${t('lbl_document_count')} 문서`;
     } else {
-        searchStats.textContent = `총 ${totalDocs}개 문서 (${Object.keys(documentCategories).length}개 카테고리)`;
+        searchStats.textContent = t('lbl_total_documents', {
+            count: totalDocs,
+            categories: Object.keys(documentCategories).length
+        });
     }
 }
 
@@ -370,9 +373,7 @@ function applyMainConfigLabels() {
     if (homeButton) {
         if (mainConfig.show_home_button) {
             homeButton.style.display = '';
-            if (mainConfig.home_button_label) {
-                homeButton.textContent = mainConfig.home_button_label;
-            }
+            homeButton.textContent = t('btn_home_main');
         } else {
             homeButton.style.display = 'none';
         }
@@ -431,8 +432,21 @@ function initializeKeyboardShortcuts() {
     });
 }
 
+// i18n 적용 함수
+function applyI18nTranslations() {
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        element.textContent = t(key);
+    });
+}
+
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
+    // Load i18n data first
+    await loadI18nData('ko'); // Default to Korean, can be made configurable later
+    applyI18nTranslations();
+    
     await loadDocuments();
     applyMainConfigLabels();
 

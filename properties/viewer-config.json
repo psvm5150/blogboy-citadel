@@ -2,9 +2,7 @@
   "page_title": "Main Max: Fury Load",
   "show_theme_toggle": true,
   "default_theme": "light",
-  "dark_mode_button_label": "🌙 다크모드",
-  "light_mode_button_label": "☀️ 라이트모드",
-  "home_button_label": "🏠 홈으로",
+  "locale": "default",
   "show_table_of_contents": true,
   "copyright_text": "© 2025 tansan5150.github.io. All rights reserved."
 }

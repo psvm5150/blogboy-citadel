@@ -151,13 +151,15 @@ async function createCategorySection(title, files) {
     const fileList = fileListArray.join('');
 
     const countDisplay = mainConfig.show_document_count ? 
-        `<div class="category-count">${files.length}${t('lbl_document_count')}</div>` : '';
+        `<span class="category-count">${files.length} ${t('lbl_document_count')}</span>` : '';
 
     return `
         <div class="category-section">
             <div class="category-header">
-                <div class="category-title">${title}</div>
-                ${countDisplay}
+                <div class="category-title">
+                    <span class="category-title-text">${title}</span>
+                    ${countDisplay}
+                </div>
             </div>
             <div class="category-body">
                 <ul class="post-list">
@@ -296,7 +298,7 @@ function handleSearch(event) {
             ).length;
 
             if (hasVisiblePosts) {
-                categoryCount.textContent = searchTerm ? `${visibleCount}${t('lbl_document_count')}` : `${posts.length}${t('lbl_document_count')}`;
+                categoryCount.textContent = searchTerm ? `${visibleCount} ${t('lbl_document_count')}` : `${posts.length} ${t('lbl_document_count')}`;
             }
         }
     });

@@ -130,7 +130,28 @@ body {
     color: #2c3e50;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
+}
+
+.category-title-text {
+    flex: 1;
+}
+
+.category-count {
+    font-size: 0.9rem;
+    color: #6c757d;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.category-count:hover {
+    background: rgba(102, 126, 234, 0.15);
+    transform: scale(1.05);
 }
 
 .category-body {

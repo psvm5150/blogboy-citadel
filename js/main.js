@@ -129,30 +129,22 @@ async function renderDocuments() {
     }
 }
 
-// 서버에서 파일의 수정 날짜를 가져오는 함수
+// 파일 내용에서 실제 수정 날짜를 가져오는 함수
 async function getFileModifiedDate(filePath) {
     try {
         const documentRoot = normalizePath(mainConfig.document_root);
         const fullPath = documentRoot + filePath;
         
-        const response = await fetch(fullPath, { method: 'HEAD' });
-        if (response.ok) {
-            const lastModified = response.headers.get('Last-Modified');
+        // HTTP 헤더에서 Last-Modified 사용
+        const headResponse = await fetch(fullPath, { method: 'HEAD' });
+        if (headResponse.ok) {
+            const lastModified = headResponse.headers.get('Last-Modified');
             if (lastModified) {
                 return new Date(lastModified);
             }
         }
         
-        // HEAD 요청이 실패하면 GET 요청으로 시도하고 응답 헤더 확인
-        const getResponse = await fetch(fullPath);
-        if (getResponse.ok) {
-            const lastModified = getResponse.headers.get('Last-Modified');
-            if (lastModified) {
-                return new Date(lastModified);
-            }
-        }
-        
-        // 서버에서 날짜를 가져올 수 없으면 현재 날짜 반환 (new 표시 안함)
+        // 모든 방법이 실패하면 기본값 반환
         return new Date('1970-01-01');
     } catch (error) {
         console.warn(`Failed to get modified date for ${filePath}:`, error);
@@ -173,6 +165,30 @@ async function shouldShowNewIndicator(filePath) {
     return daysDiff <= mainConfig.new_display_days;
 }
 
+// 문서 날짜 표시 HTML 생성
+function createDateTimeDisplay(modifiedDate) {
+    if (!mainConfig.show_document_date || !modifiedDate || modifiedDate.getTime() <= new Date('1970-01-01').getTime()) {
+        return '';
+    }
+    
+    // 사용자의 로케일에 따른 날짜/시간 형식 적용
+    const dateOptions = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    };
+    const timeOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    };
+    
+    const formattedDate = modifiedDate.toLocaleDateString(navigator.language, dateOptions);
+    const formattedTime = modifiedDate.toLocaleTimeString(navigator.language, timeOptions);
+    
+    return `<span class="new-datetime">${formattedDate} ${formattedTime}</span>`;
+}
+
 // "new" 표시 HTML 생성
 function createNewIndicator() {
     return '<span class="new-indicator">new</span>';
@@ -182,14 +198,17 @@ function createNewIndicator() {
 async function createCategorySection(title, files) {
     const documentRoot = normalizePath(mainConfig.document_root);
     
-    // 각 파일에 대해 비동기적으로 new indicator 확인
+    // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인
     const fileListPromises = files.map(async (file) => {
         const showNew = await shouldShowNewIndicator(file.path);
+        // show_document_date가 true이면 항상 날짜를 가져옴
+        const modifiedDate = (mainConfig.show_document_date || showNew) ? await getFileModifiedDate(file.path) : null;
         const newIndicator = showNew ? createNewIndicator() : '';
+        const dateTimeDisplay = createDateTimeDisplay(modifiedDate);
         return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
-                    ${file.title}${newIndicator}
+                    ${file.title}${newIndicator}${dateTimeDisplay}
                 </a>
             </li>
         `;
@@ -249,15 +268,16 @@ async function createAllViewSection() {
         return b.serverModifiedDate - a.serverModifiedDate; // 내림차순 (최신이 위로)
     });
     
-    // 각 파일에 대해 비동기적으로 new indicator 확인
+    // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인
     const fileListPromises = filesWithDates.map(async (file) => {
         const showNew = await shouldShowNewIndicator(file.path);
         const newIndicator = showNew ? createNewIndicator() : '';
+        const dateTimeDisplay = createDateTimeDisplay(file.serverModifiedDate);
         const categoryName = `<span class="category-name">${file.categoryTitle}</span>`;
         return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
-                    ${file.title}${newIndicator}${categoryName}
+                    ${file.title}${newIndicator}${dateTimeDisplay}${categoryName}
                 </a>
             </li>
         `;

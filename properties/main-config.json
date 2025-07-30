@@ -9,6 +9,7 @@
   "show_document_count": true,
   "show_new_indicator": true,
   "new_display_days": 15,
+  "show_document_date": true,
   "copyright_text": "© 2025 tansan5150.github.io. All rights reserved.",
   "show_home_button": true,
   "home_button_label": "🏠 홈"

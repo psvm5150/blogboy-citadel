@@ -172,7 +172,7 @@ body {
     display: inline-block;
     background: linear-gradient(135deg, #ff7777, #ff6666);
     color: white;
-    font-size: 0.47rem;
+    font-size: 0.564rem;
     font-weight: 400;
     padding: 2px 6px;
     border-radius: 10px;
@@ -181,6 +181,18 @@ body {
     letter-spacing: 0.5px;
     box-shadow: 0 1px 3px rgba(255, 102, 102, 0.3);
     animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+/* New DateTime Display */
+.new-datetime {
+    display: inline-block;
+    color: #6c757d;
+    font-size: 0.54rem;
+    font-weight: 400;
+    margin-left: 16px;
+    opacity: 0.8;
+    letter-spacing: 0.3px;
+    font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 @keyframes subtle-pulse {

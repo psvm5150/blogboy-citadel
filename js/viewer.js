@@ -1,54 +1,8 @@
-let mainConfig = {};
-
 function getUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
     return {
         file: urlParams.get('file')
     };
-}
-
-// 경로 정규화 함수 - 다양한 형태의 경로를 일관된 형태로 변환
-function normalizePath(path) {
-    if (!path) return 'posts/';
-    
-    // 문자열로 변환
-    path = String(path);
-    
-    // 앞뒤 공백 제거
-    path = path.trim();
-    
-    // 빈 문자열이면 기본값 반환
-    if (!path) return 'posts/';
-    
-    // "./" 시작 제거
-    if (path.startsWith('./')) {
-        path = path.substring(2);
-    }
-    
-    // 시작 "/" 제거
-    if (path.startsWith('/')) {
-        path = path.substring(1);
-    }
-    
-    // 파일명인지 확인 (확장자가 있는지 체크)
-    const hasExtension = /\.[a-zA-Z0-9]+$/.test(path);
-    
-    // 파일명이 아닌 경우에만 끝에 "/" 추가
-    if (!hasExtension && !path.endsWith('/')) {
-        path += '/';
-    }
-    
-    return path;
-}
-
-// main-config.json 파일 로드
-async function loadMainConfig() {
-    const response = await fetch('./properties/main-config.json');
-    if (!response.ok) {
-        throw new Error(`Failed to load main-config.json: ${response.status}`);
-    }
-    mainConfig = await response.json();
-    console.log('Main config loaded successfully in viewer');
 }
 
 // 뷰어 설정 로드
@@ -106,7 +60,7 @@ async function loadMarkdown(filePath) {
 
     try {
         // 먼저 main config를 로드해야 함
-        await loadMainConfig();
+        await loadMainConfig('.');
         
         // 상대 경로 사용
         const fetchUrl = filePath;
@@ -441,7 +395,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const params = getUrlParameters();
 
     // 설정 로드 (main config와 viewer config 모두)
-    await loadMainConfig();
+    await loadMainConfig('.');
     const config = await loadViewerConfig();
 
     // 테마 토글 버튼 표시/숨김 처리

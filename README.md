@@ -26,6 +26,7 @@ blogboy-citadel/
 │   ├── 🎨 main.css           # Main page styles
 │   └── 🎨 viewer.css         # Viewer page styles
 ├── 📁 js/
+│   ├── ⚡ common.js          # Shared utilities and functions
 │   ├── ⚡ main.js            # Main page logic
 │   └── ⚡ viewer.js          # Viewer page logic
 ├── 📁 lib/                # External libraries

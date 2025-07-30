@@ -49,7 +49,6 @@ blogboy-citadel/
 ├── 📄 index.html          # Main page
 ├── 📄 viewer.html         # Markdown viewer
 ├── 📄 favicon.svg         # Site icon
-├── ⚙️ package.json        # Project configuration
 ├── 📄 .nojekyll           # GitHub Pages configuration
 └── 📄 README.md           # This file
 ```
@@ -216,7 +215,7 @@ Available locale values: `"ko"` (Korean), `"en"` (English), `"es"` (Spanish), or
 
 ## Live Site
 
-**[tansan5150.github.io](https://tansan5150.github.io)**
+**[psvm5150.github.io](https://psvm5150.github.io)**
 
 ## Local Development
 
@@ -227,8 +226,8 @@ Available locale values: `"ko"` (Korean), `"en"` (English), `"es"` (Spanish), or
 ### Setup
 ```bash
 # Clone repository
-git clone https://github.com/tansan5150/tansan5150.github.io.git
-cd tansan5150.github.io
+git clone https://github.com/blogboy-citadel.git
+cd blogboy-citadel
 
 # Run local server (Python 3 example)
 python -m http.server 8000
@@ -257,16 +256,16 @@ This project is licensed under the Creative Commons Attribution 2.0 License. See
 
 ## Contact
 
-- **GitHub**: [@tansan5150](https://github.com/tansan5150)
-- **Website**: [tansan5150.github.io](https://tansan5150.github.io)
+- **GitHub**: [@psvm5150](https://github.com/tansan5150)
+- **Website**: [psvm5150.github.io](https://tansan5150.github.io)
 
 ---
 
 <div align="center">
-  <p>Made by tansan5150</p>
+  <p>Made by psvm5150</p>
   <p>
-    <a href="https://tansan5150.github.io">Live Site</a> •
-    <a href="https://github.com/tansan5150/tansan5150.github.io/issues">Report Bug</a> •
-    <a href="https://github.com/tansan5150/tansan5150.github.io/issues">Request Feature</a>
+    <a href="https://psvm5150.github.io">Live Site</a> •
+    <a href="https://github.com/psvm5150/blogboy-citadel/issues">Report Bug</a> •
+    <a href="https://github.com/psvm5150/blogboy-citadel/issues">Request Feature</a>
   </p>
 </div>

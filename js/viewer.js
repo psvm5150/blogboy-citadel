@@ -401,13 +401,20 @@ function applyI18nTranslations() {
 document.addEventListener('DOMContentLoaded', async () => {
     const params = getUrlParameters();
 
-    // Load i18n data first
-    await loadI18nData('ko'); // Default to Korean, can be made configurable later
-    applyI18nTranslations();
-
-    // 설정 로드 (main config와 viewer config 모두)
-    await loadMainConfig('.');
+    // 설정 로드 (viewer config 먼저 로드하여 locale 설정 확인)
     const config = await loadViewerConfig();
+    await loadMainConfig('.');
+    
+    // Get locale from viewer config, fallback to 'ko' if not specified
+    let locale = config.site_locale || 'ko';
+    if (locale === 'default') {
+        // Use browser language detection when set to 'default'
+        locale = detectBrowserLanguage();
+    }
+    
+    // Load i18n data with the configured locale
+    await loadI18nData(locale);
+    applyI18nTranslations();
 
     // 테마 토글 버튼 표시/숨김 처리
     const themeToggleBtn = document.getElementById('darkmode-toggle');

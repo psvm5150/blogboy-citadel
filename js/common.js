@@ -172,6 +172,41 @@ async function getFileModifiedDate(filePath) {
 }
 
 /**
+ * Get available languages from i18n directory
+ * @returns {Array<string>} - Array of available language codes
+ */
+function getAvailableLanguages() {
+    return ['en', 'es', 'ko'];
+}
+
+/**
+ * Detect browser's preferred language and return available language or fallback to English
+ * @returns {string} - Language code (en, es, ko)
+ */
+function detectBrowserLanguage() {
+    const availableLanguages = getAvailableLanguages();
+    
+    // Get browser's preferred languages
+    const browserLanguages = navigator.languages || [navigator.language || navigator.userLanguage || 'en'];
+    
+    // Check each browser language preference
+    for (const browserLang of browserLanguages) {
+        // Extract language code (e.g., 'ko-KR' -> 'ko', 'en-US' -> 'en')
+        const langCode = browserLang.split('-')[0].toLowerCase();
+        
+        // Check if this language is available
+        if (availableLanguages.includes(langCode)) {
+            console.log(`Browser language detected: ${langCode}`);
+            return langCode;
+        }
+    }
+    
+    // Fallback to English if no browser language is available
+    console.log('No matching browser language found, falling back to English');
+    return 'en';
+}
+
+/**
  * Load i18n data for the specified language
  * @param {string} language - Language code (ko, en, es)
  * @param {string} basePath - Base path for the i18n files (optional, defaults to current directory)
@@ -191,10 +226,10 @@ async function loadI18nData(language = 'ko', basePath = '') {
         return i18nData;
     } catch (error) {
         console.error(`Error loading i18n data for ${language}:`, error);
-        // Fallback to Korean if other language fails
-        if (language !== 'ko') {
-            console.log('Falling back to Korean language');
-            return await loadI18nData('ko', basePath);
+        // Fallback to English if other language fails
+        if (language !== 'en') {
+            console.log('Falling back to English language');
+            return await loadI18nData('en', basePath);
         }
         throw error;
     }

@@ -39,6 +39,10 @@ blogboy-citadel/
 │   ├── 📁 test-content/        # Test content examples
 │   └── 📁 ... (other categories)
 ├── 📁 properties/         # Configuration files
+│   ├── 📁 i18n/             # Internationalization files
+│   │   ├── 🌐 ko.json       # Korean language pack
+│   │   ├── 🌐 en.json       # English language pack
+│   │   └── 🌐 es.json       # Spanish language pack
 │   ├── ⚙️ main-config.json   # Main page configuration
 │   ├── ⚙️ toc.json           # Table of contents
 │   └── ⚙️ viewer-config.json # Viewer page configuration
@@ -142,12 +146,14 @@ Site-wide configuration settings including titles, URLs, and display options.
 
 ```json
 {
-  "site_title": "Your Site Title",
-  "main_title": "Main Page Title",
+  "main_title": "Your Site Title",
   "main_subtitle": "Your subtitle here",
-  "site_url": "https://github.com/yourusername",
+  "site_label_url": "https://github.com/yourusername",
+  "show_view_filter": true,
+  "default_view_filter": "category",
   "show_document_count": true,
-  "show_home_button": true
+  "show_home_button": true,
+  "site_locale": "default"
 }
 ```
 
@@ -179,6 +185,32 @@ Viewer page settings for theme options and UI elements.
   "page_title": "Viewer Page Title"
 }
 ```
+
+### i18n Internationalization
+Internationalization support for multiple languages. The system supports Korean (ko), English (en), and Spanish (es) language packs.
+
+Language files are located in `properties/i18n/` directory. Additional language files can be added as needed:
+- `ko.json` - Korean language pack
+- `en.json` - English language pack  
+- `es.json` - Spanish language pack
+
+Each language file contains translations for UI elements including:
+- Button labels (Dark/Light mode, Home, etc.)
+- Loading and error messages
+- Search and navigation labels
+- Document count formatting
+
+To set the site language, configure the `site_locale` property in `main-config.json`:
+
+```json
+{
+  "site_locale": "ko"
+}
+```
+
+Available locale values: `"ko"` (Korean), `"en"` (English), `"es"` (Spanish), or `"default"`
+
+**Note**: When `site_locale` is set to "default", the system will determine by browser settings
 
 ## Live Site
 

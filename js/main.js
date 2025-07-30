@@ -326,13 +326,13 @@ function updateSearchStats(searchTerm = '', visibleCount = null) {
 // 메인 페이지 라벨 적용
 function applyMainConfigLabels() {
     // 문서 타이틀
-    document.title = mainConfig.site_name;
+    document.title = mainConfig.site_label_name;
 
     // 사이트 타이틀 (좌상단)
     const siteTitle = document.querySelector('.site-title');
     if (siteTitle) {
-        if (mainConfig.show_site_name) {
-            siteTitle.textContent = mainConfig.site_name;
+        if (mainConfig.show_site_label) {
+            siteTitle.textContent = mainConfig.site_label_name;
             siteTitle.style.display = '';
         } else {
             siteTitle.style.display = 'none';
@@ -352,10 +352,10 @@ function applyMainConfigLabels() {
     }
 
     // 사이트 URL (좌상단 링크로 만들기)
-    if (siteTitle && mainConfig.show_site_name && !siteTitle.parentElement.href) {
+    if (siteTitle && mainConfig.show_site_label && !siteTitle.parentElement.href) {
         // 사이트 타이틀을 링크로 감싸기
         const link = document.createElement('a');
-        link.href = mainConfig.site_url;
+        link.href = mainConfig.site_label_url;
         link.style.textDecoration = 'none';
         link.style.color = 'inherit';
         siteTitle.parentElement.insertBefore(link, siteTitle);
@@ -443,8 +443,18 @@ function applyI18nTranslations() {
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
-    // Load i18n data first
-    await loadI18nData('ko'); // Default to Korean, can be made configurable later
+    // Load main config first to get locale setting
+    await loadMainConfig();
+    
+    // Get locale from config, fallback to 'ko' if not specified
+    let locale = mainConfig.site_locale || 'ko';
+    if (locale === 'default') {
+        // Use browser language detection when set to 'default'
+        locale = detectBrowserLanguage();
+    }
+    
+    // Load i18n data with the configured locale
+    await loadI18nData(locale);
     applyI18nTranslations();
     
     await loadDocuments();

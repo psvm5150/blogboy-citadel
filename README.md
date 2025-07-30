@@ -1,7 +1,7 @@
 # Blogboy Citadel
 
 > Return your posts to me and I myself will carry you through the gates of Valhalla.  
-> You will code eternal, shiny and RESTful!
+> 🧴💨 You will code eternal, shiny and RESTful! 
 
 A lightweight and simple blog management system for GitHub Pages blogs. Built as an alternative to Jekyll when design configuration became too complex and cumbersome.
 
@@ -15,7 +15,7 @@ A lightweight and simple blog management system for GitHub Pages blogs. Built as
 
 - **Pure web technologies**: Built with HTML, CSS, and JavaScript without Jekyll
 - **GitHub Pages compatible**: Uses `.nojekyll` file for static site hosting
-- **Dynamic markdown rendering**: Real-time document loading through GitHub API
+- **Dynamic markdown rendering**: Real-time document loading from local markdown files
 - **Responsive design**: Works seamlessly across all devices
 - **Lightweight and simple**: A minimalist blog management system for easy content organization
 
@@ -56,7 +56,6 @@ blogboy-citadel/
 - **JavaScript Libraries**: 
   - [marked.js](https://marked.js.org/) - Markdown parser
 - **Hosting**: GitHub Pages
-- **API**: GitHub REST API
 
 ## Responsive Design
 

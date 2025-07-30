@@ -1,156 +1,227 @@
-# Main Max: Fury Load 🚀
+# Blogboy Citadel
 
-> 개발 문서 및 가이드 모음 - Jekyll 없는 순수 HTML/CSS/JavaScript 블로그
+> Return your posts to me and I myself will carry you through the gates of Valhalla.  
+> You will code eternal, shiny and RESTful!
+
+A lightweight and simple blog management system for GitHub Pages blogs. Built as an alternative to Jekyll when design configuration became too complex and cumbersome.
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://tansan5150.github.io)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-CC%20BY%202.0-lightgrey.svg)](LICENSE)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-## 🌟 특징
+## Features
 
-- **Jekyll 없는 순수 웹 기술**: HTML, CSS, JavaScript만으로 구현
-- **GitHub Pages 호환**: `.nojekyll` 파일로 정적 사이트 호스팅
-- **동적 마크다운 렌더링**: GitHub API를 통해 실시간으로 문서 로드
-- **반응형 디자인**: 모든 기기에서 완벽하게 작동
-- **깔끔한 코드 구조**: CSS와 JavaScript 파일 분리로 유지보수 용이
+- **Pure web technologies**: Built with HTML, CSS, and JavaScript without Jekyll
+- **GitHub Pages compatible**: Uses `.nojekyll` file for static site hosting
+- **Dynamic markdown rendering**: Real-time document loading through GitHub API
+- **Responsive design**: Works seamlessly across all devices
+- **Lightweight and simple**: A minimalist blog management system for easy content organization
 
-## 🎯 사이트 구조
+## Site Structure
 ```
-tansan5150.github.io/
-├── 📄 index.html          # 메인 페이지
-├── 📄 viewer.html         # 마크다운 뷰어
+blogboy-citadel/
 ├── 📁 css/
-│   ├── main.css           # 메인 페이지 스타일
-│   └── viewer.css         # 뷰어 페이지 스타일
+│   ├── 🎨 main.css           # Main page styles
+│   └── 🎨 viewer.css         # Viewer page styles
 ├── 📁 js/
-│   ├── main.js            # 메인 페이지 로직
-│   └── viewer.js          # 뷰어 페이지 로직
-├── 📁 posts/              # 마크다운 문서들
-│   ├── 📁 md/             # Markdown 가이드
-│   ├── 📁 vi/             # Vi/Vim 관련
-│   ├── 📁 idea/           # IntelliJ IDEA
-│   ├── 📁 spring-init/    # Spring 초기화
-│   └── 📁 ... (기타 카테고리)
-├── 📄 .nojekyll           # GitHub Pages 설정
-├── 📄 .gitignore          # Git 무시 파일
-└── 📄 README.md           # 이 파일
+│   ├── ⚡ main.js            # Main page logic
+│   └── ⚡ viewer.js          # Viewer page logic
+├── 📁 lib/                # External libraries
+│   ├── 📁 css/            # Library CSS files
+│   └── 📁 js/             # Library JavaScript files
+├── 📁 posts/              # Markdown blog documents
+│   ├── 📁 sample-tutorials/    # Sample tutorial documents
+│   ├── 📁 example-guides/      # Example guide documents
+│   ├── 📁 demo-articles/       # Demo article samples
+│   ├── 📁 test-content/        # Test content examples
+│   └── 📁 ... (other categories)
+├── 📁 properties/         # Configuration files
+│   ├── ⚙️ main-config.json   # Main page configuration
+│   ├── ⚙️ toc.json           # Table of contents
+│   └── ⚙️ viewer-config.json # Viewer page configuration
+├── 📄 index.html          # Main page
+├── 📄 viewer.html         # Markdown viewer
+├── 📄 favicon.svg         # Site icon
+├── ⚙️ package.json        # Project configuration
+├── 📄 .nojekyll           # GitHub Pages configuration
+└── 📄 README.md           # This file
 ```
 
-
-## 🚀 주요 기능
-
-### 🔍 현재 지원 카테고리
-
-| 아이콘 | 카테고리 | 설명 |
-|--------|----------|------|
-| 📝 | Markdown | 마크다운 문법 및 가이드 |
-| ⌨️ | Vi/Vim | 텍스트 에디터 사용법 |
-| 💡 | IntelliJ IDEA | IDE 설정 및 팁 |
-| 🌱 | Spring Init | 스프링 프로젝트 초기화 |
-| 🔐 | Certificate | 인증서 관련 |
-| 🔄 | SVN | 버전 관리 시스템 |
-| 📄 | SLText | 텍스트 처리 도구 |
-| 🔗 | Swagger | API 문서화 |
-| 🌐 | Git Server | Git 서버 설정 |
-| ⚡ | Shortcuts | 단축키 모음 |
-
-## 🛠️ 기술 스택
+## Tech Stack
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **CSS Framework**: 없음 (순수 CSS)
+- **CSS Framework**: None (pure CSS)
 - **JavaScript Libraries**: 
-  - [marked.js](https://marked.js.org/) - 마크다운 파서
+  - [marked.js](https://marked.js.org/) - Markdown parser
 - **Hosting**: GitHub Pages
 - **API**: GitHub REST API
 
-## 📱 반응형 디자인
+## Responsive Design
 
-### 데스크톱 (1200px+)
-- 3-4열 그리드 레이아웃
-- 큰 폰트 사이즈 및 여백
+### Desktop (1200px+)
+- 3-4 column grid layout
+- Large font sizes and spacing
 
-### 태블릿 (768px - 1199px)
-- 2-3열 그리드 레이아웃
-- 적당한 폰트 사이즈
+### Tablet (768px - 1199px)
+- 2-3 column grid layout
+- Medium font sizes
 
-### 모바일 (768px 미만)
-- 1열 세로 레이아웃
-- 터치 친화적인 버튼 크기
-- 축소된 헤더
+### Mobile (768px and below)
+- Single column vertical layout
+- Touch-friendly button sizes
+- Compact header
 
-## 🌐 라이브 사이트
+## Adding Documents
 
-**🔗 [tansan5150.github.io](https://tansan5150.github.io)**
+1. Add `.md` files to the appropriate category folder in the `posts/` directory
+2. Update the `properties/toc.json` file to include the new document
+3. Commit and push files to GitHub
+4. The site automatically detects and displays new documents
 
-## 📝 문서 추가 방법
+### Properties Configuration
 
-1. `posts/` 디렉토리 내 적절한 카테고리 폴더에 `.md` 파일 추가
-2. 파일을 GitHub에 커밋 및 푸시
-3. 사이트가 자동으로 새 문서를 감지하여 표시
+#### Adding New Documents to Existing Categories
+Update `properties/toc.json` to add new files to existing categories:
 
-### 예시
+```json
+{
+  "category_name": {
+    "title": "📝 Category Display Title",
+    "files": [
+      {
+        "title": "Document Display Title",
+        "path": "category-folder/document-name.md",
+        "disable_auto_toc": false
+      }
+    ]
+  }
+}
+```
+
+#### Adding New Categories
+To add a completely new category, add a new section to `properties/toc.json`:
+
+```json
+{
+  "new_category": {
+    "title": "🆕 New Category Title",
+    "files": [
+      {
+        "title": "First Document",
+        "path": "new-category/first-document.md"
+      }
+    ]
+  }
+}
+```
+
+### Example
 ```bash
-# 새 마크다운 파일 추가
-echo "# 새 문서 제목" > posts/md/new-document.md
+# Add new markdown file
+echo "# New Document Title" > posts/example-category/new-document.md
 
-# Git에 추가 및 커밋
-git add posts/md/new-document.md
-git commit -m "Add new document"
+# Update toc.json to include the new document
+# Edit properties/toc.json and add the file entry
+
+# Add to Git and commit
+git add posts/example-category/new-document.md properties/toc.json
+git commit -m "Add new document and update TOC"
 git push origin main
 ```
 
-## 🎯 URL 구조
+**Note**: Directory names in `posts/` should match the category structure in `toc.json` for proper organization.
 
-- **메인 페이지**: `/`
-- **문서 뷰어**: `/viewer.html?file=posts/[category]/[filename].md`
+## Configuration
 
-### 예시 URL
+The system uses three JSON configuration files in the `properties/` directory:
+
+### main-config.json
+Site-wide configuration settings including titles, URLs, and display options.
+
+```json
+{
+  "site_title": "Your Site Title",
+  "main_title": "Main Page Title",
+  "main_subtitle": "Your subtitle here",
+  "site_url": "https://github.com/yourusername",
+  "show_document_count": true,
+  "show_home_button": true
+}
 ```
-https://tansan5150.github.io/viewer.html?file=posts/md/MarkDownGuide.md
+
+### toc.json
+Table of contents structure that organizes blog posts into categories.
+
+```json
+{
+  "category_name": {
+    "title": "📝 Category Display Title",
+    "files": [
+      {
+        "title": "Document Title",
+        "path": "folder/document.md"
+      }
+    ]
+  }
+}
 ```
 
+### viewer-config.json
+Viewer page settings for theme options and UI elements.
 
-## 🔧 로컬 개발
+```json
+{
+  "show_table_of_contents": true,
+  "default_theme": "light",
+  "show_theme_toggle": true,
+  "page_title": "Viewer Page Title"
+}
+```
 
-### 요구사항
-- 웹 브라우저 (Chrome, Firefox, Safari, Edge)
-- 로컬 웹 서버 (선택사항)
+## Live Site
 
-### 실행 방법
-```shell script
-# 저장소 클론
+**[tansan5150.github.io](https://tansan5150.github.io)**
+
+## Local Development
+
+### Requirements
+- Web browser (Chrome, Firefox, Safari, Edge)
+- Local web server (optional)
+
+### Setup
+```bash
+# Clone repository
 git clone https://github.com/tansan5150/tansan5150.github.io.git
 cd tansan5150.github.io
 
-# 로컬 서버 실행 (Python 3 사용 예시)
+# Run local server (Python 3 example)
 python -m http.server 8000
 
-# 브라우저에서 http://localhost:8000 접속
+# Open http://localhost:8000 in browser
 ```
 
+## Performance Optimization
 
-## 📊 성능 최적화
+- **Minimal HTTP requests**: Reduced CDN library usage
+- **Separated CSS/JS**: Enhanced caching efficiency
+- **Image optimization**: Automatic resizing and compression
+- **Asynchronous loading**: GitHub API asynchronous processing
 
-- **최소한의 HTTP 요청**: CDN 라이브러리 최소화
-- **CSS/JS 분리**: 캐싱 효율성 증대
-- **이미지 최적화**: 자동 크기 조정 및 압축
-- **비동기 로딩**: GitHub API 비동기 처리
+## Contributing
 
-## 🤝 기여하기
+1. Fork this repository
+2. Create a new branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Create a Pull Request
 
-1. Fork 이 저장소
-2. 새 브랜치 생성 (`git checkout -b feature/amazing-feature`)
-3. 변경사항 커밋 (`git commit -m 'Add amazing feature'`)
-4. 브랜치에 Push (`git push origin feature/amazing-feature`)
-5. Pull Request 생성
+## License
 
-## 📄 라이선스
+This project is licensed under the Creative Commons Attribution 2.0 License. See the [LICENSE](LICENSE) file for details.
 
-이 프로젝트는 Creative Commons 라이선스 하에 있습니다. 자세한 내용은 [LICENSE](LICENSE) 파일을 확인하세요.
-
-## 📞 연락처
+## Contact
 
 - **GitHub**: [@tansan5150](https://github.com/tansan5150)
 - **Website**: [tansan5150.github.io](https://tansan5150.github.io)
@@ -165,4 +236,3 @@ python -m http.server 8000
     <a href="https://github.com/tansan5150/tansan5150.github.io/issues">Request Feature</a>
   </p>
 </div>
-

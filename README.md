@@ -189,10 +189,12 @@ Viewer page settings for theme options and UI elements.
 ### i18n Internationalization
 Internationalization support for multiple languages. The system supports Korean (ko), English (en), and Spanish (es) language packs.
 
-Language files are located in `properties/i18n/` directory. Additional language files can be added as needed:
+Language files are located in `properties/i18n/` directory. 
 - `ko.json` - Korean language pack
 - `en.json` - English language pack  
 - `es.json` - Spanish language pack
+
+Additional language files can be added as needed.
 
 Each language file contains translations for UI elements including:
 - Button labels (Dark/Light mode, Home, etc.)

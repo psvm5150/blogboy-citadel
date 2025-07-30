@@ -129,13 +129,76 @@ async function renderDocuments() {
     }
 }
 
+// GitHub Pages 여부 확인 함수
+function isGitHubPages() {
+    return window.location.hostname.endsWith('.github.io');
+}
+
+// GitHub API URL 생성 함수
+function generateGitHubApiUrl(filePath) {
+    const hostname = window.location.hostname;
+    if (!hostname.endsWith('.github.io')) {
+        return null;
+    }
+    
+    // hostname에서 사용자명 추출 (예: psvm5150.github.io -> psvm5150)
+    const username = hostname.split('.')[0];
+    const repoName = hostname; // 전체 hostname을 repo name으로 사용
+    
+    // 파일 경로 정규화 (posts/ 제거)
+    const documentRoot = normalizePath(mainConfig.document_root);
+    let normalizedPath = filePath;
+    if (filePath.startsWith(documentRoot)) {
+        normalizedPath = filePath.substring(documentRoot.length);
+    }
+    
+    return `https://api.github.com/repos/${username}/${repoName}/commits?path=posts/${normalizedPath}&per_page=1`;
+}
+
+// GitHub API를 통해 커밋 날짜 가져오기
+async function getGitHubCommitDate(filePath) {
+    try {
+        const apiUrl = generateGitHubApiUrl(filePath);
+        if (!apiUrl) {
+            return null;
+        }
+        
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            console.warn(`GitHub API request failed for ${filePath}: ${response.status}`);
+            return null;
+        }
+        
+        const commits = await response.json();
+        if (commits && commits.length > 0) {
+            const commitDate = commits[0].commit.committer.date;
+            return new Date(commitDate);
+        }
+        
+        return null;
+    } catch (error) {
+        console.warn(`Failed to get GitHub commit date for ${filePath}:`, error);
+        return null;
+    }
+}
+
 // 파일 내용에서 실제 수정 날짜를 가져오는 함수
 async function getFileModifiedDate(filePath) {
     try {
         const documentRoot = normalizePath(mainConfig.document_root);
         const fullPath = documentRoot + filePath;
         
-        // HTTP 헤더에서 Last-Modified 사용
+        // GitHub Pages 여부 확인
+        if (isGitHubPages()) {
+            // GitHub Pages인 경우 GitHub API 사용
+            const gitHubDate = await getGitHubCommitDate(filePath);
+            if (gitHubDate) {
+                return gitHubDate;
+            }
+            // GitHub API 실패 시 fallback으로 HTTP 헤더 사용
+        }
+        
+        // GitHub Pages가 아니거나 GitHub API 실패 시 HTTP 헤더에서 Last-Modified 사용
         const headResponse = await fetch(fullPath, { method: 'HEAD' });
         if (headResponse.ok) {
             const lastModified = headResponse.headers.get('Last-Modified');

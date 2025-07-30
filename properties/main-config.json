@@ -3,13 +3,13 @@
   "main_title": "Main Max: Fury Load",
   "main_subtitle": "You will code eternal, shiny and RESTful!",
   "site_url": "https://github.com/tansan5150",
-  "copyright_text": "© 2025 tansan5150.github.io. All rights reserved.",
-  "show_document_count": true,
-  "show_home_button": true,
-  "home_button_label": "🏠 홈",
   "document_root": "posts/",
+  "show_view_filter": true,
+  "default_view_filter": "category",
+  "show_document_count": true,
   "show_new_indicator": true,
   "new_display_days": 15,
-  "show_view_filter": true,
-  "default_view_filter": "category"
+  "copyright_text": "© 2025 tansan5150.github.io. All rights reserved.",
+  "show_home_button": true,
+  "home_button_label": "🏠 홈"
 }

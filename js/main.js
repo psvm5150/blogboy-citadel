@@ -390,12 +390,17 @@ function updateSearchStats(searchTerm = '', visibleCount = null) {
 // 메인 페이지 라벨 적용
 function applyMainConfigLabels() {
     // 문서 타이틀
-    document.title = mainConfig.site_title;
+    document.title = mainConfig.site_name;
 
     // 사이트 타이틀 (좌상단)
     const siteTitle = document.querySelector('.site-title');
     if (siteTitle) {
-        siteTitle.textContent = mainConfig.site_title;
+        if (mainConfig.show_site_name) {
+            siteTitle.textContent = mainConfig.site_name;
+            siteTitle.style.display = '';
+        } else {
+            siteTitle.style.display = 'none';
+        }
     }
 
     // 메인 제목
@@ -411,7 +416,7 @@ function applyMainConfigLabels() {
     }
 
     // 사이트 URL (좌상단 링크로 만들기)
-    if (siteTitle && !siteTitle.parentElement.href) {
+    if (siteTitle && mainConfig.show_site_name && !siteTitle.parentElement.href) {
         // 사이트 타이틀을 링크로 감싸기
         const link = document.createElement('a');
         link.href = mainConfig.site_url;

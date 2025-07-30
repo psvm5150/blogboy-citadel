@@ -1,8 +1,9 @@
 {
-  "site_title": "tansan5150.github.io",
+  "show_site_name": true,
+  "site_name": "tansan5150.github.io",
+  "site_url": "https://github.com/tansan5150",
   "main_title": "Main Max: Fury Load",
   "main_subtitle": "You will code eternal, shiny and RESTful!",
-  "site_url": "https://github.com/tansan5150",
   "document_root": "posts/",
   "show_view_filter": true,
   "default_view_filter": "category",

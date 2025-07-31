@@ -326,30 +326,30 @@ function updateSearchStats(searchTerm = '', visibleCount = null) {
 
 // 메인 페이지 라벨 적용
 function applyMainConfigLabels() {
-    // 문서 타이틀
-    document.title = mainConfig.site_label_name;
+    // 문서 타이틀 (i18n with fallback)
+    document.title = tWithFallback('site_label_name', 'site_label_name');
 
     // 사이트 타이틀 (좌상단)
     const siteTitle = document.querySelector('.site-title');
     if (siteTitle) {
         if (mainConfig.show_site_label) {
-            siteTitle.textContent = mainConfig.site_label_name;
+            siteTitle.textContent = tWithFallback('site_label_name', 'site_label_name');
             siteTitle.style.display = '';
         } else {
             siteTitle.style.display = 'none';
         }
     }
 
-    // 메인 제목
+    // 메인 제목 (i18n with fallback)
     const mainTitle = document.querySelector('.header-main h1');
     if (mainTitle) {
-        mainTitle.textContent = mainConfig.main_title;
+        mainTitle.textContent = tWithFallback('main_title', 'main_title');
     }
 
-    // 메인 부제목
+    // 메인 부제목 (i18n with fallback)
     const mainSubtitle = document.querySelector('.header-main p');
     if (mainSubtitle) {
-        mainSubtitle.textContent = mainConfig.main_subtitle;
+        mainSubtitle.textContent = tWithFallback('main_subtitle', 'main_subtitle');
     }
 
     // 사이트 URL (좌상단 링크로 만들기)

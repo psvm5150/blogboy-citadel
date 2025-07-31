@@ -253,3 +253,45 @@ function t(key, params = {}) {
     
     return text;
 }
+
+/**
+ * Get translated text with fallback to main-config.json
+ * For specific keys (main_title, main_subtitle, site_label_name), 
+ * use i18n value if available, otherwise fallback to main-config.json
+ * @param {string} key - The i18n key
+ * @param {string} configKey - The corresponding key in main-config.json
+ * @param {Object} params - Parameters for template substitution (optional)
+ * @returns {string} - Translated text or fallback value
+ */
+function tWithFallback(key, configKey, params = {}) {
+    // Check if i18n data has the key and it's not empty
+    if (i18nData && i18nData[key] && i18nData[key].trim() !== '') {
+        let text = i18nData[key];
+        
+        // Replace template parameters
+        if (params && typeof text === 'string') {
+            Object.keys(params).forEach(param => {
+                text = text.replace(`{${param}}`, params[param]);
+            });
+        }
+        
+        return text;
+    }
+    
+    // Fallback to main-config.json value
+    if (mainConfig && mainConfig[configKey]) {
+        let text = mainConfig[configKey];
+        
+        // Replace template parameters
+        if (params && typeof text === 'string') {
+            Object.keys(params).forEach(param => {
+                text = text.replace(`{${param}}`, params[param]);
+            });
+        }
+        
+        return text;
+    }
+    
+    // Final fallback to the key itself
+    return key;
+}

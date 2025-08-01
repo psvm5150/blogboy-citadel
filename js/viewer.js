@@ -277,17 +277,47 @@ async function generateTableOfContents(contentDiv, markdown, filePath) {
     const actualHeadings = contentDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
     let tocIndex = 0;
 
-    actualHeadings.forEach((element, index) => {
-        // 첫 번째 h1 또는 h2는 메인 타이틀이므로 건너뛰기
-        if (index === 0 && (element.tagName === 'H1' || element.tagName === 'H2')) {
-            return;
+    // TOC 헤딩과 매칭하되, 실패 시 순차적 매칭으로 폴백
+    let unmatchedHeadings = [];
+    
+    // 첫 번째 시도: 정확한 텍스트와 레벨 매칭
+    tocHeadings.forEach((tocHeading) => {
+        let matched = false;
+        // DOM에서 해당 텍스트를 가진 헤딩 요소 찾기
+        for (let i = 0; i < actualHeadings.length; i++) {
+            const element = actualHeadings[i];
+            const elementText = element.textContent.trim();
+            const expectedLevel = tocHeading.level;
+            const actualLevel = parseInt(element.tagName.substring(1));
+            
+            // 텍스트와 레벨이 모두 일치하는 헤딩에 ID 할당
+            if (elementText === tocHeading.text && actualLevel === expectedLevel && !element.id) {
+                element.id = `toc-${tocIndex}`;
+                tocIndex++;
+                matched = true;
+                break;
+            }
         }
-
-        if (tocIndex < tocHeadings.length) {
-            element.id = `toc-${tocIndex}`;
-            tocIndex++;
+        
+        // 매칭되지 않은 헤딩은 나중에 순차적으로 처리
+        if (!matched) {
+            unmatchedHeadings.push(tocHeading);
         }
     });
+    
+    // 두 번째 시도: 매칭되지 않은 헤딩들을 순차적으로 할당
+    if (unmatchedHeadings.length > 0) {
+        let availableHeadings = Array.from(actualHeadings).filter(h => !h.id);
+        let fallbackIndex = 0;
+        
+        unmatchedHeadings.forEach((tocHeading) => {
+            if (fallbackIndex < availableHeadings.length) {
+                availableHeadings[fallbackIndex].id = `toc-${tocIndex}`;
+                tocIndex++;
+                fallbackIndex++;
+            }
+        });
+    }
 
     // 메인 타이틀 다음에 목차 삽입
     if (mainTitle) {

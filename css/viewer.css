@@ -189,18 +189,18 @@ body {
 }
 
 .toc-indent-1 .toc-link {
+    font-size: 1rem;
+    color: #0366d6;
+}
+
+.toc-indent-2 .toc-link {
     font-size: 0.95rem;
     color: #586069;
 }
 
-.toc-indent-2 .toc-link {
-    font-size: 0.9rem;
-    color: #6a737d;
-}
-
 .toc-indent-3 .toc-link,
 .toc-indent-4 .toc-link {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #6a737d;
 }
 
@@ -335,11 +335,11 @@ body {
 }
 
 .darkmode .toc-indent-1 .toc-link {
-    color: #8b949e;
+    color: #58a6ff;
 }
 
 .darkmode .toc-indent-2 .toc-link {
-    color: #7d8590;
+    color: #8b949e;
 }
 
 .darkmode .toc-indent-3 .toc-link,

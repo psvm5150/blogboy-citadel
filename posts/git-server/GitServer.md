@@ -1,32 +1,15 @@
 나만의 Git Server 만들기 
 ===================  
-<br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `@author Tansan Man(tansan5150)`    
-  >   * `@up to date 2023.04.24` 
+  >  `@author Tansan Man(tansan5150)`    
+  >  `@up to date 2023.04.24` 
     
 <br>
-<br>
+
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
 <br>
---------------------------------------
-
-<br> 
-### 목차
-<br>
-  > &nbsp; [1. 개요](#1)   
-  > &nbsp; [2. 인증서 설정](#2)   
-  > &nbsp; [3. 서버에 Repository 만들기](#3-repository)   
-  > &nbsp; [4. PC에 Git Project 만들고 연결하기](#4-pc-git-project)   
-  > &nbsp; [5. 원격 저장소 관리](#5)  
-  > &nbsp; [[부록] Sublime Text 의 Git 연동](#sublime-text-git)  
-
-
-  <br> <br> <br> <br>
---------------------------------------
-  <br>
 
 ### 1. 개요
 

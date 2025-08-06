@@ -1,30 +1,15 @@
 개발 도구 인증서 적용 가이드
-===================  
-<br> <br> <br> <br> <br> <br> <br> <br>
+===================
   
-  >   * `@author Tansan Man(tansan5150)`    
-  >   * `@up to date 2022.10.17` 
+  >  `@author Tansan Man(tansan5150)`    
+  >  `@up to date 2022.10.17` 
     
 <br>
-<br>
+
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
 <br>
---------------------------------------
-
-<br> 
-### 목차
-<br>
-  > &nbsp; [1. 인증서 생성](#1)   
-  > &nbsp; [2. 개발 서버 적용](#2)   
-  > &nbsp; [3. 개발 도구에 적용](#3)   
-  > &nbsp; [4. 서버 접속을 더 쉽게](#4)  
-
-
-  <br> <br> <br> <br>
---------------------------------------
-  <br>
 
 ### 1. 인증서 생성 
 <br>

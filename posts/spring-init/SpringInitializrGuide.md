@@ -1,31 +1,16 @@
 #### IntelliJ IDEA 를 이용한
 폐쇄망에서 Spring Boot Project 시작 하기 
 ===================  
-<br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `@author Tansan Man(tansan5150)`    
-  >   * `@up to date 2023.05.26` 
+  >  `@author Tansan Man(tansan5150)`    
+  >  `@up to date 2023.05.26` 
     
 <br>
-<br>
+
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
 <br>  
---------------------------------------
-<br>  
-
-### 목차
-<br>
-  > &nbsp; [1. Spring Initilalizr](#1-spring-initilalizr)   
-  > &nbsp; [2. Project 만들기](#2-project)   
-  > &nbsp; [3. 예제 코드](#3)   
-
-  <br> <br> <br> <br>
---------------------------------------
-
-
-<br>
 
 ### 1. Spring Initilalizr
 본 Guide는 인터넷이 열되지 않은 폐쇄망(내부망)에서 Spring Boot Project 를 생성하고 사용 하는 방법에 대한 안내서다.  

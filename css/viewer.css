@@ -129,19 +129,19 @@ body {
 .auto-toc {
     background: #f8f9fa;
     border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin: 2rem 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
 .toc-title {
-    margin: 0 0 1rem 0;
-    font-size: 1.2rem;
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #24292e;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 0.4rem;
 }
 
 .toc-list {
@@ -151,7 +151,7 @@ body {
 }
 
 .toc-item {
-    margin: 0.3rem 0;
+    margin: 0.15rem 0;
     line-height: 1.5;
 }
 
@@ -317,7 +317,7 @@ body {
 .darkmode .auto-toc {
     background: #21262d;
     border-color: #30363d;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 .darkmode .toc-title {

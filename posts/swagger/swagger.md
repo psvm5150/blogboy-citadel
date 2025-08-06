@@ -1,28 +1,14 @@
 Spring Boot Swagger 적용 Guide
 ===================  
-<br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `@author Tansan Man(tansan5150)`    
-  >   * `@up to date 2023.06.30` 
+  >  `@author Tansan Man(tansan5150)`    
+  >  `@up to date 2023.06.30` 
     
 <br>
-<br>
+
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
-<br>  
---------------------------------------
-<br>  
-
-### 목차
-<br>
-  > &nbsp; [1. Swagger 개요](#1-swagger)  
-  > &nbsp; [2. Maven pom 설정](#2-maven-pom)   
-  > &nbsp; [3. Swagger Configuration](#3-swagger-configuration)   
-  > &nbsp; [4. 각 API 별 Swagger 명세](#4-api-swagger)   
-
-  <br> <br> <br> <br>
---------------------------------------
 <br>
 
 ### 1. Swagger 개요

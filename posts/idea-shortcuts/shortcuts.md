@@ -1,32 +1,15 @@
 IntelliJ IDEA 자주쓰는 단축키 모음
 ===================  
-<br> <br> <br> <br> <br> <br> <br> <br>
   
-  >   * `@author Tansan Man(tansan5150)`    
-  >   * `@up to date 2023.07.21` 
+  >  `@author Tansan Man(tansan5150)`    
+  >  `@up to date 2023.07.21` 
     
 <br>
-<br>
+
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
 
-<br>
---------------------------------------
-
-<br> 
-### 목차
-<br>
-  > &nbsp; [1. IDE 화면 조작](#1-ide)   
-  > &nbsp; [2. 찾기, 검색 및 바꾸기](#2)   
-  > &nbsp; [3. Bookmark 기능](#3-bookmark)   
-  > &nbsp; [4. Editor 편집 - 기본](#4-editor-)   
-  > &nbsp; [5. Editor 편집 - 다중선택, 세로열](#5-editor-)   
-  > &nbsp; [6. 코딩](#6)   
-  > &nbsp; [[참고] 전체 단축키 모음](#_4)   
-
-  <br> <br> <br> <br>
---------------------------------------
-  <br>
+ <br>
 
 ### 1. IDE 화면 조작
 #### 1.1 IDE 조작 기본

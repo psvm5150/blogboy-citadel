@@ -204,6 +204,34 @@ body {
     color: #6a737d;
 }
 
+/* 문서 메타 정보 스타일 */
+.document-meta {
+    padding: 0;
+    margin: 0.125rem 0;
+    font-size: 0.85rem;
+    color: #6a737d;
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    min-height: 1.875rem;
+    justify-content: flex-end;
+}
+
+.document-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.document-meta-label {
+    font-weight: 600;
+    color: #24292e;
+}
+
+.document-meta-value {
+    color: #586069;
+}
+
 /* 다크모드 스타일 */
 .darkmode {
     background-color: #0d1117;
@@ -345,6 +373,19 @@ body {
 .darkmode .toc-indent-3 .toc-link,
 .darkmode .toc-indent-4 .toc-link {
     color: #7d8590;
+}
+
+/* 다크모드 문서 메타 정보 스타일 */
+.darkmode .document-meta {
+    color: #8b949e;
+}
+
+.darkmode .document-meta-label {
+    color: #e6edf3;
+}
+
+.darkmode .document-meta-value {
+    color: #8b949e;
 }
 
 /* 반응형 디자인 */

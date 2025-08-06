@@ -22,5 +22,7 @@
   "lbl_new_indicator": "new",
   "lbl_document_count": "개",
   "lbl_search_result": "검색 결과",
-  "lbl_total_documents": "총 {count}개 문서 ({categories}개 카테고리)"
+  "lbl_total_documents": "총 {count}개 문서 ({categories}개 카테고리)",
+  "lbl_author": "작성자",
+  "lbl_creation_date": "작성일"
 }

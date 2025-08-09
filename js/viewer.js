@@ -1,3 +1,4 @@
+'use strict';
 function getUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
     return {
@@ -478,15 +479,6 @@ async function applyViewerConfigLabels() {
     const homeButtons = document.querySelectorAll('.home-button');
     homeButtons.forEach(button => {
         button.textContent = t('btn_home_viewer');
-    });
-}
-
-// i18n 적용 함수
-function applyI18nTranslations() {
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        element.textContent = t(key);
     });
 }
 

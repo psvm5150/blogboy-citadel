@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Common utilities shared between main.js and viewer.js
  * This file contains shared functions and variables to avoid code duplication
@@ -364,6 +366,18 @@ function t(key, params = {}) {
     }
     
     return text;
+}
+
+/**
+ * Apply i18n translations to elements with [data-i18n] attribute
+ * Centralized utility to avoid duplication in main.js and viewer.js
+ */
+function applyI18nTranslations() {
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        element.textContent = t(key);
+    });
 }
 
 /**

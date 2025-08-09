@@ -1,3 +1,4 @@
+'use strict';
 let documentCategories = {};
 let currentViewMode = 'category'; // Default value, will be changed during initialization based on settings
 
@@ -463,15 +464,6 @@ function bindDarkModeButton() {
     btn.onclick = () => {
         setDarkMode(!document.body.classList.contains('darkmode'));
     };
-}
-
-// i18n 적용 함수
-function applyI18nTranslations() {
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        element.textContent = t(key);
-    });
 }
 
 // 초기화

@@ -1,9 +1,6 @@
 나만의 Git Server 만들기 
 ===================  
   
-  >  `@author Tansan Man(tansan5150)`    
-  >  `@up to date 2023.04.24` 
-    
 <br>
 
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  

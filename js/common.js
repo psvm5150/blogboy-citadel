@@ -236,6 +236,75 @@ async function loadI18nData(language = 'ko', basePath = '') {
 }
 
 /**
+ * Flexible date parser supporting multiple formats
+ * Supported: YYYY-MM-DD, YYYY.MM.DD, YYYY/MM/DD, YYYYMMDD, DD/MM/YYYY (pref), MM/DD/YYYY (ambiguous), and native Date parse
+ * @param {string|number|Date} dateInput
+ * @returns {Date|null}
+ */
+function parseFlexibleDate(dateInput) {
+    if (!dateInput) return null;
+    if (dateInput instanceof Date) return isNaN(dateInput.getTime()) ? null : dateInput;
+    const s = String(dateInput).trim();
+    if (!s) return null;
+
+    // ISO-like YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+        const d = new Date(s);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    // YYYY.MM.DD
+    if (/^\d{4}\.\d{2}\.\d{2}$/.test(s)) {
+        const [y, m, d] = s.split('.').map(x => parseInt(x, 10));
+        const dt = new Date(y, m - 1, d);
+        return isNaN(dt.getTime()) ? null : dt;
+    }
+
+    // YYYY/MM/DD
+    if (/^\d{4}\/\d{2}\/\d{2}$/.test(s)) {
+        const [y, m, d] = s.split('/').map(x => parseInt(x, 10));
+        const dt = new Date(y, m - 1, d);
+        return isNaN(dt.getTime()) ? null : dt;
+    }
+
+    // YYYYMMDD
+    if (/^\d{8}$/.test(s)) {
+        const y = parseInt(s.slice(0, 4), 10);
+        const m = parseInt(s.slice(4, 6), 10);
+        const d = parseInt(s.slice(6, 8), 10);
+        const dt = new Date(y, m - 1, d);
+        return isNaN(dt.getTime()) ? null : dt;
+    }
+
+    // DD/MM/YYYY or MM/DD/YYYY (prefer DD/MM/YYYY; if DD > 12, definite)
+    if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(s)) {
+        const [a, b, c] = s.split('/').map(x => parseInt(x, 10));
+        const dd = a;
+        const mm = b;
+        const yy = c;
+        const dt = new Date(yy, mm - 1, dd);
+        return isNaN(dt.getTime()) ? null : dt;
+    }
+
+    // Fallback to native Date
+    const dt = new Date(s);
+    return isNaN(dt.getTime()) ? null : dt;
+}
+
+/**
+ * Locale-based date formatter (date only)
+ * Uses browser locale via navigator.language
+ * @param {Date} date
+ * @param {Object} options - Intl.DateTimeFormat options override
+ * @returns {string}
+ */
+function formatDateLocale(date, options = { year: 'numeric', month: '2-digit', day: '2-digit' }) {
+    if (!(date instanceof Date) || isNaN(date.getTime())) return '';
+    const locale = navigator.language || undefined;
+    return date.toLocaleDateString(locale, options);
+}
+
+/**
  * Get translated text for the given key
  * @param {string} key - The i18n key
  * @param {Object} params - Parameters for template substitution (optional)

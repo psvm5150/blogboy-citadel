@@ -1,9 +1,6 @@
 개발 도구 인증서 적용 가이드
 ===================
   
-  >  `@author Tansan Man(tansan5150)`    
-  >  `@up to date 2022.10.17` 
-    
 <br>
 
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  

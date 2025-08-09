@@ -131,7 +131,7 @@ body {
     border: 1px solid #e9ecef;
     border-radius: 6px;
     padding: 1rem;
-    margin: 0.5rem 0;
+    margin: 1rem 0; /* 기존 0.5rem에서 2배로 증가하여 메타-목차 사이 간격 확대 */
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
@@ -210,26 +210,19 @@ body {
     margin: 0.125rem 0;
     font-size: 0.85rem;
     color: #6a737d;
-    display: flex;
-    gap: 3rem;
-    align-items: center;
-    min-height: 1.875rem;
-    justify-content: flex-end;
+    display: block; /* 단일 라인 텍스트 표시 */
+    text-align: right; /* 기존 우측정렬 유지 */
 }
 
-.document-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+/* 제목과 메타 사이 간격을 절반으로 줄이기 */
+.markdown-body > h1:first-of-type {
+    margin-bottom: 8px; /* 기본보다 절반 수준으로 축소 */
 }
 
-.document-meta-label {
-    font-weight: 600;
-    color: #24292e;
-}
-
-.document-meta-value {
-    color: #586069;
+/* 메타와 제목의 인접 관계에서 추가 위쪽 여백 제거 */
+.markdown-body h1 + .document-meta,
+.markdown-body h2 + .document-meta {
+    margin-top: 0;
 }
 
 /* 다크모드 스타일 */

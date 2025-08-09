@@ -94,7 +94,10 @@ async function loadMarkdown(filePath) {
 
         // 기본 처리
         await updateDocumentTitle(contentDiv);
+        // 자동 목차 생성
         await generateTableOfContents(contentDiv, markdown, filePath);
+        // 제목 바로 아래에 문서 메타 정보(작성자 · 날짜) 삽입 (TOC가 있으면 TOC 위로 위치함)
+        await insertDocumentMeta(contentDiv, filePath);
         fixImagePaths(filePath);
 
     } catch (error) {
@@ -319,50 +322,66 @@ async function generateTableOfContents(contentDiv, markdown, filePath) {
         });
     }
 
-    // 메인 타이틀 다음에 목차와 문서 메타 정보 삽입
+    // 메인 타이틀 다음에 목차 삽입 (문서 메타 정보는 별도로 삽입됨)
     if (mainTitle) {
         const firstHeading = contentDiv.querySelector('h1, h2');
         if (firstHeading) {
-            // 목차 먼저 삽입
             firstHeading.insertAdjacentHTML('afterend', tocHtml);
-            // 그 다음 문서 메타 정보 삽입 (목차 위에 나타나게 됨)
-            const metaHtml = await generateDocumentMeta();
-            if (metaHtml) {
-                firstHeading.insertAdjacentHTML('afterend', metaHtml);
-            }
         }
     }
 }
 
-// 문서 메타 정보 생성
-async function generateDocumentMeta() {
+
+// 문서 메타 정보 생성 (항상 표시, 라벨 제거)
+async function generateDocumentMeta(filePath) {
     try {
         const config = await loadViewerConfig();
-        
-        // 작성자 정보가 없으면 메타 정보를 표시하지 않음
-        if (!config.global_author) {
-            return null;
+        const tocConfig = await loadTocConfig();
+
+        // document_root 접두사 제거하여 toc.json의 path와 일치시키기
+        const documentRoot = normalizePath(mainConfig.document_root);
+        const relativePath = filePath.startsWith(documentRoot) ? filePath.substring(documentRoot.length) : filePath;
+
+        // toc.json에서 현재 문서 항목 찾기
+        let tocEntry = null;
+        for (const [categoryKey, categoryInfo] of Object.entries(tocConfig)) {
+            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const found = categoryInfo.files.find(f => f.path === relativePath);
+                if (found) { tocEntry = found; break; }
+            }
         }
 
-        // 현재 날짜를 작성일로 사용 (브라우저 언어 설정에 따라 포맷)
-        const creationDate = new Date();
-        const formattedDate = creationDate.toLocaleDateString(navigator.language, {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
+        // 작성자: toc가 우선, 없으면 global_author
+        const author = (tocEntry && tocEntry.author) ? tocEntry.author : (config.global_author || '');
+
+        // 작성일: toc가 우선, 없으면 파일 수정일(TOC와 동일 포맷)
+        let dateText = '';
+        if (tocEntry && tocEntry.date) {
+            const parsed = parseFlexibleDate(String(tocEntry.date));
+            if (parsed) {
+                dateText = formatDateLocale(parsed);
+            } else {
+                // 파싱 실패 시 원문 표시
+                dateText = String(tocEntry.date);
+            }
+        } else {
+            // toc에 지정이 없으면 getFileModifiedDate 사용 (TOC와 동일 소스)
+            const modifiedDate = await getFileModifiedDate(relativePath);
+            dateText = formatDateLocale(modifiedDate);
+        }
+
+        // 값 조합: "author  ·  date" (시각적으로 2배 간격 유지 위해 NBSP 사용)
+        let line = '';
+        if (author && dateText) {
+            line = `${author}&nbsp;&nbsp;·&nbsp;&nbsp;${dateText}`;
+        } else if (author) {
+            line = author;
+        } else {
+            line = dateText; // author가 비어도 날짜는 표시
+        }
 
         const metaHtml = `
-            <div class="document-meta">
-                <div class="document-meta-item">
-                    <span class="document-meta-label">${t('lbl_author')}:</span>
-                    <span class="document-meta-value">${config.global_author}</span>
-                </div>
-                <div class="document-meta-item">
-                    <span class="document-meta-label">${t('lbl_creation_date')}:</span>
-                    <span class="document-meta-value">${formattedDate}</span>
-                </div>
-            </div>
+            <div class="document-meta">${line}</div>
         `;
 
         return metaHtml;
@@ -469,6 +488,21 @@ function applyI18nTranslations() {
         const key = element.getAttribute('data-i18n');
         element.textContent = t(key);
     });
+}
+
+// 문서 메타 정보 삽입 함수 (제목 바로 아래, TOC 위)
+async function insertDocumentMeta(contentDiv, filePath) {
+    try {
+        const firstHeading = contentDiv.querySelector('h1, h2');
+        if (!firstHeading) return;
+        const metaHtml = await generateDocumentMeta(filePath);
+        if (metaHtml) {
+            // 제목 바로 다음 위치에 삽입
+            firstHeading.insertAdjacentHTML('afterend', metaHtml);
+        }
+    } catch (e) {
+        console.error('Failed to insert document meta:', e);
+    }
 }
 
 // 페이지 로드

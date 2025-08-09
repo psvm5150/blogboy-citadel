@@ -5,7 +5,9 @@
       {
         "title": "MarkDown 완벽 가이드",
         "path": "md/MarkDownGuide.md",
-        "disable_auto_toc": true
+        "disable_auto_toc": true,
+        "author": "Gene mo Ahne",
+        "date": "2025-08-01"
       }
     ]
   },
@@ -18,7 +20,9 @@
       },
       {
         "title": "SublimeText 사용자 가이드",
-        "path": "sltext/SubLimeTextUsersGuide.md"
+        "path": "sltext/SubLimeTextUsersGuide.md",
+        "author": "Gene mo Ahne",
+        "date": "2025-08-10"
       },
       {
         "title": "SublimeText 단축키 모음",

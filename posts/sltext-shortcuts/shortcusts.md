@@ -1,9 +1,6 @@
 Sublime Text 4 자주쓰는 단축키 모음
 ===================  
   
-  >  `@author Tansan Man(tansan5150)`    
-  >  `@up to date 2023.09.05 ` 
-    
 <br>
 
 [![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  

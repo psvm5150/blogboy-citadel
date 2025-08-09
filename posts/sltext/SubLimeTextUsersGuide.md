@@ -1,8 +1,5 @@
 Sublime Text 4 Users' Guide
 ===================  
-  
-  > `@author Tansan Man(tansan5150)`    
-  > `@up to date 2023.01.03` 
     
 <br>
 

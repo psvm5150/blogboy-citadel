@@ -23,7 +23,5 @@
   "lbl_new_indicator": "nuevo",
   "lbl_document_count": "elementos",
   "lbl_search_result": "resultados de búsqueda",
-  "lbl_total_documents": "Total {count} documentos ({categories} categorías)",
-  "lbl_author": "Autor",
-  "lbl_creation_date": "Fecha de Creación"
+  "lbl_total_documents": "Total {count} documentos ({categories} categorías)"
 }

@@ -98,28 +98,13 @@ async function shouldShowNewIndicator(filePath) {
     return daysDiff <= mainConfig.new_display_days;
 }
 
-// 문서 날짜 표시 HTML 생성
-function createDateTimeDisplay(modifiedDate) {
-    if (!mainConfig.show_document_date || !modifiedDate || modifiedDate.getTime() <= new Date('1970-01-01').getTime()) {
+// 문서 날짜 표시 HTML 생성 (날짜만 표시 - 시간 제거)
+function createDateTimeDisplay(dateObj) {
+    if (!mainConfig.show_document_date || !dateObj || !(dateObj instanceof Date) || isNaN(dateObj.getTime()) || dateObj.getTime() <= new Date('1970-01-01').getTime()) {
         return '';
     }
-    
-    // 사용자의 로케일에 따른 날짜/시간 형식 적용
-    const dateOptions = {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-    };
-    const timeOptions = {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
-    };
-    
-    const formattedDate = modifiedDate.toLocaleDateString(navigator.language, dateOptions);
-    const formattedTime = modifiedDate.toLocaleTimeString(navigator.language, timeOptions);
-    
-    return `<span class="new-datetime">${formattedDate} ${formattedTime}</span>`;
+    const formattedDate = formatDateLocale(dateObj);
+    return `<span class="new-datetime">${formattedDate}</span>`;
 }
 
 // "new" 표시 HTML 생성
@@ -130,14 +115,22 @@ function createNewIndicator() {
 // 카테고리 섹션 생성
 async function createCategorySection(title, files) {
     const documentRoot = normalizePath(mainConfig.document_root);
+
+    // 날짜 결정 함수: toc의 date가 있으면 우선 사용, 없으면 파일 수정일
+    async function getDisplayDateForFile(file) {
+        if (file && file.date) {
+            const parsed = parseFlexibleDate(String(file.date));
+            if (parsed) return parsed;
+        }
+        return await getFileModifiedDate(file.path);
+    }
     
     // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인
     const fileListPromises = files.map(async (file) => {
         const showNew = await shouldShowNewIndicator(file.path);
-        // show_document_date가 true이면 항상 날짜를 가져옴
-        const modifiedDate = (mainConfig.show_document_date || showNew) ? await getFileModifiedDate(file.path) : null;
         const newIndicator = showNew ? createNewIndicator() : '';
-        const dateTimeDisplay = createDateTimeDisplay(modifiedDate);
+        const displayDate = (mainConfig.show_document_date || showNew) ? await getDisplayDateForFile(file) : null;
+        const dateTimeDisplay = createDateTimeDisplay(displayDate);
         return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
@@ -207,7 +200,9 @@ async function createAllViewSection() {
     const fileListPromises = filesWithDates.map(async (file) => {
         const showNew = await shouldShowNewIndicator(file.path);
         const newIndicator = showNew ? createNewIndicator() : '';
-        const dateTimeDisplay = createDateTimeDisplay(file.serverModifiedDate);
+        // 표시용 날짜: toc에 있으면 우선, 없으면 serverModifiedDate 사용
+        const displayDate = file.date ? (parseFlexibleDate(String(file.date)) || file.serverModifiedDate) : file.serverModifiedDate;
+        const dateTimeDisplay = createDateTimeDisplay(displayDate);
         const categoryName = `<span class="category-name">${file.categoryTitle}</span>`;
         return `
             <li class="post-item">

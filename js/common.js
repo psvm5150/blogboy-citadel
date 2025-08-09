@@ -9,6 +9,36 @@ let mainConfig = {};
 // Global i18n object for translations
 let i18nData = {};
 
+// In-memory cache for file modified dates to avoid repeated network calls
+// Map<filePath, { mtime: number, cachedAt: number }>
+const __modifiedDateCache = new Map();
+
+function __loadModifiedDateCacheFromSession() {
+    try {
+        const raw = sessionStorage.getItem('modifiedDateCache:v1');
+        if (!raw) return;
+        const obj = JSON.parse(raw);
+        Object.keys(obj).forEach((k) => {
+            __modifiedDateCache.set(k, obj[k]);
+        });
+    } catch (e) {
+        // ignore parse errors
+    }
+}
+
+function __persistModifiedDateCacheToSession() {
+    try {
+        const obj = {};
+        __modifiedDateCache.forEach((v, k) => { obj[k] = v; });
+        sessionStorage.setItem('modifiedDateCache:v1', JSON.stringify(obj));
+    } catch (e) {
+        // ignore quota errors
+    }
+}
+
+// Initialize cache from session on load
+__loadModifiedDateCacheFromSession();
+
 /**
  * Path normalization function - converts various path formats to consistent format
  * @param {string} path - The path to normalize
@@ -143,27 +173,40 @@ async function getFileModifiedDate(filePath) {
     try {
         const documentRoot = normalizePath(mainConfig.document_root);
         const fullPath = documentRoot + filePath;
-        
-        // Check if it's GitHub Pages
-        if (isGitHubPages()) {
-            // Use GitHub API for GitHub Pages
-            const gitHubDate = await getGitHubCommitDate(filePath);
-            if (gitHubDate) {
-                return gitHubDate;
-            }
-            // Fallback to HTTP headers if GitHub API fails
+        const now = Date.now();
+        const TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+        // 1) Check in-memory/session cache first
+        const cached = __modifiedDateCache.get(filePath);
+        if (cached && typeof cached.mtime === 'number' && typeof cached.cachedAt === 'number' && (now - cached.cachedAt) < TTL_MS) {
+            return new Date(cached.mtime);
         }
         
-        // Use HTTP Last-Modified header if not GitHub Pages or GitHub API failed
+        // 2) If hosted on GitHub Pages, try GitHub API (may be slow, but we'll cache the result)
+        if (isGitHubPages()) {
+            const gitHubDate = await getGitHubCommitDate(filePath);
+            if (gitHubDate && !isNaN(gitHubDate.getTime())) {
+                __modifiedDateCache.set(filePath, { mtime: gitHubDate.getTime(), cachedAt: now });
+                __persistModifiedDateCacheToSession();
+                return gitHubDate;
+            }
+        }
+        
+        // 3) Fallback to HTTP Last-Modified header
         const headResponse = await fetch(fullPath, { method: 'HEAD' });
         if (headResponse.ok) {
             const lastModified = headResponse.headers.get('Last-Modified');
             if (lastModified) {
-                return new Date(lastModified);
+                const dt = new Date(lastModified);
+                if (!isNaN(dt.getTime())) {
+                    __modifiedDateCache.set(filePath, { mtime: dt.getTime(), cachedAt: now });
+                    __persistModifiedDateCacheToSession();
+                    return dt;
+                }
             }
         }
         
-        // Return default date if all methods fail
+        // 4) Default
         return new Date('1970-01-01');
     } catch (error) {
         console.warn(`Failed to get modified date for ${filePath}:`, error);

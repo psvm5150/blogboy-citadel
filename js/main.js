@@ -86,14 +86,17 @@ async function renderDocuments() {
 
 
 // 파일이 "new" 표시를 받을지 확인하는 함수
-async function shouldShowNewIndicator(filePath) {
+// dateOverride가 주어지면 네트워크 호출 없이 해당 날짜를 사용
+async function shouldShowNewIndicator(filePath, dateOverride = null) {
     if (!mainConfig.show_new_indicator) {
         return false;
     }
     
-    const fileDate = await getFileModifiedDate(filePath);
+    const baseDate = dateOverride instanceof Date && !isNaN(dateOverride.getTime())
+        ? dateOverride
+        : await getFileModifiedDate(filePath);
     const currentDate = new Date();
-    const daysDiff = Math.floor((currentDate - fileDate) / (1000 * 60 * 60 * 24));
+    const daysDiff = Math.floor((currentDate - baseDate) / (1000 * 60 * 60 * 24));
     
     return daysDiff <= mainConfig.new_display_days;
 }
@@ -116,21 +119,27 @@ function createNewIndicator() {
 async function createCategorySection(title, files) {
     const documentRoot = normalizePath(mainConfig.document_root);
 
-    // 날짜 결정 함수: toc의 date가 있으면 우선 사용, 없으면 파일 수정일
-    async function getDisplayDateForFile(file) {
-        if (file && file.date) {
-            const parsed = parseFlexibleDate(String(file.date));
-            if (parsed) return parsed;
-        }
-        return await getFileModifiedDate(file.path);
-    }
-    
-    // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인
+    // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인 (네트워크 호출 최소화)
     const fileListPromises = files.map(async (file) => {
-        const showNew = await shouldShowNewIndicator(file.path);
+        // 우선 toc의 날짜를 파싱해 둔다
+        const tocDate = file && file.date ? parseFlexibleDate(String(file.date)) : null;
+
+        // 필요할 때만 수정일 조회 (캐시됨)
+        let modifiedDate = null;
+        const needAnyDate = !!mainConfig.show_document_date || !!mainConfig.show_new_indicator;
+        if (!tocDate && needAnyDate) {
+            modifiedDate = await getFileModifiedDate(file.path);
+        }
+
+        // NEW 여부는 tocDate가 있으면 그걸로 판정, 없으면 수정일로 판정
+        const baseForNew = tocDate || modifiedDate;
+        const showNew = baseForNew ? await shouldShowNewIndicator(file.path, baseForNew) : false;
         const newIndicator = showNew ? createNewIndicator() : '';
-        const displayDate = (mainConfig.show_document_date || showNew) ? await getDisplayDateForFile(file) : null;
+
+        // 날짜 표시: 설정 ON이면 tocDate 우선, 없으면 수정일 사용
+        const displayDate = mainConfig.show_document_date ? (tocDate || modifiedDate) : null;
         const dateTimeDisplay = createDateTimeDisplay(displayDate);
+
         return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
@@ -180,28 +189,32 @@ async function createAllViewSection() {
         }
     }
     
-    // 각 파일의 서버 수정일을 가져와서 정렬용 데이터 준비
+    // 정렬용 기준 날짜 준비: toc의 날짜가 있으면 그걸 사용, 없으면 수정일 조회
     const filesWithDates = await Promise.all(
         allFiles.map(async (file) => {
-            const modifiedDate = await getFileModifiedDate(file.path);
+            const tocDate = file && file.date ? parseFlexibleDate(String(file.date)) : null;
+            const serverModifiedDate = tocDate ? null : await getFileModifiedDate(file.path);
+            const sortDate = tocDate || serverModifiedDate || new Date('1970-01-01');
             return {
                 ...file,
-                serverModifiedDate: modifiedDate
+                categoryTitle: file.categoryTitle,
+                tocDate,
+                serverModifiedDate,
+                sortDate
             };
         })
     );
     
-    // 서버 수정일 기준으로 정렬 (최신순)
-    filesWithDates.sort((a, b) => {
-        return b.serverModifiedDate - a.serverModifiedDate; // 내림차순 (최신이 위로)
-    });
+    // 기준 날짜(sortDate)로 정렬 (최신순)
+    filesWithDates.sort((a, b) => b.sortDate - a.sortDate);
     
-    // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인
+    // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인 (추가 네트워크 호출 없음)
     const fileListPromises = filesWithDates.map(async (file) => {
-        const showNew = await shouldShowNewIndicator(file.path);
+        const baseForNew = file.tocDate || file.serverModifiedDate;
+        const showNew = baseForNew ? await shouldShowNewIndicator(file.path, baseForNew) : false;
         const newIndicator = showNew ? createNewIndicator() : '';
         // 표시용 날짜: toc에 있으면 우선, 없으면 serverModifiedDate 사용
-        const displayDate = file.date ? (parseFlexibleDate(String(file.date)) || file.serverModifiedDate) : file.serverModifiedDate;
+        const displayDate = file.tocDate || file.serverModifiedDate;
         const dateTimeDisplay = createDateTimeDisplay(displayDate);
         const categoryName = `<span class="category-name">${file.categoryTitle}</span>`;
         return `

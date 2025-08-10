@@ -55,6 +55,45 @@ async function isAutoTocDisabled(filePath) {
     }
 }
 
+// 최상단 setext 제목(===, ---) 감지: 문서의 첫 유의미 라인과 그 다음 라인으로 판단
+function detectTopSetextTitle(markdown) {
+    if (!markdown) return false;
+    const lines = markdown.split('\n');
+    let i = 0;
+    // 첫 유의미(비공백) 라인 찾기
+    while (i < lines.length && lines[i].trim() === '') i++;
+    if (i >= lines.length - 1) return false;
+    const titleCandidate = lines[i].trim();
+    const underline = lines[i + 1].trim();
+    // 제목 라인은 하이픈/이퀄만으로 이루어지면 안됨 (YAML front matter 등 방지)
+    const isOnlyHyphensOrEquals = /^(=+|-+)$/.test(titleCandidate);
+    if (!titleCandidate || isOnlyHyphensOrEquals) return false;
+    // 바로 다음 라인이 = 또는 - 로만 구성되어야 함
+    if (/^=+$/.test(underline) || /^-+$/.test(underline)) {
+        return true;
+    }
+    return false;
+}
+
+// toc.json 에서 현재 파일의 제목 찾기
+async function getTocTitleForFile(filePath) {
+    try {
+        const tocConfig = await loadTocConfig();
+        const documentRoot = normalizePath(mainConfig.document_root);
+        const relativePath = filePath.startsWith(documentRoot) ? filePath.substring(documentRoot.length) : filePath;
+        for (const [, categoryInfo] of Object.entries(tocConfig)) {
+            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const found = categoryInfo.files.find(f => f.path === relativePath);
+                if (found && found.title) return String(found.title);
+            }
+        }
+        return null;
+    } catch (e) {
+        console.error('Failed to get TOC title for file:', e);
+        return null;
+    }
+}
+
 // GitHub raw 파일 로드
 async function loadMarkdown(filePath) {
     const contentDiv = document.getElementById('content');
@@ -73,6 +112,16 @@ async function loadMarkdown(filePath) {
 
         const markdown = await response.text();
 
+        // 필요 시 TOC 제목을 setext 형식으로 주입 (문서 최상단에 ===/--- 없을 때만)
+        let finalMarkdown = markdown;
+        if (!detectTopSetextTitle(markdown)) {
+            const tocTitle = await getTocTitleForFile(filePath);
+            if (tocTitle && tocTitle.trim()) {
+                // === 스타일의 h1을 최상단에 삽입
+                finalMarkdown = `${tocTitle}\n===================\n\n` + markdown;
+            }
+        }
+
         // marked.js 설정 (GitHub 기본 설정)
         marked.setOptions({
             breaks: true,
@@ -85,7 +134,7 @@ async function loadMarkdown(filePath) {
             smartypants: false
         });
 
-        const html = marked.parse(markdown);
+        const html = marked.parse(finalMarkdown);
         contentDiv.innerHTML = `<div class="markdown-body">${html}</div>`;
 
         // 코드블록에 하이라이팅 적용
@@ -96,7 +145,7 @@ async function loadMarkdown(filePath) {
         // 기본 처리
         await updateDocumentTitle(contentDiv);
         // 자동 목차 생성
-        await generateTableOfContents(contentDiv, markdown, filePath);
+        await generateTableOfContents(contentDiv, finalMarkdown, filePath);
         // 제목 바로 아래에 문서 메타 정보(작성자 · 날짜) 삽입 (TOC가 있으면 TOC 위로 위치함)
         await insertDocumentMeta(contentDiv, filePath);
         fixImagePaths(filePath);

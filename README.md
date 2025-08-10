@@ -6,7 +6,7 @@
 A lightweight and simple blog management system for GitHub Pages blogs. Built as an alternative to Jekyll when design configuration became too complex and cumbersome.
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen)](https://psvm5150.github.io)
-[![License](https://img.shields.io/badge/License-CC%20BY%202.0-lightgrey.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -252,12 +252,11 @@ python -m http.server 8000
 
 ## License
 
-This project is licensed under the Creative Commons Attribution 2.0 License. See the [LICENSE](LICENSE) file for details.
+MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
-- **GitHub**: [@psvm5150](https://github.com/psvm5150)
-- **Website**: [psvm5150.github.io](https://psvm5150.github.io)
+- **GitHub**: [@psvm5150](https://github.com/psvm5150/blogboy-citadel)
 
 ---
 

@@ -15,5 +15,6 @@
   "default_theme": "light",
   "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
   "show_home_button": true,
-  "site_locale": "default"
+  "site_locale": "default",
+  "documents_per_page": 20
 }

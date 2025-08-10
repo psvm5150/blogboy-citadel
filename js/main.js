@@ -2,14 +2,39 @@
 let documentCategories = {};
 let currentViewMode = 'category'; // Default value, will be changed during initialization based on settings
 
+// Pagination/Search state
+let currentPage = 1;
+let currentSearchTerm = '';
+function getPerPage() {
+    const n = Number(mainConfig.documents_per_page);
+    return Number.isFinite(n) && n > 0 ? n : 20;
+}
+
+// Flatten all docs once TOC is loaded
+function buildAllDocsFlat() {
+    const all = [];
+    for (const [, categoryInfo] of Object.entries(documentCategories)) {
+        if (categoryInfo.files && categoryInfo.files.length > 0) {
+            categoryInfo.files.forEach(file => {
+                const tocDate = file && file.date ? parseFlexibleDate(String(file.date)) : null;
+                all.push({
+                    file,
+                    categoryTitle: categoryInfo.title,
+                    tocDate,
+                    sortDate: tocDate || new Date('1970-01-01')
+                });
+            });
+        }
+    }
+    // For All view and search, keep newest first by tocDate if available
+    all.sort((a, b) => b.sortDate - a.sortDate);
+    return all;
+}
+
 // toc.json 파일 로드
 async function loadToc() {
     try {
-        const response = await fetch('properties/toc.json');
-        if (!response.ok) {
-            throw new Error(`Failed to load toc.json: ${response.status}`);
-        }
-        documentCategories = await response.json();
+        documentCategories = await fetchJsonCached('properties/toc.json');
         console.log('TOC loaded successfully');
     } catch (error) {
         console.error('Error loading TOC:', error);
@@ -37,6 +62,8 @@ async function loadDocuments() {
             currentViewMode = 'category';
         }
 
+        currentPage = 1;
+        currentSearchTerm = '';
         await renderDocuments();
 
     } catch (error) {
@@ -45,40 +72,60 @@ async function loadDocuments() {
     }
 }
 
-// 현재 뷰 모드에 따라 문서 렌더링
+// 현재 뷰 모드 + 검색어에 따라 문서 렌더링 (페이징 포함)
 async function renderDocuments() {
     const postsContainer = document.getElementById('postsContainer');
-    
-    // 로딩 표시
+    const pager = document.getElementById('pagination');
+
+    if (!postsContainer) return;
+
     postsContainer.innerHTML = `<div class="loading">${t('msg_loading_documents')}</div>`;
-    
-    let html = '';
 
     try {
-        if (currentViewMode === 'all') {
-            // 전체보기 모드
-            html = await createAllViewSection();
+        const perPage = getPerPage();
+        const allFlat = buildAllDocsFlat();
+
+        // 필터링: 검색어가 있으면 전체 영역에서 검색
+        const term = (currentSearchTerm || '').trim().toLowerCase();
+        let filtered = term
+            ? allFlat.filter(it => (it.file.title || '').toLowerCase().includes(term) || (it.categoryTitle || '').toLowerCase().includes(term))
+            : allFlat;
+
+        // 표시 모드에 따른 그룹화 / 섹션 타이틀
+        const totalItems = filtered.length;
+        const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        const start = (currentPage - 1) * perPage;
+        const pageSlice = filtered.slice(start, start + perPage);
+
+        let html = '';
+        if (term || currentViewMode === 'all') {
+            // 검색 결과 또는 전체보기는 단일 섹션으로 렌더링 (카테고리 배지 표시)
+            html = await createFlatListSection(term ? `🔎 ${t('lbl_search_result')}` : t('lbl_all_documents'), pageSlice);
         } else {
-            // 분류보기 모드 (기본)
-            const sectionPromises = [];
-            for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
-                if (categoryInfo.files && categoryInfo.files.length > 0) {
-                    sectionPromises.push(createCategorySection(categoryInfo.title, categoryInfo.files));
-                }
+            // 분류보기: 페이지 조각을 카테고리별로 묶어 섹션 렌더링
+            const grouped = new Map();
+            for (const item of pageSlice) {
+                if (!grouped.has(item.categoryTitle)) grouped.set(item.categoryTitle, []);
+                grouped.get(item.categoryTitle).push(item.file);
             }
+            const sectionPromises = [];
+            grouped.forEach((files, title) => sectionPromises.push(createCategorySection(title, files)));
             const sections = await Promise.all(sectionPromises);
             html = sections.join('');
         }
 
-        if (html === '') {
+        if (!html) {
             postsContainer.innerHTML = `<div class="loading">${t('msg_no_documents')}</div>`;
         } else {
             postsContainer.innerHTML = html;
-
-            const totalDocs = Object.values(documentCategories)
-                .reduce((total, category) => total + category.files.length, 0);
-            console.log(`Total ${totalDocs} documents loaded in ${currentViewMode} mode`);
         }
+
+        renderPaginationControls(pager, totalItems, currentPage, totalPages);
+
+        console.log(`Rendered ${Math.min(perPage, totalItems)} of ${totalItems} items (page ${currentPage}/${totalPages}) in ${term ? 'search' : currentViewMode} mode`);
     } catch (error) {
         console.error('Error rendering documents:', error);
         postsContainer.innerHTML = `<div class="loading">${t('msg_failed_render_documents')}</div>`;
@@ -173,6 +220,45 @@ async function createCategorySection(title, files) {
     `;
 }
 
+// Flat list section renderer for All/Search view (expects slice of flattened items)
+async function createFlatListSection(titleText, flattenedItems) {
+    const documentRoot = normalizePath(mainConfig.document_root);
+
+    const fileListPromises = flattenedItems.map(async (wrap) => {
+        const file = wrap.file;
+        const showNew = wrap.tocDate ? await shouldShowNewIndicator(file.path, wrap.tocDate) : false;
+        const newIndicator = showNew ? createNewIndicator() : '';
+        const displayDate = mainConfig.show_document_date ? wrap.tocDate : null;
+        const dateTimeDisplay = createDateTimeDisplay(displayDate);
+        const categoryName = `<span class="category-name">${wrap.categoryTitle}</span>`;
+        return `
+            <li class="post-item">
+                <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
+                    ${file.title}${newIndicator}${dateTimeDisplay}${categoryName}
+                </a>
+            </li>
+        `;
+    });
+
+    const fileListArray = await Promise.all(fileListPromises);
+    const fileList = fileListArray.join('');
+    const countDisplay = '';
+
+    return `
+        <div class="category-section">
+            <div class="category-header">
+                <div class="category-title">${titleText}</div>
+                ${countDisplay}
+            </div>
+            <div class="category-body">
+                <ul class="post-list">
+                    ${fileList}
+                </ul>
+            </div>
+        </div>
+    `;
+}
+
 // 전체보기 모드로 문서 목록 생성
 async function createAllViewSection() {
     const documentRoot = normalizePath(mainConfig.document_root);
@@ -249,6 +335,32 @@ async function createAllViewSection() {
 }
 
 // 검색 기능
+function renderPaginationControls(pager, totalItems, current, totalPages) {
+    if (!pager) return;
+    if (totalItems === 0) { pager.innerHTML = ''; return; }
+    const prevDisabled = current <= 1 ? 'disabled' : '';
+    const nextDisabled = current >= totalPages ? 'disabled' : '';
+
+    const pageInfo = t('lbl_page_info', { current, total: totalPages });
+    pager.innerHTML = `
+        <button id="btnPrevPage" ${prevDisabled}>${t('btn_prev_page')}</button>
+        <span class="page-info">${pageInfo}</span>
+        <button id="btnNextPage" ${nextDisabled}>${t('btn_next_page')}</button>
+    `;
+
+    const prev = document.getElementById('btnPrevPage');
+    const next = document.getElementById('btnNextPage');
+    if (prev) prev.onclick = async () => { if (currentPage > 1) { currentPage--; await renderDocuments(); restoreSearchInput(); } };
+    if (next) next.onclick = async () => { currentPage++; await renderDocuments(); restoreSearchInput(); };
+}
+
+function restoreSearchInput() {
+    const input = document.getElementById('documentSearch');
+    if (input && input.value !== currentSearchTerm) {
+        input.value = currentSearchTerm;
+    }
+}
+
 function initializeSearch() {
     const searchContainer = document.querySelector('.main-content .container');
 
@@ -278,57 +390,29 @@ function initializeSearch() {
 
 // 검색 처리
 function handleSearch(event) {
-    const searchTerm = event.target.value.toLowerCase();
-    const allCategories = document.querySelectorAll('.category-section');
-    let totalVisible = 0;
-
-    allCategories.forEach(category => {
-        const posts = category.querySelectorAll('.post-item');
-        let hasVisiblePosts = false;
-
-        posts.forEach(post => {
-            const title = post.querySelector('.post-link').textContent.toLowerCase();
-            const isVisible = title.includes(searchTerm);
-
-            post.style.display = isVisible ? 'block' : 'none';
-            if (isVisible) {
-                hasVisiblePosts = true;
-                totalVisible++;
-            }
-        });
-
-        category.style.display = hasVisiblePosts ? 'block' : 'none';
-
-        const categoryCount = category.querySelector('.category-count');
-        if (categoryCount && mainConfig.show_document_count) {
-            const visibleCount = Array.from(posts).filter(post => 
-                post.style.display !== 'none'
-            ).length;
-
-            if (hasVisiblePosts) {
-                categoryCount.textContent = searchTerm ? `${visibleCount} ${t('lbl_document_count')}` : `${posts.length} ${t('lbl_document_count')}`;
-            }
-        }
-    });
-
-    updateSearchStats(searchTerm, totalVisible);
+    currentSearchTerm = (event.target.value || '').trim();
+    currentPage = 1;
+    updateSearchStats(currentSearchTerm);
+    renderDocuments();
 }
 
 // 검색 통계 업데이트
-function updateSearchStats(searchTerm = '', visibleCount = null) {
+function updateSearchStats(searchTerm = '') {
     const searchStats = document.getElementById('searchStats');
     if (!searchStats) return;
 
-    const totalDocs = Object.values(documentCategories)
-        .reduce((total, category) => total + category.files.length, 0);
-
+    const allFlat = buildAllDocsFlat();
+    const totalDocs = allFlat.length;
     if (searchTerm) {
-        const actualVisible = visibleCount !== null ? visibleCount : totalDocs;
-        searchStats.textContent = `"${searchTerm}" ${t('lbl_search_result')}: ${actualVisible}${t('lbl_document_count')} 문서`;
+        const term = searchTerm.toLowerCase();
+        const matched = allFlat.filter(it => (it.file.title || '').toLowerCase().includes(term) || (it.categoryTitle || '').toLowerCase().includes(term)).length;
+        searchStats.textContent = `"${searchTerm}" ${t('lbl_search_result')}: ${matched}${t('lbl_document_count')} 문서`;
     } else {
+        // categories count
+        const categoriesCount = Object.keys(documentCategories).length;
         searchStats.textContent = t('lbl_total_documents', {
             count: totalDocs,
-            categories: Object.keys(documentCategories).length
+            categories: categoriesCount
         });
     }
 }
@@ -405,13 +489,10 @@ function initializeViewModeControls() {
             // 뷰 필터가 표시되는 경우에만 이벤트 리스너 추가
             viewModeSelect.addEventListener('change', async (e) => {
                 currentViewMode = e.target.value;
+                currentPage = 1;
                 await renderDocuments();
-                
-                // 검색이 활성화되어 있다면 다시 적용
-                const searchInput = document.getElementById('documentSearch');
-                if (searchInput && searchInput.value) {
-                    searchInput.dispatchEvent(new Event('input'));
-                }
+                restoreSearchInput();
+                updateSearchStats(currentSearchTerm);
             });
         }
         
@@ -442,29 +523,6 @@ function initializeKeyboardShortcuts() {
     });
 }
 
-// 다크모드 상태 저장 및 토글
-async function setDarkMode(on) {
-    // 전환 버튼 텍스트, class 처리
-    if (on) {
-        document.body.classList.add('darkmode');
-        sessionStorage.setItem('theme_mode', 'dark');
-        const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = t('btn_light_mode');
-    } else {
-        document.body.classList.remove('darkmode');
-        sessionStorage.setItem('theme_mode', 'light');
-        const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = t('btn_dark_mode');
-    }
-}
-
-function bindDarkModeButton() {
-    const btn = document.getElementById('darkmode-toggle');
-    if (!btn) return;
-    btn.onclick = () => {
-        setDarkMode(!document.body.classList.contains('darkmode'));
-    };
-}
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {

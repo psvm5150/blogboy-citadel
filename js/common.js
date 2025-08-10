@@ -5,6 +5,32 @@
  * This file contains shared functions and variables to avoid code duplication
  */
 
+// Simple in-memory JSON cache to avoid redundant fetches
+// Map<url, Promise<any>> ensures single flight per URL
+const __jsonCache = new Map();
+
+async function fetchJsonCached(url) {
+    if (!url) throw new Error('fetchJsonCached: url is required');
+    if (__jsonCache.has(url)) {
+        return __jsonCache.get(url);
+    }
+    const p = (async () => {
+        const res = await fetch(url);
+        if (!res.ok) {
+            throw new Error(`Failed to load JSON ${url}: ${res.status}`);
+        }
+        return res.json();
+    })();
+    __jsonCache.set(url, p);
+    try {
+        return await p;
+    } catch (e) {
+        // On failure, remove cache entry to allow retry later
+        __jsonCache.delete(url);
+        throw e;
+    }
+}
+
 // Global configuration object shared across modules
 let mainConfig = {};
 
@@ -88,12 +114,7 @@ async function loadMainConfig(basePath = '') {
     const configPath = basePath ? `${basePath}/properties/main-config.json` : 'properties/main-config.json';
     
     try {
-        const response = await fetch(configPath);
-        if (!response.ok) {
-            throw new Error(`Failed to load main-config.json: ${response.status}`);
-        }
-        
-        mainConfig = await response.json();
+        mainConfig = await fetchJsonCached(configPath);
         console.log('Main config loaded successfully');
         return mainConfig;
     } catch (error) {
@@ -261,12 +282,7 @@ async function loadI18nData(language = 'ko', basePath = '') {
     const i18nPath = basePath ? `${basePath}/properties/i18n/${language}.json` : `properties/i18n/${language}.json`;
     
     try {
-        const response = await fetch(i18nPath);
-        if (!response.ok) {
-            throw new Error(`Failed to load ${language}.json: ${response.status}`);
-        }
-        
-        i18nData = await response.json();
+        i18nData = await fetchJsonCached(i18nPath);
         console.log(`I18n data loaded successfully for language: ${language}`);
         return i18nData;
     } catch (error) {
@@ -391,8 +407,8 @@ function applyI18nTranslations() {
  */
 function tWithFallback(key, configKey, params = {}) {
     // Check if i18n data has the key and it's not empty
-    if (i18nData && i18nData[key] && i18nData[key].trim() !== '') {
-        let text = i18nData[key];
+    if (i18nData && i18nData[key] && String(i18nData[key]).trim() !== '') {
+        let text = String(i18nData[key]);
         
         // Replace template parameters
         if (params && typeof text === 'string') {
@@ -406,7 +422,7 @@ function tWithFallback(key, configKey, params = {}) {
     
     // Fallback to main-config.json value
     if (mainConfig && mainConfig[configKey]) {
-        let text = mainConfig[configKey];
+        let text = String(mainConfig[configKey]);
         
         // Replace template parameters
         if (params && typeof text === 'string') {
@@ -420,4 +436,42 @@ function tWithFallback(key, configKey, params = {}) {
     
     // Final fallback to the key itself
     return key;
+}
+// Theme mode management shared by main and viewer
+async function setDarkMode(on) {
+    // Base class and storage
+    if (on) {
+        document.body.classList.add('darkmode');
+        try { sessionStorage.setItem('theme_mode', 'dark'); } catch (e) {}
+        const toggle = document.getElementById('darkmode-toggle');
+        if (toggle) toggle.innerText = t('btn_light_mode');
+    } else {
+        document.body.classList.remove('darkmode');
+        try { sessionStorage.setItem('theme_mode', 'light'); } catch (e) {}
+        const toggle = document.getElementById('darkmode-toggle');
+        if (toggle) toggle.innerText = t('btn_dark_mode');
+    }
+
+    // Viewer-specific assets (present only in viewer.html)
+    const mdLight = document.getElementById('md-light');
+    const mdDark = document.getElementById('md-dark');
+    const hlLight = document.getElementById('highlight-light');
+    const hlDark = document.getElementById('highlight-dark');
+    if (mdLight && mdDark && hlLight && hlDark) {
+        if (on) {
+            mdLight.disabled = true; mdDark.disabled = false;
+            hlLight.disabled = true; hlDark.disabled = false;
+        } else {
+            mdLight.disabled = false; mdDark.disabled = true;
+            hlLight.disabled = false; hlDark.disabled = true;
+        }
+    }
+}
+
+function bindDarkModeButton() {
+    const btn = document.getElementById('darkmode-toggle');
+    if (!btn) return;
+    btn.onclick = () => {
+        setDarkMode(!document.body.classList.contains('darkmode'));
+    };
 }

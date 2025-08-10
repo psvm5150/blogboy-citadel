@@ -22,5 +22,8 @@
   "lbl_new_indicator": "new",
   "lbl_document_count": "items",
   "lbl_search_result": "search results",
-  "lbl_total_documents": "Total {count} documents ({categories} categories)"
+  "lbl_total_documents": "Total {count} documents ({categories} categories)",
+  "btn_prev_page": "Prev",
+  "btn_next_page": "Next",
+  "lbl_page_info": "Page {current}/{total}"
 }

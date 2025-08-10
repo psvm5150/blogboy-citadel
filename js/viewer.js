@@ -8,21 +8,13 @@ function getUrlParameters() {
 
 // 뷰어 설정 로드
 async function loadViewerConfig() {
-    const response = await fetch('./properties/viewer-config.json');
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return await response.json();
+    return await fetchJsonCached('./properties/viewer-config.json');
 }
 
 // TOC 설정 로드
 async function loadTocConfig() {
     try {
-        const response = await fetch('./properties/toc.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return await response.json();
+        return await fetchJsonCached('./properties/toc.json');
     } catch (error) {
         console.error('Failed to load toc config:', error);
         return {};
@@ -511,44 +503,6 @@ async function showError(contentDiv, filePath, errorMessage) {
     `;
 }
 
-// 다크모드 상태 저장 및 토글
-async function setDarkMode(on) {
-    const config = await loadViewerConfig();
-
-    // 전환 버튼 텍스트, class 처리 기존과 동일
-    if (on) {
-        document.body.classList.add('darkmode');
-        sessionStorage.setItem('theme_mode', 'dark');
-        const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = t('btn_light_mode');
-
-        // 마크다운&하이라이트 다크 스타일 활성화
-        document.getElementById('md-light').disabled = true;
-        document.getElementById('md-dark').disabled = false;
-        document.getElementById('highlight-light').disabled = true;
-        document.getElementById('highlight-dark').disabled = false;
-
-    } else {
-        document.body.classList.remove('darkmode');
-        sessionStorage.setItem('theme_mode', 'light');
-        const toggle = document.getElementById('darkmode-toggle');
-        if (toggle) toggle.innerText = t('btn_dark_mode');
-
-        // 무조건 라이트 스타일만 활성화
-        document.getElementById('md-light').disabled = false;
-        document.getElementById('md-dark').disabled = true;
-        document.getElementById('highlight-light').disabled = false;
-        document.getElementById('highlight-dark').disabled = true;
-    }
-}
-
-function bindDarkModeButton() {
-    const btn = document.getElementById('darkmode-toggle');
-    if (!btn) return;
-    btn.onclick = () => {
-        setDarkMode(!document.body.classList.contains('darkmode'));
-    };
-}
 
 // 뷰어 페이지 라벨 적용
 async function applyViewerConfigLabels() {

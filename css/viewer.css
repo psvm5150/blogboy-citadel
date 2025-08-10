@@ -213,6 +213,14 @@ body {
     display: block; /* 단일 라인 텍스트 표시 */
     text-align: right; /* 기존 우측정렬 유지 */
 }
+/* 문서 메타 내 RSS 링크 스타일 */
+.document-meta .rss-link {
+    color: inherit;
+    text-decoration: none;
+}
+.document-meta .rss-link:hover {
+    text-decoration: underline;
+}
 
 /* 제목과 메타 사이 간격을 절반으로 줄이기 */
 .markdown-body > h1:first-of-type {
@@ -426,6 +434,18 @@ body {
 /* 스크롤 부드럽게 하기 */
 html {
     scroll-behavior: smooth;
+}
+/* 스크린리더 전용 텍스트 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* 헤더 앵커 링크 스타일 */

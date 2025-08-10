@@ -55,6 +55,29 @@ async function isAutoTocDisabled(filePath) {
     }
 }
 
+// 현재 문서의 disable_license_phrase 설정 확인
+async function isLicensePhraseDisabled(filePath) {
+    try {
+        const tocConfig = await loadTocConfig();
+
+        const documentRoot = normalizePath(mainConfig.document_root);
+        const normalizedPath = filePath.startsWith(documentRoot) ? filePath.substring(documentRoot.length) : filePath;
+
+        for (const [, categoryInfo] of Object.entries(tocConfig)) {
+            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const file = categoryInfo.files.find(f => f.path === normalizedPath);
+                if (file && file.disable_license_phrase === true) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    } catch (error) {
+        console.error('Error checking license phrase setting:', error);
+        return false;
+    }
+}
+
 // 최상단 setext 제목(===, ---) 감지: 문서의 첫 유의미 라인과 그 다음 라인으로 판단
 function detectTopSetextTitle(markdown) {
     if (!markdown) return false;
@@ -148,8 +171,8 @@ async function loadMarkdown(filePath) {
         await generateTableOfContents(contentDiv, finalMarkdown, filePath);
         // 제목 바로 아래에 문서 메타 정보(작성자 · 날짜) 삽입 (TOC가 있으면 TOC 위로 위치함)
         await insertDocumentMeta(contentDiv, filePath);
-        // 라이선스 정보 자동 표시 (자동 목차 아래, 없으면 작성자/작성일 아래)
-        await insertLicenseInfo(contentDiv);
+        // 라이선스 정보 자동 표시 (자동 목차 아래, 없으면 작성자/작성일 아래) 및 본문 전 여백 처리
+        await insertLicenseInfo(contentDiv, filePath);
         fixImagePaths(filePath);
 
     } catch (error) {
@@ -432,8 +455,28 @@ async function generateDocumentMeta(filePath) {
             line = dateText; // author가 비어도 날짜는 표시
         }
 
+        // RSS 아이콘/링크: viewer-config.json 의 rss_feed_url 이 있으면 표시 (작성일 뒤, 공백 2칸)
+        let rssHtml = '';
+        const rssUrlRaw = config.rss_feed_url;
+        if (rssUrlRaw && String(rssUrlRaw).trim() !== '') {
+            let rssUrl = String(rssUrlRaw).trim();
+            try {
+                // 절대/상대 모두 허용
+                const u = new URL(rssUrl, window.location.origin);
+                rssUrl = u.pathname + u.search + u.hash || u.toString();
+            } catch (e) {
+                // URL 파싱 실패 시 그대로 사용
+            }
+            rssHtml = `&nbsp;&nbsp;<a class="rss-link" href="${rssUrl}" target="_blank" rel="noopener" title="RSS 구독">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
+                    <path d="M6.18 17.82A2.18 2.18 0 1 1 4 20a2.18 2.18 0 0 1 2.18-2.18M4 10.5a9.5 9.5 0 0 1 9.5 9.5h-3A6.5 6.5 0 0 0 4 13.5zm0-6A15.5 15.5 0 0 1 19.5 20h-3A12.5 12.5 0 0 0 4 7.5z"/>
+                </svg>
+                <span class="sr-only">RSS</span>
+            </a>`;
+        }
+
         const metaHtml = `
-            <div class="document-meta">${line}</div>
+            <div class="document-meta">${line}${rssHtml}</div>
         `;
 
         return metaHtml;
@@ -548,27 +591,46 @@ async function insertDocumentMeta(contentDiv, filePath) {
     }
 }
 
-// 라이선스 정보 자동 삽입: 자동 목차 아래, 없으면 문서 메타 아래. 상단에 <br> 한 줄 추가.
-async function insertLicenseInfo(contentDiv) {
+// 라이선스 정보 자동 삽입 및 본문 앞 여백 처리
+// 규칙:
+// - toc.json 에 disable_license_phrase=true 이면 라이선스 문구 표시 생략
+// - viewer-config.json 에 라이선스 설정(배지 이미지 또는 설명)이 없으면 표시 생략
+// - 라이선스 문구가 있는 경우: 라이선스 앞 1줄 공백(기존 유지) + 라이선스와 본문 사이 2줄 공백 추가
+// - 라이선스 문구가 없는 경우: 자동목차가 있으면 TOC와 본문 사이 2줄 공백, 없으면 문서 메타와 본문 사이 2줄 공백
+async function insertLicenseInfo(contentDiv, filePath) {
     try {
         const config = await loadViewerConfig();
-        const descRaw = config.license_description;
-        const imgRaw = config.license_badge_image;
-        const linkRaw = config.license_badge_link;
 
-        // 표시할 내용이 전혀 없으면 종료
-        if ((!descRaw || String(descRaw).trim() === '') && (!imgRaw || String(imgRaw).trim() === '')) {
-            return;
-        }
-
-        // 삽입 위치 결정: 자동 목차가 우선, 없으면 문서 메타 아래
+        // 삽입 위치 기준 요소: TOC 우선, 없으면 문서 메타
         const tocEl = contentDiv.querySelector('.auto-toc');
         const metaEl = contentDiv.querySelector('.document-meta');
         const anchorEl = tocEl || metaEl;
         if (!anchorEl) {
-            return; // 규칙상 TOC나 메타가 없으면 삽입하지 않음
+            return; // 규칙상 TOC나 메타가 없으면 처리하지 않음
         }
 
+        // toc.json 에서 비활성화 여부 확인
+        const disabledByToc = await isLicensePhraseDisabled(filePath);
+
+        // viewer-config 의 라이선스 유효성 검사 (배지 이미지 또는 설명 둘 중 하나라도 있으면 유효)
+        const descRaw = config.license_description;
+        const imgRaw = config.license_badge_image;
+        const linkRaw = config.license_badge_link;
+        const hasValidLicenseConfig = !((!descRaw || String(descRaw).trim() === '') && (!imgRaw || String(imgRaw).trim() === ''));
+
+        // 헬퍼: 2줄 공백 삽입 (본문 시작 전 여백)
+        const insertTwoBlankLines = (afterElement) => {
+            if (!afterElement) return;
+            afterElement.insertAdjacentHTML('afterend', '<br><br>');
+        };
+
+        // 라이선스 표시 조건 미충족일 때: 라이선스는 생략하고 2줄 여백만 추가
+        if (disabledByToc || !hasValidLicenseConfig) {
+            insertTwoBlankLines(anchorEl);
+            return;
+        }
+
+        // 여기서부터 라이선스 표시 수행
         // 컨테이너 생성
         const container = document.createElement('div');
         container.className = 'license-info';
@@ -618,13 +680,11 @@ async function insertLicenseInfo(contentDiv) {
 
             // 이미지 로드 실패 시 이미지 및 링크 제거, 앞 공백 제거
             imgEl.addEventListener('error', () => {
-                // 링크 래퍼 제거 혹은 이미지 제거
                 if (linkEl && linkEl.parentNode) {
                     linkEl.parentNode.removeChild(linkEl);
                 } else if (imgEl && imgEl.parentNode) {
                     imgEl.parentNode.removeChild(imgEl);
                 }
-                // 선행 공백 제거
                 const space = container.querySelector('.license-space');
                 if (space) space.remove();
             });
@@ -643,11 +703,12 @@ async function insertLicenseInfo(contentDiv) {
             container.appendChild(document.createTextNode(desc));
         }
 
-        // 위에 <br> 한 줄 삽입하고 그 다음에 컨테이너 삽입
-        // 주의: 동일 anchor에 연속 afterend 삽입 시 두 번째 요소가 <br> 앞에 오게 되므로
-        // 컨테이너를 먼저 삽입한 뒤 컨테이너 바로 앞에 <br>을 넣어 최종 순서를 [anchor][br][container]로 만든다.
+        // 기존 기능 유지: 라이선스 앞 1줄 공백 + 라이선스 삽입
         anchorEl.insertAdjacentElement('afterend', container);
         container.insertAdjacentHTML('beforebegin', '<br>');
+
+        // 본문 시작 전 2줄 여백 추가 (라이선스와 본문 사이)
+        container.insertAdjacentHTML('afterend', '<br><br>');
     } catch (e) {
         console.error('Failed to insert license info:', e);
     }

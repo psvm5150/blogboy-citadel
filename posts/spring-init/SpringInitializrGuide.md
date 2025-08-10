@@ -1,17 +1,6 @@
 
-
 폐쇄망에서 Spring Boot Project 시작 하기 
 ===================  
-  
-  >  `@author Tansan Man(tansan5150)`    
-  >  `@up to date 2023.05.26` 
-    
-<br>
-
-[![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
-본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
-
-<br>  
 
 ### 1. Spring Initilalizr
 본 Guide는 인터넷이 열되지 않은 폐쇄망(내부망)에서 Spring Boot Project 를 생성하고 사용 하는 방법에 대한 안내서다.  

@@ -1,29 +1,3 @@
-Subversion(SVN) 형상관리 Guide
-===================  
-<br> 
-  
-  > `@author Tansan Man(tansan5150)`    
-    
-<br>
-
-[![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
-본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
-
---------------------------------------
-
-<br>  
-
-### 목차
-<br>
-  > &nbsp; [1. SVN Repository 생성 요청](#1-svn-repository)   
-  > &nbsp; [2. Tortoise SVN 을 통한 저장소 최초 등록](#2-tortoise-svn)   
-  > &nbsp; [3. IntelliJ IDEA 에서 SVN 사용](#3-intellij-idea-svn)   
-  > &nbsp; [4. SVN 원격 Repository 관리 작업](#4-svn-repository)  
-
-  <br> <br> <br> <br>
---------------------------------------
-
-
 <br>
 
 ### 1. SVN Repository 생성 요청

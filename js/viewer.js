@@ -148,6 +148,8 @@ async function loadMarkdown(filePath) {
         await generateTableOfContents(contentDiv, finalMarkdown, filePath);
         // 제목 바로 아래에 문서 메타 정보(작성자 · 날짜) 삽입 (TOC가 있으면 TOC 위로 위치함)
         await insertDocumentMeta(contentDiv, filePath);
+        // 라이선스 정보 자동 표시 (자동 목차 아래, 없으면 작성자/작성일 아래)
+        await insertLicenseInfo(contentDiv);
         fixImagePaths(filePath);
 
     } catch (error) {
@@ -401,8 +403,8 @@ async function generateDocumentMeta(filePath) {
             }
         }
 
-        // 작성자: toc가 우선, 없으면 global_author
-        const author = (tocEntry && tocEntry.author) ? tocEntry.author : (config.global_author || '');
+        // 작성자: toc가 우선, 없으면 viewer-config의 author (호환 목적으로 global_author도 폴백)
+        const author = (tocEntry && tocEntry.author) ? tocEntry.author : (config.author || config.global_author || '');
 
         // 작성일: toc가 우선, 없으면 파일 수정일(TOC와 동일 포맷)
         let dateText = '';
@@ -543,6 +545,111 @@ async function insertDocumentMeta(contentDiv, filePath) {
         }
     } catch (e) {
         console.error('Failed to insert document meta:', e);
+    }
+}
+
+// 라이선스 정보 자동 삽입: 자동 목차 아래, 없으면 문서 메타 아래. 상단에 <br> 한 줄 추가.
+async function insertLicenseInfo(contentDiv) {
+    try {
+        const config = await loadViewerConfig();
+        const descRaw = config.license_description;
+        const imgRaw = config.license_badge_image;
+        const linkRaw = config.license_badge_link;
+
+        // 표시할 내용이 전혀 없으면 종료
+        if ((!descRaw || String(descRaw).trim() === '') && (!imgRaw || String(imgRaw).trim() === '')) {
+            return;
+        }
+
+        // 삽입 위치 결정: 자동 목차가 우선, 없으면 문서 메타 아래
+        const tocEl = contentDiv.querySelector('.auto-toc');
+        const metaEl = contentDiv.querySelector('.document-meta');
+        const anchorEl = tocEl || metaEl;
+        if (!anchorEl) {
+            return; // 규칙상 TOC나 메타가 없으면 삽입하지 않음
+        }
+
+        // 컨테이너 생성
+        const container = document.createElement('div');
+        container.className = 'license-info';
+
+        let imgEl = null;
+        let linkEl = null;
+
+        // 이미지 URL 정규화 (http/https 아니면 normalizePath 사용)
+        let imgUrl = null;
+        if (imgRaw && String(imgRaw).trim() !== '') {
+            const trimmed = String(imgRaw).trim();
+            if (/^https?:\/\//i.test(trimmed)) {
+                imgUrl = trimmed;
+            } else {
+                imgUrl = normalizePath(trimmed);
+            }
+        }
+
+        if (imgUrl) {
+            imgEl = document.createElement('img');
+            imgEl.src = imgUrl;
+            imgEl.alt = 'license-badge';
+            imgEl.style.verticalAlign = 'middle';
+
+            // 링크 유효성 검사 (없거나 유효하지 않으면 링크 없이 이미지 표시)
+            let validLink = false;
+            if (linkRaw && String(linkRaw).trim() !== '') {
+                try {
+                    // allow absolute and site-root/relative
+                    const u = new URL(linkRaw, window.location.origin);
+                    validLink = /^https?:/i.test(u.protocol) || linkRaw.startsWith('/') || linkRaw.startsWith('#');
+                } catch (e) {
+                    validLink = false;
+                }
+            }
+
+            if (validLink) {
+                linkEl = document.createElement('a');
+                linkEl.href = linkRaw;
+                linkEl.target = '_blank';
+                linkEl.rel = 'noopener noreferrer';
+                linkEl.appendChild(imgEl);
+                container.appendChild(linkEl);
+            } else {
+                container.appendChild(imgEl);
+            }
+
+            // 이미지 로드 실패 시 이미지 및 링크 제거, 앞 공백 제거
+            imgEl.addEventListener('error', () => {
+                // 링크 래퍼 제거 혹은 이미지 제거
+                if (linkEl && linkEl.parentNode) {
+                    linkEl.parentNode.removeChild(linkEl);
+                } else if (imgEl && imgEl.parentNode) {
+                    imgEl.parentNode.removeChild(imgEl);
+                }
+                // 선행 공백 제거
+                const space = container.querySelector('.license-space');
+                if (space) space.remove();
+            });
+        }
+
+        // 설명 텍스트 추가
+        const desc = descRaw ? String(descRaw) : '';
+        if (desc.trim() !== '') {
+            if (imgEl) {
+                // 이미지가 있을 때만 공백 1칸 추가
+                const space = document.createElement('span');
+                space.className = 'license-space';
+                space.textContent = ' ';
+                container.appendChild(space);
+            }
+            container.appendChild(document.createTextNode(desc));
+        }
+
+        // 위에 <br> 한 줄 삽입하고 그 다음에 컨테이너 삽입
+        // 주의: 동일 anchor에 연속 afterend 삽입 시 두 번째 요소가 <br> 앞에 오게 되므로
+        // 컨테이너를 먼저 삽입한 뒤 컨테이너 바로 앞에 <br>을 넣어 최종 순서를 [anchor][br][container]로 만든다.
+        anchorEl.insertAdjacentElement('afterend', container);
+        container.insertAdjacentHTML('beforebegin', '<br>');
+    } catch (e) {
+        console.error('Failed to insert license info:', e);
     }
 }
 

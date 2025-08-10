@@ -1,13 +1,3 @@
-나만의 Git Server 만들기 
-===================  
-  
-<br>
-
-[![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
-본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
-
-<br>
-
 ### 1. 개요
 
 Git을 활용하여 다양한 개발 관련 업무에서 형상관리를 할 수 있다. Harvest 와는 다르게 빠르고 IDE나 Editor 와 같은 도구에 통합되어 있어  보다 편리하게 쓸 수 있다. 또한 인터넷에서 Reference를 쉽게 찾을 수 있으며 현 시점에서 사실상 형상관리의 표준 이라 할 수 있다. 그리고 우리도 차세대 업무에서 Git을 표준 형상관리 도구로 사용하게 될 것이다. 

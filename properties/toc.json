@@ -7,7 +7,8 @@
         "path": "md/MarkDownGuide.md",
         "disable_auto_toc": true,
         "author": "Gene mo Ahne",
-        "date": "2025-08-01"
+        "date": "2025-08-01",
+        "disable_license_phrase": true
       }
     ]
   },
@@ -16,7 +17,8 @@
     "files": [
       {
         "title": "Vi/Vim 완벽 사용법",
-        "path": "vi/ViQuickStart.md"
+        "path": "vi/ViQuickStart.md",
+        "date": "2024-01-01"
       },
       {
         "title": "SublimeText 사용자 가이드",
@@ -26,7 +28,8 @@
       },
       {
         "title": "SublimeText 단축키 모음",
-        "path": "sltext-shortcuts/shortcusts.md"
+        "path": "sltext-shortcuts/shortcusts.md",
+        "author": "psvm5150"
       }
     ]
   },

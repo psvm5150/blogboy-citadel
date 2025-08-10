@@ -1,16 +1,3 @@
-Spring Boot Swagger 적용 Guide
-===================  
-  
-  >  `@author Tansan Man(tansan5150)`    
-  >  `@up to date 2023.06.30` 
-    
-<br>
-
-[![Creative Commons Korea](https://ccl.cckorea.org/images/ico-cc.png)](https://creativecommons.org/licenses/by/2.0/kr/)  
-본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.  
-
-<br>
-
 ### 1. Swagger 개요
 본 Guide는 Spring Boot  어플리케이션에서 Swagger 를 적용하고 사용 하는 방법에 대한 안내서다.  
 

@@ -491,26 +491,6 @@ body {
     color: #8b949e;
 }
 
-.darkmode .footer {
-    background: #21262d;
-}
-
-.darkmode .footer p {
-    color: #7d8590;
-}
-
-.darkmode .home-button {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: white;
-}
-
-.darkmode .home-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: white;
-    transform: translateY(-2px);
-}
 
 /* Dark Mode Toggle Button */
 .darkmode-toggle {
@@ -547,9 +527,9 @@ body {
     gap: 0;
 }
 
-/* Responsive Dark Mode */
+/* Responsive Footer Controls (theme-invariant) */
 @media (max-width: 768px) {
-    .darkmode .footer-controls {
+    .footer-controls {
         flex-direction: column;
         gap: 12px;
     }

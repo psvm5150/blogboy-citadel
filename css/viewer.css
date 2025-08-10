@@ -113,16 +113,17 @@ body {
 
 /* 푸터 */
 .footer {
-    background: #f8f9fa;
-    padding: 2rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 0;
     text-align: center;
-    border-top: 1px solid #e9ecef;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     margin-top: 2rem;
 }
 
 .footer p {
     margin-bottom: 16px;
-    color: #6c757d;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* 자동 목차 스타일 */
@@ -245,39 +246,7 @@ body {
     box-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
 
-.darkmode .footer {
-    background-color: #21262d;
-    border-top-color: #30363d;
-}
-
-.darkmode .footer p {
-    color: #7d8590;
-}
-
-/* Footer home button styling for better visibility in light mode */
-.footer .home-button {
-    background: #667eea;
-    color: white;
-    border: 2px solid #667eea;
-}
-
-.footer .home-button:hover {
-    background: #5a67d8;
-    border-color: #5a67d8;
-    color: white;
-}
-
-/* Dark mode footer home button */
-.darkmode .footer .home-button {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: white;
-}
-
-.darkmode .footer .home-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-}
+/* Footer inherits button styles from .home-button defined above; keep theme-invariant */
 
 .darkmode .loading {
     color: #8b949e;

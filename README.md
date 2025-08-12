@@ -141,17 +141,33 @@ git push origin main
 The system uses three JSON configuration files in the `properties/` directory:
 
 ### main-config.json
-Site-wide configuration settings including titles, URLs, and display options.
+Site-wide configuration settings grouped into header, list, and footer sections.
 
 ```json
 {
-  "main_title": "Your Site Title",
-  "main_subtitle": "Your subtitle here",
-  "site_badge_url": "https://github.com/yourusername",
-  "show_view_filter": true,
-  "default_view_filter": "category",
-  "show_document_count": true,
-  "show_home_button": true,
+  "header": {
+    "title": "Main Max: Fury Load",
+    "subtitle": "You will code eternal, shiny and RESTful!",
+    "show_badge": true,
+    "badge_text": "psvm5150.github.io",
+    "badge_url": "https://github.com/psvm5150"
+  },
+  "list": {
+    "document_root": "posts/",
+    "documents_per_page": 20,
+    "show_view_filter": true,
+    "default_view_filter": "category",
+    "show_document_count": true,
+    "show_new_indicator": true,
+    "new_display_days": 15,
+    "show_document_date": true
+  },
+  "footer": {
+    "show_theme_toggle": true,
+    "default_theme": "light",
+    "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
+    "show_home_button": true
+  },
   "site_locale": "default"
 }
 ```

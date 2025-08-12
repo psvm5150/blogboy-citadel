@@ -112,9 +112,44 @@ function normalizePath(path) {
  */
 async function loadMainConfig(basePath = '') {
     const configPath = basePath ? `${basePath}/properties/main-config.json` : 'properties/main-config.json';
-    
     try {
-        mainConfig = await fetchJsonCached(configPath);
+        const raw = await fetchJsonCached(configPath);
+        // Backward-compatible normalization: support both nested (header/list/footer) and legacy flat structure
+        const flattened = {};
+        if (raw && typeof raw === 'object' && (raw.header || raw.list || raw.footer)) {
+            const h = raw.header || {};
+            const l = raw.list || {};
+            const f = raw.footer || {};
+            // Header (support new keys with backward compatibility for old ones)
+            if (h.title != null) flattened.title = h.title;
+            if (h.main_title != null && flattened.title == null) flattened.title = h.main_title;
+            if (h.subtitle != null) flattened.subtitle = h.subtitle;
+            if (h.main_subtitle != null && flattened.subtitle == null) flattened.subtitle = h.main_subtitle;
+            if (h.show_badge != null) flattened.show_badge = h.show_badge;
+            if (h.show_site_badge != null && flattened.show_badge == null) flattened.show_badge = h.show_site_badge;
+            if (h.badge_text != null) flattened.badge_text = h.badge_text;
+            if (h.site_badge_text != null && flattened.badge_text == null) flattened.badge_text = h.site_badge_text;
+            if (h.badge_url != null) flattened.badge_url = h.badge_url;
+            if (h.site_badge_url != null && flattened.badge_url == null) flattened.badge_url = h.site_badge_url;
+            // List
+            if (l.document_root != null) flattened.document_root = l.document_root;
+            if (l.documents_per_page != null) flattened.documents_per_page = l.documents_per_page;
+            if (l.show_view_filter != null) flattened.show_view_filter = l.show_view_filter;
+            if (l.default_view_filter != null) flattened.default_view_filter = l.default_view_filter;
+            if (l.show_document_count != null) flattened.show_document_count = l.show_document_count;
+            if (l.show_new_indicator != null) flattened.show_new_indicator = l.show_new_indicator;
+            if (l.new_display_days != null) flattened.new_display_days = l.new_display_days;
+            if (l.show_document_date != null) flattened.show_document_date = l.show_document_date;
+            // Footer
+            if (f.show_theme_toggle != null) flattened.show_theme_toggle = f.show_theme_toggle;
+            if (f.default_theme != null) flattened.default_theme = f.default_theme;
+            if (f.copyright_text != null) flattened.copyright_text = f.copyright_text;
+            if (f.show_home_button != null) flattened.show_home_button = f.show_home_button;
+            // Root
+            if (raw.site_locale != null) flattened.site_locale = raw.site_locale;
+        }
+        // Merge: keep original nested structure (raw) but ensure flat keys exist
+        mainConfig = { ...raw, ...flattened };
         console.log('Main config loaded successfully');
         return mainConfig;
     } catch (error) {

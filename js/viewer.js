@@ -6,9 +6,44 @@ function getUrlParameters() {
     };
 }
 
-// 뷰어 설정 로드
+// 뷰어 설정 로드 (신구 구조 호환)
 async function loadViewerConfig() {
-    return await fetchJsonCached('./properties/viewer-config.json');
+    const raw = await fetchJsonCached('./properties/viewer-config.json');
+
+    // Normalize to flat legacy fields for backward compatibility
+    const normalized = { ...raw };
+
+    // Header mappings
+    const header = raw && typeof raw === 'object' ? raw.header || {} : {};
+    if (header && typeof header === 'object') {
+        if (header.title != null) normalized.page_title = String(header.title);
+        if (header.show_theme_toggle != null) normalized.show_theme_toggle = !!header.show_theme_toggle;
+        if (header.default_theme != null) normalized.default_theme = String(header.default_theme);
+    }
+
+    // Viewer mappings
+    const viewer = raw && typeof raw === 'object' ? raw.viewer || {} : {};
+    if (viewer && typeof viewer === 'object') {
+        if (viewer.author != null) normalized.author = String(viewer.author);
+        if (viewer.show_table_of_contents != null) normalized.show_table_of_contents = !!viewer.show_table_of_contents;
+        if (viewer.license_badge_image != null) normalized.license_badge_image = String(viewer.license_badge_image);
+        if (viewer.license_badge_link != null) normalized.license_badge_link = String(viewer.license_badge_link);
+        if (viewer.license_description != null) normalized.license_description = String(viewer.license_description);
+        if (viewer.rss_feed_url != null) normalized.rss_feed_url = String(viewer.rss_feed_url);
+    }
+
+    // Footer mappings
+    const footer = raw && typeof raw === 'object' ? raw.footer || {} : {};
+    if (footer && typeof footer === 'object') {
+        if (footer.copyright_text != null) normalized.copyright_text = String(footer.copyright_text);
+    }
+
+    // Fallbacks for site_locale remain at root
+    if (normalized.site_locale == null && typeof raw.site_locale !== 'undefined') {
+        normalized.site_locale = raw.site_locale;
+    }
+
+    return normalized;
 }
 
 // TOC 설정 로드

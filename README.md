@@ -147,7 +147,7 @@ Site-wide configuration settings including titles, URLs, and display options.
 {
   "main_title": "Your Site Title",
   "main_subtitle": "Your subtitle here",
-  "site_label_url": "https://github.com/yourusername",
+  "site_badge_url": "https://github.com/yourusername",
   "show_view_filter": true,
   "default_view_filter": "category",
   "show_document_count": true,
@@ -174,14 +174,27 @@ Table of contents structure that organizes blog posts into categories.
 ```
 
 ### viewer-config.json
-Viewer page settings for theme options and UI elements.
+Viewer page settings for theme options and UI elements. Note: page_title has been renamed to header.title and the config is now grouped into header, viewer, and footer sections.
 
 ```json
 {
-  "show_table_of_contents": true,
-  "default_theme": "light",
-  "show_theme_toggle": true,
-  "page_title": "Viewer Page Title"
+  "header": {
+    "title": "Main Max: Fury Load",
+    "show_theme_toggle": true,
+    "default_theme": "light"
+  },
+  "viewer": {
+    "author": "psvm5150",
+    "show_table_of_contents": true,
+    "license_badge_image": "https://ccl.cckorea.org/images/ico-cc.png",
+    "license_badge_link": "https://creativecommons.org/licenses/by/4.0/deed.ko",
+    "license_description": "이 저작물은 Creative Commons 저작자표시 4.0 국제 라이선스에 따라 이용할 수 있습니다.",
+    "rss_feed_url": "/rss.xml"
+  },
+  "footer": {
+    "copyright_text": "© 2025 psvm5150.github.io. All rights reserved."
+  },
+  "site_locale": "default"
 }
 ```
 

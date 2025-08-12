@@ -37,7 +37,8 @@ body {
     font-size: 1.2rem;
     font-weight: 700;
     color: white;
-    background: rgba(102, 126, 234, 0.9);
+    /* Updated to a slightly dark pastel indigo that pairs well with white text */
+    background: rgba(91, 109, 170, 0.95); /* ~#5B6DAA */
     padding: 8px 16px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -216,30 +217,45 @@ body {
 
 /* New Indicator */
 .new-indicator {
-    display: inline-block;
-    background: linear-gradient(135deg, #ff7777, #ff6666);
-    color: white;
-    font-size: 0.564rem;
-    font-weight: 400;
-    padding: 2px 6px;
-    border-radius: 10px;
-    margin-left: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, rgba(79, 160, 221, 0.16), rgba(79, 160, 221, 0.08));
+    color: #1e5fa3;
+    font-size: 0.58rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 1px 3px rgba(255, 102, 102, 0.3);
-    animation: subtle-pulse 2s ease-in-out infinite;
+    letter-spacing: 0.6px;
+    border: 1px solid rgba(79, 160, 221, 0.35);
+    box-shadow: 0 1px 2px rgba(79, 160, 221, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    backdrop-filter: saturate(1.2);
+}
+
+.new-indicator::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4fa0dd;
+    box-shadow: 0 0 0 3px rgba(79, 160, 221, 0.18);
 }
 
 /* New DateTime Display */
 .new-datetime {
     display: inline-block;
-    color: #6c757d;
-    font-size: 0.54rem;
-    font-weight: 400;
-    margin-left: 16px;
-    opacity: 0.8;
-    letter-spacing: 0.3px;
+    color: #64748b;
+    font-size: 0.58rem;
+    font-weight: 500;
+    margin-left: 10px;
+    letter-spacing: 0.2px;
     font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(2, 6, 23, 0.03);
+    border: 1px solid rgba(100, 116, 139, 0.2);
 }
 
 @keyframes subtle-pulse {
@@ -314,12 +330,12 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 12px 24px;
+    padding: 8px 16px;
     border-radius: 24px;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
-    height: 48px;
+    height: 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -464,12 +480,21 @@ body {
 }
 
 .darkmode .new-indicator {
-    background: linear-gradient(135deg, #f85149, #da3633);
-    box-shadow: 0 1px 3px rgba(248, 81, 73, 0.4);
+    background: linear-gradient(135deg, rgba(79, 160, 221, 0.18), rgba(79, 160, 221, 0.10));
+    color: #79c0ff;
+    border: 1px solid rgba(79, 160, 221, 0.40);
+    box-shadow: 0 1px 2px rgba(79, 160, 221, 0.25), inset 0 0 0 1px rgba(240, 246, 252, 0.04);
+}
+
+.darkmode .new-indicator::before {
+    background: #79c0ff;
+    box-shadow: 0 0 0 3px rgba(121, 192, 255, 0.22);
 }
 
 .darkmode .new-datetime {
-    color: #7d8590;
+    color: #9fb0c0;
+    background: rgba(240, 246, 252, 0.06);
+    border: 1px solid rgba(125, 133, 144, 0.35);
 }
 
 .darkmode .category-name {
@@ -497,7 +522,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.3);
     color: white;
-    padding: 12px 24px;
+    padding: 8px 16px;
     border-radius: 24px;
     cursor: pointer;
     font-size: 14px;
@@ -507,7 +532,7 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 48px;
+    height: 40px;
     margin-right: 16px;
 }
 

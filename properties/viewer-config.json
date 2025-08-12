@@ -1,13 +1,19 @@
 {
-  "page_title": "Main Max: Fury Load",
-  "author": "psvm5150",
-  "show_theme_toggle": true,
-  "default_theme": "light",
-  "show_table_of_contents": true,
-  "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
-  "site_locale": "default",
-  "license_badge_image": "https://ccl.cckorea.org/images/ico-cc.png",
-  "license_badge_link": "https://creativecommons.org/licenses/by/4.0/deed.ko",
-  "license_description": "이 저작물은 Creative Commons 저작자표시 4.0 국제 라이선스에 따라 이용할 수 있습니다.",
-  "rss_feed_url": "/rss.xml"
+  "header": {
+    "title": "Main Max: Fury Load",
+    "show_theme_toggle": true,
+    "default_theme": "light"
+  },
+  "viewer": {
+    "author": "psvm5150",
+    "show_table_of_contents": true,
+    "license_badge_image": "https://ccl.cckorea.org/images/ico-cc.png",
+    "license_badge_link": "https://creativecommons.org/licenses/by/4.0/deed.ko",
+    "license_description": "이 저작물은 Creative Commons 저작자표시 4.0 국제 라이선스에 따라 이용할 수 있습니다.",
+    "rss_feed_url": "/rss.xml"
+  },
+  "footer": {
+    "copyright_text": "© 2025 psvm5150.github.io. All rights reserved."
+  },
+  "site_locale": "default"
 }

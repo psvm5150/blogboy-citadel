@@ -1,20 +1,26 @@
 {
-  "main_title": "Main Max: Fury Load",
-  "main_subtitle": "You will code eternal, shiny and RESTful!",
-  "show_site_label": true,
-  "site_label_name": "psvm5150.github.io",
-  "site_label_url": "https://github.com/psvm5150",
-  "document_root": "posts/",
-  "show_view_filter": true,
-  "default_view_filter": "category",
-  "show_document_count": true,
-  "show_new_indicator": true,
-  "new_display_days": 15,
-  "show_document_date": true,
-  "show_theme_toggle": true,
-  "default_theme": "light",
-  "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
-  "show_home_button": true,
-  "site_locale": "default",
-  "documents_per_page": 20
+  "header": {
+    "title": "Main Max: Fury Load",
+    "subtitle": "You will code eternal, shiny and RESTful!",
+    "show_badge": true,
+    "badge_text": "psvm5150.github.io",
+    "badge_url": "https://github.com/psvm5150"
+  },
+  "list": {
+    "document_root": "posts/",
+    "documents_per_page": 20,
+    "show_view_filter": true,
+    "default_view_filter": "category",
+    "show_document_count": true,
+    "show_new_indicator": true,
+    "new_display_days": 15,
+    "show_document_date": true
+  },
+  "footer": {
+    "show_theme_toggle": true,
+    "default_theme": "light",
+    "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
+    "show_home_button": true
+  },
+  "site_locale": "default"
 }

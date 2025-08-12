@@ -420,13 +420,13 @@ function updateSearchStats(searchTerm = '') {
 // 메인 페이지 라벨 적용
 function applyMainConfigLabels() {
     // 문서 타이틀 (i18n with fallback)
-    document.title = tWithFallback('site_label_name', 'site_label_name');
+    document.title = tWithFallback('site_label_name', 'badge_text');
 
     // 사이트 타이틀 (좌상단)
     const siteTitle = document.querySelector('.site-title');
     if (siteTitle) {
-        if (mainConfig.show_site_label) {
-            siteTitle.textContent = tWithFallback('site_label_name', 'site_label_name');
+        if (mainConfig.show_badge) {
+            siteTitle.textContent = tWithFallback('site_label_name', 'badge_text');
             siteTitle.style.display = '';
         } else {
             siteTitle.style.display = 'none';
@@ -436,20 +436,20 @@ function applyMainConfigLabels() {
     // 메인 제목 (i18n with fallback)
     const mainTitle = document.querySelector('.header-main h1');
     if (mainTitle) {
-        mainTitle.textContent = tWithFallback('main_title', 'main_title');
+        mainTitle.textContent = tWithFallback('main_title', 'title');
     }
 
     // 메인 부제목 (i18n with fallback)
     const mainSubtitle = document.querySelector('.header-main p');
     if (mainSubtitle) {
-        mainSubtitle.textContent = tWithFallback('main_subtitle', 'main_subtitle');
+        mainSubtitle.textContent = tWithFallback('main_subtitle', 'subtitle');
     }
 
     // 사이트 URL (좌상단 링크로 만들기)
-    if (siteTitle && mainConfig.show_site_label && !siteTitle.parentElement.href) {
+    if (siteTitle && mainConfig.show_badge && !siteTitle.parentElement.href) {
         // 사이트 타이틀을 링크로 감싸기
         const link = document.createElement('a');
-        link.href = mainConfig.site_label_url;
+        link.href = mainConfig.badge_url;
         link.style.textDecoration = 'none';
         link.style.color = 'inherit';
         siteTitle.parentElement.insertBefore(link, siteTitle);

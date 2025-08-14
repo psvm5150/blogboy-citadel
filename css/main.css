@@ -516,6 +516,11 @@ body {
     color: #8b949e;
 }
 
+.darkmode .footer {
+    background: #0d1117;
+    color: #e6edf3;
+    border-top: 1px solid #30363d;
+}
 
 /* Dark Mode Toggle Button */
 .darkmode-toggle {
@@ -533,7 +538,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 40px;
-    margin-right: 16px;
+    margin-right: 8px;
 }
 
 .darkmode-toggle:hover {
@@ -549,18 +554,28 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0;
+    gap: 0.25rem; /* reduced by half */
 }
 
-/* Responsive Footer Controls (theme-invariant) */
+/* Prevent button text from wrapping and align with viewer header look */
+.darkmode-toggle,
+.home-button {
+    white-space: nowrap;
+}
+
+/* Responsive Footer Controls (align with viewer header behavior) */
 @media (max-width: 768px) {
     .footer-controls {
-        flex-direction: column;
-        gap: 12px;
+        flex-direction: row; /* keep in a row like viewer header */
+        gap: 0.5rem;
     }
-    
-    .darkmode-toggle {
-        margin-right: 0;
-        margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+    .darkmode-toggle,
+    .home-button {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+        height: 36px;
     }
 }

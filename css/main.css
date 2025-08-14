@@ -45,6 +45,38 @@ body {
     backdrop-filter: blur(10px);
 }
 
+/* Image badge mode overrides */
+.site-title.image-badge {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.site-title.image-badge .site-badge-image {
+    display: block;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    max-width: 60vw; /* protect layout on narrow screens */
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .site-title.image-badge .site-badge-image {
+        max-height: 62px;
+        max-width: 80vw;
+        margin-left: auto; /* center on mobile */
+        margin-right: auto; /* center on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .site-title.image-badge .site-badge-image {
+        max-height: 54px;
+        max-width: 85vw;
+    }
+}
+
 .header-main {
     padding-top: 20px;
     text-align: center;
@@ -381,6 +413,10 @@ body {
         margin-bottom: 16px;
         font-size: 1rem;
     }
+    /* Reduce spacing between image badge and header title on mobile (~20%) */
+    .site-title.image-badge {
+        margin-bottom: 4px; /* 16px -> 12px (~25% reduction, close to 20%) */
+    }
 
     .header-main {
         padding-top: 0;
@@ -445,6 +481,10 @@ body {
 .darkmode .site-title {
     background: rgba(102, 126, 234, 0.8);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.darkmode .site-title.image-badge {
+    background: transparent;
+    box-shadow: none;
 }
 
 .darkmode .view-mode-select {

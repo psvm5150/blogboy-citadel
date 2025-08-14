@@ -3,7 +3,9 @@
     "title": "Main Max: Fury Load",
     "subtitle": "You will code eternal, shiny and RESTful!",
     "show_badge": true,
+    "badge_type": "text",
     "badge_text": "psvm5150.github.io",
+    "badge_image": "tmp/kt3.png",
     "badge_url": "https://github.com/psvm5150"
   },
   "list": {

@@ -426,8 +426,27 @@ function applyMainConfigLabels() {
     const siteTitle = document.querySelector('.site-title');
     if (siteTitle) {
         if (mainConfig.show_badge) {
-            siteTitle.textContent = tWithFallback('site_label_name', 'badge_text');
+            const badgeType = (mainConfig.badge_type || 'text').toLowerCase();
+            const badgeText = tWithFallback('site_label_name', 'badge_text');
+            // Reset state
+            siteTitle.classList.remove('image-badge');
             siteTitle.style.display = '';
+            if (badgeType === 'image' && mainConfig.badge_image) {
+                // Image mode: ignore color/text, show image
+                const imgSrc = mainConfig.badge_image; // already normalized in loadMainConfig if provided
+                siteTitle.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = badgeText;
+                img.className = 'site-badge-image';
+                siteTitle.appendChild(img);
+                siteTitle.classList.add('image-badge');
+                console.log('[badge] Using image badge:', imgSrc);
+            } else {
+                // Text mode (default)
+                siteTitle.textContent = badgeText;
+                console.log('[badge] Using text badge:', badgeText);
+            }
         } else {
             siteTitle.style.display = 'none';
         }
@@ -446,7 +465,7 @@ function applyMainConfigLabels() {
     }
 
     // 사이트 URL (좌상단 링크로 만들기)
-    if (siteTitle && mainConfig.show_badge && !siteTitle.parentElement.href) {
+    if (siteTitle && mainConfig.show_badge && !siteTitle.parentElement.href && mainConfig.badge_url) {
         // 사이트 타이틀을 링크로 감싸기
         const link = document.createElement('a');
         link.href = mainConfig.badge_url;

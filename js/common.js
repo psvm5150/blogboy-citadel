@@ -131,6 +131,12 @@ async function loadMainConfig(basePath = '') {
             if (h.site_badge_text != null && flattened.badge_text == null) flattened.badge_text = h.site_badge_text;
             if (h.badge_url != null) flattened.badge_url = h.badge_url;
             if (h.site_badge_url != null && flattened.badge_url == null) flattened.badge_url = h.site_badge_url;
+            // New badge display options
+            if (h.badge_type != null) flattened.badge_type = String(h.badge_type);
+            if (h.badge_image != null && String(h.badge_image).trim() !== '') {
+                // Use path normalization for image path
+                flattened.badge_image = normalizePath(String(h.badge_image));
+            }
             // List
             if (l.document_root != null) flattened.document_root = l.document_root;
             if (l.documents_per_page != null) flattened.documents_per_page = l.documents_per_page;

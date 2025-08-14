@@ -414,6 +414,18 @@ body {
     color: #e6edf3;
 }
 
+/* Pagination (Dark Mode) - slightly darker gray for better aesthetics */
+.darkmode .pagination button {
+    background: #1f242b; /* slightly darker gray */
+    border: 1px solid #30363d;
+    color: #e6edf3;
+}
+.darkmode .pagination button:hover:not(:disabled) {
+    background: #242a31; /* a touch darker on hover */
+}
+.darkmode .pagination .page-info {
+    color: #8b949e;
+}
 
 .darkmode .site-title {
     background: rgba(102, 126, 234, 0.8);

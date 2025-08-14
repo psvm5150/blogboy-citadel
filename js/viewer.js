@@ -17,7 +17,14 @@ async function loadViewerConfig() {
     const header = raw && typeof raw === 'object' ? raw.header || {} : {};
     if (header && typeof header === 'object') {
         if (header.title != null) normalized.page_title = String(header.title);
-        if (header.show_theme_toggle != null) normalized.show_theme_toggle = !!header.show_theme_toggle;
+        // Accept new key show_colour_toggle (preferred), alias show_color_toggle, and legacy show_theme_toggle
+        if (header.show_colour_toggle != null) {
+            normalized.show_theme_toggle = !!header.show_colour_toggle;
+        } else if (header.show_color_toggle != null) {
+            normalized.show_theme_toggle = !!header.show_color_toggle;
+        } else if (header.show_theme_toggle != null) {
+            normalized.show_theme_toggle = !!header.show_theme_toggle;
+        }
         if (header.default_theme != null) normalized.default_theme = String(header.default_theme);
     }
 
@@ -30,6 +37,16 @@ async function loadViewerConfig() {
         if (viewer.license_badge_link != null) normalized.license_badge_link = String(viewer.license_badge_link);
         if (viewer.license_description != null) normalized.license_description = String(viewer.license_description);
         if (viewer.rss_feed_url != null) normalized.rss_feed_url = String(viewer.rss_feed_url);
+    }
+
+    // Adsense mappings (pass-through with defaults)
+    const adsense = raw && typeof raw === 'object' ? raw.adsense || {} : {};
+    if (adsense && typeof adsense === 'object') {
+        normalized.adsense = {
+            enabled: !!adsense.enabled,
+            client_id: adsense.client_id ? String(adsense.client_id) : '',
+            auto_ads: adsense.auto_ads !== false // default true
+        };
     }
 
     // Footer mappings
@@ -703,6 +720,28 @@ async function insertLicenseInfo(contentDiv, filePath) {
     }
 }
 
+// Google AdSense setup based on viewer-config.json
+function setupAdSense(adsenseCfg) {
+    try {
+        if (!adsenseCfg || !adsenseCfg.enabled) return;
+        const client = (adsenseCfg.client_id || '').trim();
+        if (!client || !client.startsWith('ca-pub-')) return;
+
+        // Prevent duplicate insertion
+        if (document.getElementById('google-adsense-script')) return;
+
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(client)}`;
+        s.crossOrigin = 'anonymous';
+        s.id = 'google-adsense-script';
+        document.head.appendChild(s);
+        // For Auto ads, including the script with client param is sufficient.
+    } catch (e) {
+        console.warn('Failed to setup AdSense:', e);
+    }
+}
+
 // 페이지 로드
 document.addEventListener('DOMContentLoaded', async () => {
     const params = getUrlParameters();
@@ -721,6 +760,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load i18n data with the configured locale
     await loadI18nData(locale);
     applyI18nTranslations();
+
+    // Setup Google AdSense if configured
+    if (config.adsense) {
+        setupAdSense(config.adsense);
+    }
 
     // 테마 토글 버튼 표시/숨김 처리
     const themeToggleBtn = document.getElementById('darkmode-toggle');

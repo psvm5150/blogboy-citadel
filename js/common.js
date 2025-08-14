@@ -141,7 +141,14 @@ async function loadMainConfig(basePath = '') {
             if (l.new_display_days != null) flattened.new_display_days = l.new_display_days;
             if (l.show_document_date != null) flattened.show_document_date = l.show_document_date;
             // Footer
-            if (f.show_theme_toggle != null) flattened.show_theme_toggle = f.show_theme_toggle;
+            // Accept new key show_colour_toggle (preferred), alias show_color_toggle, and legacy show_theme_toggle
+            if (f.show_colour_toggle != null) {
+                flattened.show_theme_toggle = !!f.show_colour_toggle;
+            } else if (f.show_color_toggle != null) {
+                flattened.show_theme_toggle = !!f.show_color_toggle;
+            } else if (f.show_theme_toggle != null) {
+                flattened.show_theme_toggle = !!f.show_theme_toggle;
+            }
             if (f.default_theme != null) flattened.default_theme = f.default_theme;
             if (f.copyright_text != null) flattened.copyright_text = f.copyright_text;
             if (f.show_home_button != null) flattened.show_home_button = f.show_home_button;

@@ -17,7 +17,7 @@
     "show_document_date": true
   },
   "footer": {
-    "show_theme_toggle": true,
+    "show_colour_toggle": true,
     "default_theme": "light",
     "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
     "show_home_button": true

@@ -12,13 +12,13 @@
     "license_description": "이 저작물은 Creative Commons 저작자표시 4.0 국제 라이선스에 따라 이용할 수 있습니다.",
     "rss_feed_url": "/rss.xml"
   },
+  "footer": {
+    "copyright_text": "© 2025 psvm5150.github.io. All rights reserved."
+  },
   "adsense": {
     "enabled": false,
     "client_id": "ca-pub-XXXXXXXXXXXXXXXX",
     "auto_ads": true
-  },
-  "footer": {
-    "copyright_text": "© 2025 psvm5150.github.io. All rights reserved."
   },
   "site_locale": "default"
 }

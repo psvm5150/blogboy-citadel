@@ -342,6 +342,19 @@ function detectBrowserLanguage() {
 }
 
 /**
+ * Resolve locale value against 'default' sentinel and fallbacks
+ * @param {string|undefined|null} preferred - preferred locale value (e.g., from config)
+ * @returns {string} - resolved locale code (en, es, ko)
+ */
+function resolveLocale(preferred) {
+    let locale = preferred || 'ko';
+    if (locale === 'default') {
+        locale = detectBrowserLanguage();
+    }
+    return locale;
+}
+
+/**
  * Load i18n data for the specified language
  * @param {string} language - Language code (ko, en, es)
  * @param {string} basePath - Base path for the i18n files (optional, defaults to current directory)

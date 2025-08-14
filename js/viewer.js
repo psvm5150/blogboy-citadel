@@ -775,14 +775,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         applyColourTheme(config.colour_theme);
     }
     
-    // Get locale from viewer config, fallback to 'ko' if not specified
-    let locale = config.site_locale || 'ko';
-    if (locale === 'default') {
-        // Use browser language detection when set to 'default'
-        locale = detectBrowserLanguage();
-    }
-    
-    // Load i18n data with the configured locale
+    // Resolve locale and load i18n
+    const locale = resolveLocale(config.site_locale);
     await loadI18nData(locale);
     applyI18nTranslations();
 

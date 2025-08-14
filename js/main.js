@@ -265,80 +265,6 @@ async function createFlatListSection(titleText, flattenedItems) {
     `;
 }
 
-// 전체보기 모드로 문서 목록 생성
-async function createAllViewSection() {
-    const documentRoot = normalizePath(mainConfig.document_root);
-    
-    // 모든 문서를 하나의 배열로 평면화하고 카테고리 정보 추가
-    const allFiles = [];
-    for (const [categoryKey, categoryInfo] of Object.entries(documentCategories)) {
-        if (categoryInfo.files && categoryInfo.files.length > 0) {
-            categoryInfo.files.forEach(file => {
-                allFiles.push({
-                    ...file,
-                    categoryTitle: categoryInfo.title
-                });
-            });
-        }
-    }
-    
-    // 정렬용 기준 날짜 준비: toc의 날짜가 있으면 그걸 사용, 없으면 수정일 조회
-    const filesWithDates = await Promise.all(
-        allFiles.map(async (file) => {
-            const tocDate = file && file.date ? parseFlexibleDate(String(file.date)) : null;
-            const serverModifiedDate = tocDate ? null : await getFileModifiedDate(file.path);
-            const sortDate = tocDate || serverModifiedDate || new Date('1970-01-01');
-            return {
-                ...file,
-                categoryTitle: file.categoryTitle,
-                tocDate,
-                serverModifiedDate,
-                sortDate
-            };
-        })
-    );
-    
-    // 기준 날짜(sortDate)로 정렬 (최신순)
-    filesWithDates.sort((a, b) => b.sortDate - a.sortDate);
-    
-    // 각 파일에 대해 비동기적으로 new indicator 및 날짜 확인 (추가 네트워크 호출 없음)
-    const fileListPromises = filesWithDates.map(async (file) => {
-        const baseForNew = file.tocDate || file.serverModifiedDate;
-        const showNew = baseForNew ? await shouldShowNewIndicator(file.path, baseForNew) : false;
-        const newIndicator = showNew ? createNewIndicator() : '';
-        // 표시용 날짜: toc에 있으면 우선, 없으면 serverModifiedDate 사용
-        const displayDate = file.tocDate || file.serverModifiedDate;
-        const dateTimeDisplay = createDateTimeDisplay(displayDate);
-        const categoryName = `<span class="category-name">${file.categoryTitle}</span>`;
-        return `
-            <li class="post-item">
-                <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
-                    <span class=\"post-title\">${file.title}</span>${newIndicator}${dateTimeDisplay}${categoryName}
-                </a>
-            </li>
-        `;
-    });
-    
-    const fileListArray = await Promise.all(fileListPromises);
-    const fileList = fileListArray.join('');
-
-    // 전체보기에서는 show_document_count 설정과 상관없이 카운트를 표시하지 않음
-    const countDisplay = '';
-
-    return `
-        <div class="category-section">
-            <div class="category-header">
-                <div class="category-title">${t('lbl_all_documents')}</div>
-                ${countDisplay}
-            </div>
-            <div class="category-body">
-                <ul class="post-list">
-                    ${fileList}
-                </ul>
-            </div>
-        </div>
-    `;
-}
 
 // 검색 기능
 function renderPaginationControls(pager, totalItems, current, totalPages) {
@@ -554,14 +480,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load main config first to get locale setting
     await loadMainConfig();
     
-    // Get locale from config, fallback to 'ko' if not specified
-    let locale = mainConfig.site_locale || 'ko';
-    if (locale === 'default') {
-        // Use browser language detection when set to 'default'
-        locale = detectBrowserLanguage();
-    }
-    
-    // Load i18n data with the configured locale
+    // Resolve locale and load i18n
+    const locale = resolveLocale(mainConfig.site_locale);
     await loadI18nData(locale);
     applyI18nTranslations();
     

@@ -1,0 +1,82 @@
+/* Theme: mad-max-fury
+   Purpose: Evoke the dusty, high-contrast “Mad Max: Fury Road” vibe.
+   Palette hints: burnt orange, rust, desert sand, oil-black, with subtle teal accent.
+   Scope: Header/Footer, controls, Main list title/link colors + hover + left bar, new indicator, badge.
+   Note: Dimensions unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  /* oil black -> rust -> blazing orange */
+  background: linear-gradient(135deg, #15110e 0%, #5a341c 42%, #e08c21 100%) !important;
+  color: #fff7ef !important;
+}
+.footer {
+  background: linear-gradient(135deg, #15110e 0%, #5a341c 42%, #e08c21 100%) !important;
+  color: #fff7ef !important;
+}
+.footer p { color: rgba(255, 247, 239, 0.9) !important; }
+
+/* Header/footer controls (buttons) — steel with heat tint */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(0, 0, 0, 0.28) !important; /* dark metal */
+  border: 2px solid rgba(255, 152, 56, 0.45) !important; /* hot edge */
+  color: #ffe9d1 !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(255, 142, 31, 0.18) !important; /* heat shimmer */
+  border-color: rgba(255, 177, 94, 0.75) !important;
+}
+
+/* MAIN PAGE: desert rust accents and sandy hover */
+/* Light mode defaults */
+body:not(.darkmode)[data-page="main"] .post-link {
+  color: #9a4a06 !important; /* rusted orange - slightly darker/muted */
+  border-left: 4px solid transparent;
+  font-weight: 500;
+}
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  background-color: #fff3e0 !important; /* sun-baked sand */
+  border-left-color: #ff8f00 !important; /* flame rim */
+  color: #7a3a05 !important; /* slightly deeper rust for better focus */
+}
+
+/* Dark mode tuning: brighter accents on dark dust */
+body.darkmode[data-page="main"] .post-link {
+  color: #f2a94f !important; /* glowing ember - slightly muted */
+  border-left: 4px solid transparent;
+  font-weight: 500;
+}
+body.darkmode[data-page="main"] .post-link:hover {
+  background-color: #21180f !important; /* dark dust hover */
+  border-left-color: #ffa031 !important; /* molten edge */
+  color: #ffcf92 !important; /* slightly deeper warmed text */
+}
+
+/* New indicator: orange glow with heat haze */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(255, 145, 0, 0.18), rgba(255, 196, 115, 0.10)) !important;
+  color: #7a3900 !important;
+  border: 1px solid rgba(255, 145, 0, 0.38) !important;
+}
+body[data-page="main"] .new-indicator::before {
+  background: #ff8e00 !important;
+  box-shadow: 0 0 0 3px rgba(255, 145, 0, 0.20) !important; /* heat ring */
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(35, 24, 18, 0.92) !important; /* oil-brown steel */
+  color: #ffe6c7 !important;
+  border: 1px solid rgba(255, 153, 51, 0.30) !important; /* scorched edge */
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }
+
+/* Optional subtle accent for small meta UI that may use .category-name or counts */
+body[data-page="main"] .category-name { color: #6a3a17 !important; }
+body.darkmode[data-page="main"] .category-name { color: #c78236 !important; }

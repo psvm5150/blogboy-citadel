@@ -53,6 +53,12 @@ async function loadDocuments() {
 
     try {
         await loadMainConfig();
+        // Mark page type for potential scoping
+        try { document.body.setAttribute('data-page', 'main'); } catch (e) {}
+        // Apply colour theme stylesheet from config
+        if (mainConfig && mainConfig.colour_theme) {
+            applyColourTheme(String(mainConfig.colour_theme));
+        }
         await loadToc();
 
         // default_view_filter 설정에 따라 초기 뷰 모드 설정
@@ -423,7 +429,7 @@ function applyMainConfigLabels() {
     document.title = tWithFallback('site_label_name', 'badge_text');
 
     // 사이트 타이틀 (좌상단)
-    const siteTitle = document.querySelector('.site-title');
+    const siteTitle = document.querySelector('.site-badge');
     if (siteTitle) {
         if (mainConfig.show_badge) {
             const badgeType = (mainConfig.badge_type || 'text').toLowerCase();
@@ -581,7 +587,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         isDarkMode = sessionTheme === 'dark';
     } else {
         // 세션에 저장된 테마가 없으면 config 기본값 사용
-        isDarkMode = mainConfig.default_theme === 'dark';
+        const defaultMode = (typeof mainConfig.default_colour_mode !== 'undefined') ? mainConfig.default_colour_mode : mainConfig.default_theme;
+        isDarkMode = defaultMode === 'dark';
     }
 
     await setDarkMode(isDarkMode);

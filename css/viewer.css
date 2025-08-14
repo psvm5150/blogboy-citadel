@@ -131,7 +131,7 @@ body {
     background: #f8f9fa;
     border: 1px solid #e9ecef;
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0.5rem 1rem; /* 위·아래 여백을 절반으로 축소 */
     margin: 1rem 0; /* 기존 0.5rem에서 2배로 증가하여 메타-목차 사이 간격 확대 */
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
@@ -157,7 +157,7 @@ body {
 }
 
 .toc-link {
-    color: #0366d6;
+    color: #2f5f8f;
     text-decoration: none;
     display: block;
     padding: 0.25rem 0;
@@ -166,8 +166,8 @@ body {
 }
 
 .toc-link:hover {
-    color: #0366d6;
-    background-color: rgba(3, 102, 214, 0.1);
+    color: #2f5f8f;
+    background-color: rgba(47, 95, 143, 0.1);
     text-decoration: none;
     padding-left: 0.5rem;
 }
@@ -191,18 +191,18 @@ body {
 
 .toc-indent-1 .toc-link {
     font-size: 1rem;
-    color: #0366d6;
+    color: #2f5f8f;
 }
 
 .toc-indent-2 .toc-link {
     font-size: 0.95rem;
-    color: #586069;
+    color: #505a64;
 }
 
 .toc-indent-3 .toc-link,
 .toc-indent-4 .toc-link {
     font-size: 0.9rem;
-    color: #6a737d;
+    color: #616971;
 }
 
 /* 문서 메타 정보 스타일 */

@@ -155,12 +155,33 @@ async function loadMainConfig(basePath = '') {
             } else if (f.show_theme_toggle != null) {
                 flattened.show_theme_toggle = !!f.show_theme_toggle;
             }
-            if (f.default_theme != null) flattened.default_theme = f.default_theme;
+            // Theme default: prefer new key 'default_colour_mode', fallback to legacy 'default_theme'
+            if (f.default_colour_mode != null) {
+                flattened.default_colour_mode = f.default_colour_mode;
+                // maintain legacy alias for internal consumers
+                if (typeof flattened.default_theme === 'undefined') {
+                    flattened.default_theme = f.default_colour_mode;
+                }
+            } else if (f.default_theme != null) {
+                flattened.default_theme = f.default_theme;
+                if (typeof flattened.default_colour_mode === 'undefined') {
+                    flattened.default_colour_mode = f.default_theme;
+                }
+            }
             if (f.copyright_text != null) flattened.copyright_text = f.copyright_text;
             if (f.show_home_button != null) flattened.show_home_button = f.show_home_button;
             // Root
             if (raw.site_locale != null) flattened.site_locale = raw.site_locale;
         }
+        // Root-level theme aliasing: accept both 'colour_theme' (preferred) and 'color_theme'
+        if (typeof flattened.colour_theme === 'undefined') {
+            if (typeof raw.colour_theme !== 'undefined') {
+                flattened.colour_theme = String(raw.colour_theme);
+            } else if (typeof raw.color_theme !== 'undefined') {
+                flattened.colour_theme = String(raw.color_theme);
+            }
+        }
+        
         // Merge: keep original nested structure (raw) but ensure flat keys exist
         mainConfig = { ...raw, ...flattened };
         console.log('Main config loaded successfully');
@@ -522,4 +543,32 @@ function bindDarkModeButton() {
     btn.onclick = () => {
         setDarkMode(!document.body.classList.contains('darkmode'));
     };
+}
+
+// Inject colour theme stylesheet based on config.colour_theme
+function applyColourTheme(themeName) {
+    try {
+        if (!themeName || typeof themeName !== 'string') return;
+        // sanitize: allow letters, numbers, dash and underscore
+        const safe = themeName.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '');
+        if (!safe) return;
+        // Set a body data attribute for possible CSS scoping or debugging
+        try { document.body.setAttribute('data-colour-theme', safe); } catch (e) {}
+        // Create or update <link id="colour-theme">
+        let link = document.getElementById('colour-theme');
+        const href = `./css/themes/${safe}.css`;
+        if (link) {
+            if (link.getAttribute('href') !== href) {
+                link.setAttribute('href', href);
+            }
+        } else {
+            link = document.createElement('link');
+            link.id = 'colour-theme';
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+        }
+    } catch (e) {
+        console.warn('Failed to apply colour theme:', e);
+    }
 }

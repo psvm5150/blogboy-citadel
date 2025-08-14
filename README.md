@@ -164,7 +164,7 @@ Site-wide configuration settings grouped into header, list, and footer sections.
   },
   "footer": {
     "show_theme_toggle": true,
-    "default_theme": "light",
+    "default_colour_mode": "light",
     "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
     "show_home_button": true
   },
@@ -197,7 +197,7 @@ Viewer page settings for theme options and UI elements. Note: page_title has bee
   "header": {
     "title": "Main Max: Fury Load",
     "show_theme_toggle": true,
-    "default_theme": "light"
+    "default_colour_mode": "light"
   },
   "viewer": {
     "author": "psvm5150",

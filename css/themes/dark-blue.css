@@ -1,0 +1,64 @@
+/* Theme: dark-blue
+   Applies to both pages. Only affects allowed areas.
+   - Viewer: header/footer colors and button styles
+   - Main: header/footer colors and specific list/title/new indicator styles
+   Note: Dimensions remain unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  background: #2c3e50 !important;
+  color: #ffffff !important;
+}
+.footer {
+  background: #2c3e50 !important;
+  color: #ffffff !important;
+}
+.footer p { color: rgba(255,255,255,0.9) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* MAIN PAGE ONLY: document name color, focus bg, left bar, and new mark */
+/* Link/title color to match existing main blue tone */
+body[data-page="main"] .post-link {
+  color: #4a6fd1 !important;
+  border-left: 4px solid transparent;
+}
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  background-color: #f8f9ff !important;
+  border-left-color: #4a6fd1 !important;
+  color: #3550ad !important;
+}
+
+/* New indicator uses current blue style (kept same as main default) */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(79, 160, 221, 0.16), rgba(79, 160, 221, 0.08)) !important;
+  color: #1e5fa3 !important;
+  border: 1px solid rgba(79, 160, 221, 0.35) !important;
+}
+body[data-page="main"] .new-indicator::before { 
+  background: #4fa0dd !important; 
+  box-shadow: 0 0 0 3px rgba(79, 160, 221, 0.18) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+/* Do not style .image-badge (image mode) */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(91, 109, 170, 0.95) !important; /* match Gram badge color (~#5B6DAA) */
+  color: #ffffff !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }

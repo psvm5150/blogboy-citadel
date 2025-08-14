@@ -30,7 +30,7 @@ body {
     position: relative;
 }
 
-.site-title {
+.site-badge {
     position: absolute;
     top: -8px;
     left: 0;
@@ -46,13 +46,13 @@ body {
 }
 
 /* Image badge mode overrides */
-.site-title.image-badge {
+.site-badge.image-badge {
     background: transparent;
     padding: 0;
     border-radius: 0;
     box-shadow: none;
 }
-.site-title.image-badge .site-badge-image {
+.site-badge.image-badge .site-badge-image {
     display: block;
     max-height: 80px;
     width: auto;
@@ -62,7 +62,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .site-title.image-badge .site-badge-image {
+    .site-badge.image-badge .site-badge-image {
         max-height: 62px;
         max-width: 80vw;
         margin-left: auto; /* center on mobile */
@@ -71,7 +71,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .site-title.image-badge .site-badge-image {
+    .site-badge.image-badge .site-badge-image {
         max-height: 54px;
         max-width: 85vw;
     }
@@ -406,7 +406,7 @@ body {
         padding: 24px 0;
     }
 
-    .site-title {
+    .site-badge {
         position: static;
         display: block;
         text-align: center;
@@ -414,7 +414,7 @@ body {
         font-size: 1rem;
     }
     /* Reduce spacing between image badge and header title on mobile (~20%) */
-    .site-title.image-badge {
+    .site-badge.image-badge {
         margin-bottom: 4px; /* 16px -> 12px (~25% reduction, close to 20%) */
     }
 
@@ -478,11 +478,11 @@ body {
     color: #8b949e;
 }
 
-.darkmode .site-title {
+.darkmode .site-badge {
     background: rgba(102, 126, 234, 0.8);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
-.darkmode .site-title.image-badge {
+.darkmode .site-badge.image-badge {
     background: transparent;
     box-shadow: none;
 }

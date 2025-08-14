@@ -25,7 +25,18 @@ async function loadViewerConfig() {
         } else if (header.show_theme_toggle != null) {
             normalized.show_theme_toggle = !!header.show_theme_toggle;
         }
-        if (header.default_theme != null) normalized.default_theme = String(header.default_theme);
+        // Theme default: prefer new key 'default_colour_mode', fallback to legacy 'default_theme'
+        if (header.default_colour_mode != null) {
+            normalized.default_colour_mode = String(header.default_colour_mode);
+            if (typeof normalized.default_theme === 'undefined') {
+                normalized.default_theme = String(header.default_colour_mode);
+            }
+        } else if (header.default_theme != null) {
+            normalized.default_theme = String(header.default_theme);
+            if (typeof normalized.default_colour_mode === 'undefined') {
+                normalized.default_colour_mode = String(header.default_theme);
+            }
+        }
     }
 
     // Viewer mappings
@@ -58,6 +69,13 @@ async function loadViewerConfig() {
     // Fallbacks for site_locale remain at root
     if (normalized.site_locale == null && typeof raw.site_locale !== 'undefined') {
         normalized.site_locale = raw.site_locale;
+    }
+
+    // colour_theme at root (accept alias 'color_theme')
+    if (typeof raw.colour_theme !== 'undefined') {
+        normalized.colour_theme = String(raw.colour_theme);
+    } else if (typeof raw.color_theme !== 'undefined') {
+        normalized.colour_theme = String(raw.color_theme);
     }
 
     return normalized;
@@ -749,6 +767,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 설정 로드 (viewer config 먼저 로드하여 locale 설정 확인)
     const config = await loadViewerConfig();
     await loadMainConfig('.');
+
+    // Mark page type for potential scoping
+    try { document.body.setAttribute('data-page', 'viewer'); } catch (e) {}
+    // Apply colour theme stylesheet from config
+    if (config && config.colour_theme) {
+        applyColourTheme(config.colour_theme);
+    }
     
     // Get locale from viewer config, fallback to 'ko' if not specified
     let locale = config.site_locale || 'ko';
@@ -785,7 +810,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         isDarkMode = sessionTheme === 'dark';
     } else {
         // 세션에 저장된 테마가 없으면 config 기본값 사용
-        isDarkMode = config.default_theme === 'dark';
+        const defaultMode = (typeof config.default_colour_mode !== 'undefined') ? config.default_colour_mode : config.default_theme;
+        isDarkMode = defaultMode === 'dark';
     }
 
     await setDarkMode(isDarkMode);

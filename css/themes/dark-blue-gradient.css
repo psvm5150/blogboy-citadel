@@ -1,0 +1,64 @@
+/* Theme: dark-blue-gradient
+   Applies to both pages. Only affects allowed areas.
+   - Viewer: header/footer gradient and button styles
+   - Main: keep identical to dark-blue for titles, lists, and indicators
+   Note: Dimensions remain unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  /* Darker-feel blue gradient based on dark-blue (#2c3e50) */
+  background: linear-gradient(135deg, #0e1620 0%, #3b5872 48%, #0a1118 100%) !important;
+  color: #ffffff !important;
+}
+.footer {
+  background: linear-gradient(135deg, #0e1620 0%, #3b5872 48%, #0a1118 100%) !important;
+  color: #ffffff !important;
+}
+.footer p { color: rgba(255,255,255,0.9) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* MAIN PAGE ONLY: keep identical to dark-blue for link/title and hover background */
+body[data-page="main"] .post-link {
+  color: #4a6fd1 !important;
+  border-left: 4px solid transparent;
+}
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  background-color: #f8f9ff !important;
+  border-left-color: #4a6fd1 !important;
+  color: #3550ad !important;
+}
+
+/* New indicator identical to dark-blue */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(79, 160, 221, 0.16), rgba(79, 160, 221, 0.08)) !important;
+  color: #1e5fa3 !important;
+  border: 1px solid rgba(79, 160, 221, 0.35) !important;
+}
+body[data-page="main"] .new-indicator::before { 
+  background: #4fa0dd !important; 
+  box-shadow: 0 0 0 3px rgba(79, 160, 221, 0.18) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+/* Do not style .image-badge (image mode) */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(91, 109, 170, 0.95) !important; /* match Gram badge color (~#5B6DAA) */
+  color: #ffffff !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }

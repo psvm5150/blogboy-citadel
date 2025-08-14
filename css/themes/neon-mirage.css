@@ -1,0 +1,116 @@
+/* Theme: neon-mirage
+   Purpose: Sophisticated, creative neon aesthetic with vivid yet nuanced colour shifts.
+   Design: Layered neon gradients with subtle multi-stop blends. Interactions use refined
+           glows and precise outlines for accessibility without looking harsh. 
+   Scope: Header/Footer, controls, Main list link styles + hover/focus + left bar,
+          new indicator, badge. Dimensions unchanged. Image badges are not themed.
+*/
+
+/* Header — orchid → ultraviolet neon drift with subtle haze */
+.header {
+  background: radial-gradient(120% 140% at 0% 0%, rgba(255, 44, 223, 0.18) 0%, rgba(255, 44, 223, 0) 32%),
+              linear-gradient(135deg, #ff4de1 0%, #a94dff 46%, #5b3dff 100%) !important;
+  color: #fff7ff !important;
+}
+/* Footer — aqua → lime → chartreuse neon drift (distinct, airy) */
+.footer {
+  background: radial-gradient(120% 140% at 100% 100%, rgba(0, 229, 255, 0.14) 0%, rgba(0, 229, 255, 0) 38%),
+              linear-gradient(135deg, #00d1ff 0%, #4dffc3 50%, #d2ff6a 100%) !important;
+  color: #00140e !important;
+}
+.footer p { color: rgba(0, 20, 14, 0.86) !important; }
+
+/* Header/footer controls: pill buttons with soft neon ring on hover/focus */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border: 2px solid rgba(255, 255, 255, 0.32) !important;
+  color: #ffffff !important;
+  backdrop-filter: saturate(120%) blur(2px);
+  transition: box-shadow 160ms ease, transform 120ms ease, border-color 160ms ease, background-color 160ms ease !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.60) !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12), 0 8px 26px rgba(181, 0, 255, 0.18) !important;
+  transform: translateY(-1px);
+}
+.header .darkmode-toggle:focus,
+.header .home-button:focus,
+.footer .darkmode-toggle:focus,
+.footer .home-button:focus {
+  outline: 3px solid #00ffe1 !important; /* neon focus */
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(0, 255, 225, 0.24), 0 0 20px rgba(181, 0, 255, 0.28) !important;
+}
+
+/* MAIN PAGE: Refined neon titles with lively but elegant interaction */
+/* Light mode */
+body:not(.darkmode)[data-page="main"] .post-link {
+  color: #8a1cff !important;              /* neon violet (slightly softened, refined) */
+  border-left: 6px solid transparent;     /* thicker left bar for presence */
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease !important;
+}
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  background: linear-gradient(90deg, rgba(247, 240, 255, 0.96), rgba(247, 240, 255, 0.88)) !important; /* lilac panel */
+  border-left-color: #00e6c4 !important;  /* neon aqua bar (softened) */
+  color: #5a22ff !important;              /* deeper violet on hover (refined) */
+  box-shadow: inset 0 0 0 999px rgba(0, 255, 209, 0.03), 0 2px 0 rgba(0,0,0,0.04) !important;
+}
+body:not(.darkmode)[data-page="main"] .post-link:focus {
+  outline: 3px solid #ffea00 !important;  /* cyber yellow focus */
+  outline-offset: 2px !important;
+  border-left-color: #ff4de1 !important;  /* magenta pulse (refined) */
+  box-shadow: 0 0 0 4px rgba(255, 234, 0, 0.3) !important;
+}
+
+/* Dark mode */
+body.darkmode[data-page="main"] .post-link {
+  color: #00e6c4 !important;              /* neon aqua text (softened) */
+  border-left: 6px solid transparent;
+}
+body.darkmode[data-page="main"] .post-link:hover {
+  background-color: #12121a !important;   /* deep near‑black panel */
+  border-left-color: #ff4de1 !important;  /* magenta bar (refined) */
+  color: #86ffff !important;              /* brighter aqua (refined) */
+  box-shadow: inset 0 0 0 999px rgba(181, 0, 255, 0.045), 0 2px 0 rgba(0,0,0,0.5) !important;
+}
+body.darkmode[data-page="main"] .post-link:focus {
+  outline: 3px solid #7cff00 !important;  /* neon lime focus */
+  outline-offset: 2px !important;
+  border-left-color: #00e6c4 !important;
+  box-shadow: 0 0 0 4px rgba(124, 255, 0, 0.26) !important;
+}
+
+/* New indicator — prismatic neon mist */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg,
+    rgba(255, 44, 223, 0.14),  /* magenta */
+    rgba(0, 229, 255, 0.12),   /* cyan */
+    rgba(124, 255, 0, 0.12)    /* lime */
+  ) !important;
+  color: #3d0a50 !important; /* deep neon violet text (refined) */
+  border: 1px solid rgba(255, 44, 223, 0.28) !important;
+}
+body[data-page="main"] .new-indicator::before {
+  background: linear-gradient(135deg, #ff4de1, #00d1ff) !important;
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.14) !important;
+}
+
+/* Badge for text mode; image badges untouched */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: linear-gradient(135deg, rgba(181, 0, 255, 0.84), rgba(0, 255, 209, 0.84)) !important;
+  color: #0a0611 !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.22) !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }
+
+/* Optional small meta accents for categories/counts to keep theme coherent */
+body[data-page="main"] .category-name { color: #5a22ff !important; }
+body.darkmode[data-page="main"] .category-name { color: #00e6c4 !important; }

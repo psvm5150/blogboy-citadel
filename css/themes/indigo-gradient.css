@@ -1,0 +1,62 @@
+/* Theme: indigo-gradient
+   Applies to both pages. Only affects allowed areas.
+   - Viewer: header/footer gradient and button styles
+   - Main: header/footer gradient plus doc name color, hover bg, left bar, and new mark in purple tone
+   Note: Dimensions remain unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #ffffff !important;
+}
+.footer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #ffffff !important;
+}
+.footer p { color: rgba(255,255,255,0.9) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* MAIN PAGE ONLY: purple-toned link/title and hover background */
+body[data-page="main"] .post-link {
+  color: #5965f2 !important; /* indigo (slightly bluer) */
+  border-left: 4px solid transparent;
+}
+body[data-page="main"] .post-link:hover {
+  background-color: #f5f3ff !important; /* light indigo tint */
+  border-left-color: #7c3aed !important; /* vivid indigo */
+  color: #5b21b6 !important;
+}
+
+/* New indicator adjusted to purple family */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(124, 58, 237, 0.08)) !important;
+  color: #5b21b6 !important;
+  border: 1px solid rgba(124, 58, 237, 0.35) !important;
+}
+body[data-page="main"] .new-indicator::before { 
+  background: #7c3aed !important; 
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: #5551aa !important; /* indigo badge background per request */
+  color: #ffffff !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }

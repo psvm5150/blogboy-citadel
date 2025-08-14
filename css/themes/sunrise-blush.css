@@ -1,0 +1,73 @@
+/* Theme: sunrise-blush
+   Purpose: Fresh, warm light gradient with soft coral/peach accents. Ensures excellent list readability in both light and dark modes.
+   Scope: Affects header/footer, main list title/link colors, hover background, left bar, and new indicator tones.
+   Note: Dimensions unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  background: linear-gradient(135deg, #fff1eb 0%, #ffd1c7 45%, #ff9a9e 100%) !important; /* soft peach -> coral */
+  color: #2b2b2b !important; /* dark text for light header */
+}
+.footer {
+  background: linear-gradient(135deg, #fff1eb 0%, #ffd1c7 45%, #ff9a9e 100%) !important;
+  color: #2b2b2b !important;
+}
+.footer p { color: rgba(0, 0, 0, 0.7) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 2px solid rgba(0, 0, 0, 0.12) !important;
+  color: #2b2b2b !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(0, 0, 0, 0.12) !important;
+  border-color: rgba(0, 0, 0, 0.22) !important;
+}
+
+/* MAIN PAGE: List readability and accenting */
+/* Light mode: cozy coral accent, ensure strong text contrast on white */
+body:not(.darkmode)[data-page="main"] .post-link {
+  color: #7a2e2a !important; /* deep warm brownish-red for titles */
+  border-left: 4px solid transparent;
+}
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  background-color: #fff4ef !important; /* warm blush hover */
+  border-left-color: #ff6b6b !important; /* coral accent */
+  color: #5d221f !important; /* slightly darker for readability (tuned) */
+}
+
+/* Dark mode: adjust to a bright peach accent that remains legible on dark bg */
+body.darkmode[data-page="main"] .post-link {
+  color: #ffc0a8 !important; /* bright peach for dark mode */
+  border-left: 4px solid transparent;
+}
+body.darkmode[data-page="main"] .post-link:hover {
+  background-color: #1a1412 !important; /* warm dark hover */
+  border-left-color: #ff8c78 !important;
+  color: #ffd6c8 !important;
+}
+
+/* New indicator tuned to coral/peach */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(255, 107, 107, 0.16), rgba(255, 154, 158, 0.10)) !important;
+  color: #8f2e2b !important;
+  border: 1px solid rgba(255, 107, 107, 0.35) !important;
+}
+body[data-page="main"] .new-indicator::before {
+  background: #ff6b6b !important;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.18) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(176, 78, 69, 0.94) !important; /* muted coral-brown */
+  color: #ffffff !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }

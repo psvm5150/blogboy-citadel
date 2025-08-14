@@ -1,0 +1,97 @@
+/* Theme: rose-quartz
+   Style: Sophisticated, feminine palette with blush, rose, and mauve accents.
+   Goal: Excellent readability for main-page document titles in both light and dark modes.
+   Scope: Header/Footer, control buttons, main list title/link, hover background, left bar, new indicator, and text badge.
+   Note: Dimensions unchanged; image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  background: linear-gradient(135deg, #fff5f7 0%, #ffe3ec 38%, #f8c8d8 72%, #e9a6c0 100%) !important; /* ivory -> blush -> soft rose */
+  color: #2a1f24 !important; /* deep cocoa for crisp readability on light gradient */
+}
+.footer {
+  background: linear-gradient(135deg, #fff5f7 0%, #ffe3ec 38%, #f8c8d8 72%, #e9a6c0 100%) !important;
+  color: #2a1f24 !important;
+}
+.footer p { color: rgba(0, 0, 0, 0.72) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 2px solid rgba(0, 0, 0, 0.12) !important;
+  color: #2a1f24 !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(0, 0, 0, 0.12) !important;
+  border-color: rgba(0, 0, 0, 0.22) !important;
+}
+
+/* MAIN PAGE: Title/link readability and accents */
+/* Light mode: rich rose-brown title with gentle blush hover panel */
+body:not(.darkmode)[data-page="main"] .post-link {
+  color: #b23a6e !important; /* deeper pink for improved readability */
+  border-left: 4px solid transparent;
+}
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  background-color: #fff1f5 !important; /* blush hover */
+  border-left-color: #e85d8e !important; /* bright rose accent */
+  color: #8f2b54 !important; /* slightly darker for hover focus (tuned) */
+}
+
+/* Dark mode: brighten the title and stronger contrast hover */
+body.darkmode[data-page="main"] .post-link {
+  color: #ffb3c7 !important; /* soft light rose readable on dark */
+  border-left: 4px solid transparent;
+}
+body.darkmode[data-page="main"] .post-link:hover {
+  background-color: #1a1317 !important; /* deep wine-tint hover */
+  border-left-color: #ff7aa6 !important; /* vivid pink accent */
+  color: #ffd9e4 !important; /* brighter for emphasis */
+}
+
+/* New indicator tuned to rose/mauve */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(232, 93, 142, 0.16), rgba(232, 93, 142, 0.10)) !important;
+  color: #7a2f46 !important;
+  border: 1px solid rgba(232, 93, 142, 0.35) !important;
+}
+body[data-page="main"] .new-indicator::before {
+  background: #e85d8e !important;
+  box-shadow: 0 0 0 3px rgba(232, 93, 142, 0.18) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(138, 58, 95, 0.95) !important; /* deep mauve-rose */
+  color: #ffffff !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }
+
+/* Optional dark-mode header/footer variant to keep harmony on very dark content pages */
+body.darkmode .header,
+body.darkmode .footer {
+  background: linear-gradient(135deg, #1a0f15 0%, #24121a 45%, #331a24 100%) !important; /* deep plum gradient */
+  color: #ffe6ee !important;
+}
+body.darkmode .footer p { color: rgba(255, 230, 238, 0.9) !important; }
+body.darkmode .header .darkmode-toggle,
+body.darkmode .header .home-button,
+body.darkmode .footer .darkmode-toggle,
+body.darkmode .footer .home-button {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border: 2px solid rgba(255, 255, 255, 0.28) !important;
+  color: #ffe6ee !important;
+}
+body.darkmode .header .darkmode-toggle:hover,
+body.darkmode .header .home-button:hover,
+body.darkmode .footer .darkmode-toggle:hover,
+body.darkmode .footer .home-button:hover {
+  background: rgba(255, 255, 255, 0.26) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}

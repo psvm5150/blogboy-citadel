@@ -1,0 +1,73 @@
+/* Theme: midnight-aurora
+   Purpose: Sleek, cosmic dark gradient with neon accents. Ensures excellent list readability in both light and dark modes.
+   Scope: Affects header/footer, main list title/link colors, hover background, left bar, and new indicator tones.
+   Note: Dimensions unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  background: linear-gradient(135deg, #0b1020 0%, #10243e 48%, #1a365d 100%) !important; /* deep navy -> aurora blue */
+  color: #eaf2ff !important;
+}
+.footer {
+  background: linear-gradient(135deg, #0b1020 0%, #10243e 48%, #1a365d 100%) !important;
+  color: #eaf2ff !important;
+}
+.footer p { color: rgba(234, 242, 255, 0.9) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border: 2px solid rgba(255, 255, 255, 0.28) !important;
+  color: #ffffff !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(255, 255, 255, 0.26) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* MAIN PAGE: List readability and accenting */
+/* Light mode: vivid aurora indigo/cyan accents with high contrast on white */
+body:not(.darkmode)[data-page="main"] .post-link {
+  color: #173b82 !important; /* strong indigo for titles */
+  border-left: 4px solid transparent;
+}
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  background-color: #eef4ff !important; /* soft ice-indigo hover */
+  border-left-color: #3aa6ff !important; /* bright cyan accent */
+  color: #0f2f6a !important; /* darker for contrast */
+}
+
+/* Dark mode: brighter neon-cyan for clarity on dark bg, darker hover panel */
+body.darkmode[data-page="main"] .post-link {
+  color: #7bd0ff !important; /* bright yet readable */
+  border-left: 4px solid transparent;
+}
+body.darkmode[data-page="main"] .post-link:hover {
+  background-color: #111826 !important; /* darker than default hover for clarity */
+  border-left-color: #3aa6ff !important;
+  color: #a5e2ff !important;
+}
+
+/* New indicator tuned to aurora (cyan/indigo) */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(58, 166, 255, 0.16), rgba(58, 166, 255, 0.08)) !important;
+  color: #0f61a8 !important;
+  border: 1px solid rgba(58, 166, 255, 0.35) !important;
+}
+body[data-page="main"] .new-indicator::before {
+  background: #3aa6ff !important;
+  box-shadow: 0 0 0 3px rgba(58, 166, 255, 0.18) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(36, 74, 122, 0.95) !important; /* deep aurora indigo */
+  color: #ffffff !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }

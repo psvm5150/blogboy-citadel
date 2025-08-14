@@ -1,0 +1,70 @@
+/* Theme: dark-green
+   Applies to both pages. Only affects allowed areas.
+   - Viewer: header/footer colors and button styles
+   - Main: header/footer colors and specific list/title/new indicator styles
+   Note: Dimensions remain unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  background: #0c373b !important; /* slightly more muted, grayer teal for header */
+  color: #ffffff !important;
+}
+.footer {
+  background: #0c373b !important;
+  color: #ffffff !important;
+}
+.footer p { color: rgba(255,255,255,0.82) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(0, 0, 0, 0.22) !important;
+  border: 2px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(0, 0, 0, 0.32) !important;
+  border-color: rgba(255, 255, 255, 0.38) !important;
+}
+
+/* MAIN PAGE ONLY: document name color, focus bg, left bar, and new mark */
+/* Link/title color to match green/teal tone */
+body[data-page="main"] .post-link {
+  color: #1f7a5b !important; /* slightly more muted sea green for base title */
+  border-left: 4px solid transparent;
+}
+body[data-page="main"] .post-link:hover {
+  background-color: #e7f5f0 !important; /* slightly darker mint */
+  border-left-color: #238a67 !important;
+  color: #1f6f56 !important;
+}
+
+/* New indicator uses green/teal gradient */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(79, 221, 160, 0.16), rgba(79, 221, 160, 0.08)) !important;
+  color: #1e7f6a !important;
+  border: 1px solid rgba(79, 221, 160, 0.35) !important;
+}
+body[data-page="main"] .new-indicator::before { 
+  background: #4fdda0 !important; 
+  box-shadow: 0 0 0 3px rgba(79, 221, 160, 0.18) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+/* Do not style .image-badge (image mode) */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(50, 90, 85, 0.95) !important; /* darker teal-ish badge */
+  color: #ffffff !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }
+
+
+/* Light mode only: on hover make title text slightly darker; keep bg and left bar as is */
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  color: #1a624c !important; /* slightly darker than #1f6f56 */
+}

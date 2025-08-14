@@ -191,7 +191,7 @@ async function createCategorySection(title, files) {
         return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
-                    ${file.title}${newIndicator}${dateTimeDisplay}
+                    <span class="post-title">${file.title}</span>${newIndicator}${dateTimeDisplay}
                 </a>
             </li>
         `;
@@ -234,7 +234,7 @@ async function createFlatListSection(titleText, flattenedItems) {
         return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
-                    ${file.title}${newIndicator}${dateTimeDisplay}${categoryName}
+                    <span class="post-title">${file.title}</span>${newIndicator}${dateTimeDisplay}${categoryName}
                 </a>
             </li>
         `;
@@ -307,7 +307,7 @@ async function createAllViewSection() {
         return `
             <li class="post-item">
                 <a href="viewer.html?file=${documentRoot}${file.path}" class="post-link">
-                    ${file.title}${newIndicator}${dateTimeDisplay}${categoryName}
+                    <span class=\"post-title\">${file.title}</span>${newIndicator}${dateTimeDisplay}${categoryName}
                 </a>
             </li>
         `;

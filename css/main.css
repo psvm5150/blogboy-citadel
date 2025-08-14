@@ -163,6 +163,10 @@ body {
 
 .category-title-text {
     flex: 1;
+    min-width: 0; /* allow flex child to shrink for ellipsis */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .category-count {
@@ -201,7 +205,9 @@ body {
     color: #4a6fd1;
     text-decoration: none;
     padding: 16px 24px;
-    display: block;
+    display: flex; /* for title ellipsis with trailing badges */
+    align-items: center;
+    gap: 8px;
     transition: all 0.2s ease;
     font-weight: 500;
     border-left: 4px solid transparent;
@@ -213,6 +219,15 @@ body {
     text-decoration: none;
     color: #3f60c0;
     transform: translateX(4px);
+}
+
+/* Truncated title inside post-link */
+.post-title {
+    flex: 1;
+    min-width: 0; /* allow flex child to shrink for ellipsis */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* New Indicator */

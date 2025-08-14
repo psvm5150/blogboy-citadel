@@ -198,7 +198,7 @@ body {
 }
 
 .post-link {
-    color: #667eea;
+    color: #4a6fd1;
     text-decoration: none;
     padding: 16px 24px;
     display: block;
@@ -209,9 +209,9 @@ body {
 
 .post-link:hover {
     background-color: #f8f9ff;
-    border-left-color: #667eea;
+    border-left-color: #4a6fd1;
     text-decoration: none;
-    color: #5a67d8;
+    color: #3f60c0;
     transform: translateX(4px);
 }
 

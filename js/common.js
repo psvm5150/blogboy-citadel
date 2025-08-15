@@ -567,20 +567,54 @@ function applyColourTheme(themeName) {
         if (!safe) return;
         // Set a body data attribute for possible CSS scoping or debugging
         try { document.body.setAttribute('data-colour-theme', safe); } catch (e) {}
-        // Create or update <link id="colour-theme">
-        let link = document.getElementById('colour-theme');
+
         const href = `./css/themes/${safe}.css`;
-        if (link) {
-            if (link.getAttribute('href') !== href) {
-                link.setAttribute('href', href);
-            }
-        } else {
+        let link = document.getElementById('colour-theme');
+
+        if (!link) {
             link = document.createElement('link');
             link.id = 'colour-theme';
             link.rel = 'stylesheet';
-            link.href = href;
             document.head.appendChild(link);
         }
+
+        // Attach a one-time error handler to surface failure without fallback
+        // We do NOT attempt to load any other theme to keep performance and avoid hidden fallbacks.
+        link.onerror = () => {
+            try {
+                // Mark error state
+                document.body.setAttribute('data-colour-theme-error', safe);
+                // Show a lightweight alert banner (once per session)
+                if (!sessionStorage.getItem('theme_css_error_shown')) {
+                    const banner = document.createElement('div');
+                    banner.textContent = `Failed to load theme CSS: ${safe}.css`;
+                    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#b00020;color:#fff;padding:8px 12px;font-size:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.2)';
+                    document.body.appendChild(banner);
+                    sessionStorage.setItem('theme_css_error_shown', '1');
+                    // Auto-hide after 5 seconds
+                    setTimeout(() => { try { banner.remove(); } catch (e) {} }, 5000);
+                }
+            } catch (e) {
+                // noop
+            }
+        };
+
+        // Update href last to trigger load
+        if (link.getAttribute('href') !== href) {
+            link.setAttribute('href', href);
+        }
+
+        // Ensure no duplicate theme CSS links remain (remove any other links pointing to ./css/themes/)
+        const links = Array.from(document.head.querySelectorAll('link[rel="stylesheet"]'));
+        links.forEach((l) => {
+            if (l !== link) {
+                const h = l.getAttribute('href') || '';
+                // Only remove if it clearly points to our themes folder
+                if (/\/css\/themes\/[^\s]+\.css$/i.test(h)) {
+                    try { l.parentNode.removeChild(l); } catch (e) {}
+                }
+            }
+        });
     } catch (e) {
         console.warn('Failed to apply colour theme:', e);
     }

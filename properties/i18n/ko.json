@@ -25,5 +25,7 @@
   "lbl_total_documents": "총 {count}개 문서 ({categories}개 카테고리)",
   "btn_prev_page": "이전",
   "btn_next_page": "다음",
-  "lbl_page_info": "페이지 {current}/{total}"
+  "lbl_page_info": "페이지 {current}/{total}",
+  "title_rss_subscribe": "RSS 구독",
+  "msg_failed_load_theme_css": "테마 CSS를 불러오지 못했습니다: {file}"
 }

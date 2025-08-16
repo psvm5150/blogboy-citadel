@@ -352,7 +352,7 @@ function updateSearchStats(searchTerm = '') {
     if (searchTerm) {
         const term = searchTerm.toLowerCase();
         const matched = allFlat.filter(it => (it.file.title || '').toLowerCase().includes(term) || (it.categoryTitle || '').toLowerCase().includes(term)).length;
-        searchStats.textContent = `"${searchTerm}" ${t('lbl_search_result')}: ${matched}${t('lbl_document_count')} 문서`;
+        searchStats.textContent = `"${searchTerm}" ${t('lbl_search_result')}: ${matched} ${t('lbl_document_count')}`;
     } else {
         // categories count
         const categoriesCount = Object.keys(documentCategories).length;

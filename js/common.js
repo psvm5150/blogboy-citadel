@@ -587,7 +587,7 @@ function applyColourTheme(themeName) {
                 // Show a lightweight alert banner (once per session)
                 if (!sessionStorage.getItem('theme_css_error_shown')) {
                     const banner = document.createElement('div');
-                    banner.textContent = `Failed to load theme CSS: ${safe}.css`;
+                    banner.textContent = t('msg_failed_load_theme_css', { file: `${safe}.css` });
                     banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#b00020;color:#fff;padding:8px 12px;font-size:14px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.2)';
                     document.body.appendChild(banner);
                     sessionStorage.setItem('theme_css_error_shown', '1');

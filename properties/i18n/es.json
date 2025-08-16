@@ -26,5 +26,7 @@
   "lbl_total_documents": "Total {count} documentos ({categories} categorías)",
   "btn_prev_page": "Anterior",
   "btn_next_page": "Siguiente",
-  "lbl_page_info": "Página {current}/{total}"
+  "lbl_page_info": "Página {current}/{total}",
+  "title_rss_subscribe": "Suscribirse a RSS",
+  "msg_failed_load_theme_css": "No se pudo cargar el tema CSS: {file}"
 }

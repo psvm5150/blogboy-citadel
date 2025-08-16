@@ -523,7 +523,7 @@ async function generateDocumentMeta(filePath) {
             } catch (e) {
                 // URL 파싱 실패 시 그대로 사용
             }
-            rssHtml = `&nbsp;&nbsp;<a class="rss-link" href="${rssUrl}" target="_blank" rel="noopener" title="RSS 구독">
+            rssHtml = `&nbsp;&nbsp;<a class="rss-link" href="${rssUrl}" target="_blank" rel="noopener" title="${t('title_rss_subscribe')}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
                     <path d="M6.18 17.82A2.18 2.18 0 1 1 4 20a2.18 2.18 0 0 1 2.18-2.18M4 10.5a9.5 9.5 0 0 1 9.5 9.5h-3A6.5 6.5 0 0 0 4 13.5zm0-6A15.5 15.5 0 0 1 19.5 20h-3A12.5 12.5 0 0 0 4 7.5z"/>
                 </svg>

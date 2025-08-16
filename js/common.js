@@ -619,3 +619,49 @@ function applyColourTheme(themeName) {
         console.warn('Failed to apply colour theme:', e);
     }
 }
+
+
+// Shared initialization helpers (added via refactor)
+function getUrlParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const obj = {};
+    urlParams.forEach((v, k) => { obj[k] = v; });
+    return obj;
+}
+
+async function initializeI18nFromLocalePref(preferred, basePath = '') {
+    const locale = resolveLocale(preferred);
+    await loadI18nData(locale, basePath);
+    applyI18nTranslations();
+    return locale;
+}
+
+async function initializePageTheme(pageName, configLike) {
+    try { if (pageName) document.body.setAttribute('data-page', String(pageName)); } catch (e) {}
+
+    // Apply colour theme stylesheet from config-like object
+    if (configLike && configLike.colour_theme) {
+        applyColourTheme(String(configLike.colour_theme));
+    }
+
+    // Theme toggle button visibility (if present in config)
+    const themeToggleBtn = document.getElementById('darkmode-toggle');
+    if (themeToggleBtn && Object.prototype.hasOwnProperty.call(configLike || {}, 'show_theme_toggle')) {
+        themeToggleBtn.style.display = configLike.show_theme_toggle ? '' : 'none';
+    }
+
+    // Determine dark mode from session or config defaults
+    const sessionTheme = sessionStorage.getItem('theme_mode');
+    let isDarkMode;
+    if (sessionTheme) {
+        isDarkMode = sessionTheme === 'dark';
+    } else {
+        const defaultMode = (configLike && typeof configLike.default_colour_mode !== 'undefined')
+            ? configLike.default_colour_mode
+            : (configLike ? configLike.default_theme : undefined);
+        isDarkMode = defaultMode === 'dark';
+    }
+
+    await setDarkMode(isDarkMode);
+    bindDarkModeButton();
+}

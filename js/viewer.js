@@ -1,10 +1,4 @@
 'use strict';
-function getUrlParameters() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return {
-        file: urlParams.get('file')
-    };
-}
 
 // 뷰어 설정 로드 (신구 구조 호환)
 async function loadViewerConfig() {
@@ -762,54 +756,19 @@ function setupAdSense(adsenseCfg) {
 
 // 페이지 로드
 document.addEventListener('DOMContentLoaded', async () => {
-    const params = getUrlParameters();
+    const params = getUrlParams();
 
     // 설정 로드 (viewer config 먼저 로드하여 locale 설정 확인)
     const config = await loadViewerConfig();
     await loadMainConfig('.');
 
-    // Mark page type for potential scoping
-    try { document.body.setAttribute('data-page', 'viewer'); } catch (e) {}
-    // Apply colour theme stylesheet from config
-    if (config && config.colour_theme) {
-        applyColourTheme(config.colour_theme);
-    }
-    
-    // Resolve locale and load i18n
-    const locale = resolveLocale(config.site_locale);
-    await loadI18nData(locale);
-    applyI18nTranslations();
+    await initializeI18nFromLocalePref(config.site_locale);
+    await initializePageTheme('viewer', config);
 
     // Setup Google AdSense if configured
     if (config.adsense) {
         setupAdSense(config.adsense);
     }
-
-    // 테마 토글 버튼 표시/숨김 처리
-    const themeToggleBtn = document.getElementById('darkmode-toggle');
-    if (themeToggleBtn) {
-        if (config.show_theme_toggle) {
-            themeToggleBtn.style.display = '';
-        } else {
-            themeToggleBtn.style.display = 'none';
-        }
-    }
-
-    // 테마 설정 적용 (sessionStorage 우선, 없으면 config 기본값 사용)
-    const sessionTheme = sessionStorage.getItem('theme_mode');
-    let isDarkMode;
-    
-    if (sessionTheme) {
-        // 세션에 저장된 테마가 있으면 사용
-        isDarkMode = sessionTheme === 'dark';
-    } else {
-        // 세션에 저장된 테마가 없으면 config 기본값 사용
-        const defaultMode = (typeof config.default_colour_mode !== 'undefined') ? config.default_colour_mode : config.default_theme;
-        isDarkMode = defaultMode === 'dark';
-    }
-
-    await setDarkMode(isDarkMode);
-    bindDarkModeButton();
 
     // 뷰어 라벨 적용
     await applyViewerConfigLabels();

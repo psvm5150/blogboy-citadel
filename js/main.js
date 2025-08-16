@@ -52,13 +52,6 @@ async function loadDocuments() {
     }
 
     try {
-        await loadMainConfig();
-        // Mark page type for potential scoping
-        try { document.body.setAttribute('data-page', 'main'); } catch (e) {}
-        // Apply colour theme stylesheet from config
-        if (mainConfig && mainConfig.colour_theme) {
-            applyColourTheme(String(mainConfig.colour_theme));
-        }
         await loadToc();
 
         // default_view_filter 설정에 따라 초기 뷰 모드 설정
@@ -498,42 +491,12 @@ function initializeKeyboardShortcuts() {
 
 // 초기화
 document.addEventListener('DOMContentLoaded', async () => {
-    // Load main config first to get locale setting
     await loadMainConfig();
-    
-    // Resolve locale and load i18n
-    const locale = resolveLocale(mainConfig.site_locale);
-    await loadI18nData(locale);
-    applyI18nTranslations();
-    
+    await initializeI18nFromLocalePref(mainConfig.site_locale);
+    await initializePageTheme('main', mainConfig);
+
     await loadDocuments();
     applyMainConfigLabels();
-
-    // 테마 토글 버튼 표시/숨김 처리
-    const themeToggleBtn = document.getElementById('darkmode-toggle');
-    if (themeToggleBtn) {
-        if (mainConfig.show_theme_toggle) {
-            themeToggleBtn.style.display = '';
-        } else {
-            themeToggleBtn.style.display = 'none';
-        }
-    }
-
-    // 테마 설정 적용 (sessionStorage 우선, 없으면 config 기본값 사용)
-    const sessionTheme = sessionStorage.getItem('theme_mode');
-    let isDarkMode;
-    
-    if (sessionTheme) {
-        // 세션에 저장된 테마가 있으면 사용
-        isDarkMode = sessionTheme === 'dark';
-    } else {
-        // 세션에 저장된 테마가 없으면 config 기본값 사용
-        const defaultMode = (typeof mainConfig.default_colour_mode !== 'undefined') ? mainConfig.default_colour_mode : mainConfig.default_theme;
-        isDarkMode = defaultMode === 'dark';
-    }
-
-    await setDarkMode(isDarkMode);
-    bindDarkModeButton();
 
     setTimeout(() => {
         initializeViewModeControls();

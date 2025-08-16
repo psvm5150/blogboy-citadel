@@ -7,6 +7,34 @@
     <!-- main-config.json: site_title -->
     <title></title>
     <link rel="stylesheet" href="./css/main.css">
+    <script>
+    // Early theme injection to avoid any visual fallback
+    (function(){
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', './properties/main-config.json', true);
+        xhr.onreadystatechange = function(){
+          if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
+            try {
+              var cfg = JSON.parse(xhr.responseText || '{}');
+              var theme = (cfg && (cfg.colour_theme || cfg.color_theme)) ? String(cfg.colour_theme || cfg.color_theme).trim() : '';
+              if (theme) {
+                var safe = theme.toLowerCase().replace(/[^a-z0-9-_]/g, '');
+                if (safe) {
+                  var link = document.createElement('link');
+                  link.id = 'colour-theme';
+                  link.rel = 'stylesheet';
+                  link.href = './css/themes/' + safe + '.css';
+                  document.head.appendChild(link);
+                }
+              }
+            } catch(e) { /* ignore */ }
+          }
+        };
+        xhr.send();
+      } catch(e) { /* ignore */ }
+    })();
+    </script>
 </head>
 <body>
     <header class="header">

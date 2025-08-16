@@ -20,10 +20,11 @@ body {
 
 /* Header - 하단과 같은 색상으로 변경 */
 .header {
-    background: #2c3e50;
-    color: white;
+    /* Neutral base header; theme will style */
+    background: transparent;
+    color: inherit;
     padding: 32px 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .header-content {
@@ -36,13 +37,13 @@ body {
     left: 0;
     font-size: 1.2rem;
     font-weight: 700;
-    color: white;
-    /* Updated to a slightly dark pastel indigo that pairs well with white text */
-    background: rgba(91, 109, 170, 0.95); /* ~#5B6DAA */
+    color: inherit;
+    /* Neutral base badge; theme will style if needed */
+    background: transparent;
     padding: 8px 16px;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
+    box-shadow: none;
+    backdrop-filter: none;
 }
 
 /* Image badge mode overrides */

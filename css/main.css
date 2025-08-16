@@ -239,7 +239,7 @@ body {
     padding: 16px 24px;
     display: flex; /* for title ellipsis with trailing badges */
     align-items: center;
-    gap: 8px;
+    gap: 0; /* precise control via margins to achieve exactly two-space spacing */
     transition: all 0.2s ease;
     font-weight: 500;
     border-left: 4px solid transparent;
@@ -255,7 +255,7 @@ body {
 
 /* Truncated title inside post-link */
 .post-title {
-    flex: 1;
+    flex: 0 1 auto; /* do not push badges to the far right; allow shrink for ellipsis */
     min-width: 0; /* allow flex child to shrink for ellipsis */
     white-space: nowrap;
     overflow: hidden;
@@ -273,7 +273,7 @@ body {
     font-weight: 700;
     padding: 2px 8px;
     border-radius: 999px;
-    margin-left: 12px;
+    margin-left: 1em; /* two spaces next to title */
     text-transform: uppercase;
     letter-spacing: 0.6px;
     border: 1px solid rgba(79, 160, 221, 0.35);
@@ -296,7 +296,7 @@ body {
     color: #64748b;
     font-size: 0.58rem;
     font-weight: 500;
-    margin-left: 10px;
+    margin-left: 1em; /* two spaces next to previous badge/title */
     letter-spacing: 0.2px;
     font-family: 'Segoe UI', system-ui, sans-serif;
     padding: 2px 8px;
@@ -322,9 +322,16 @@ body {
     font-size: 0.75rem;
     color: #6c757d;
     font-weight: 400;
-    margin-left: 12px;
+    margin-left: auto; /* push to far right */
+    margin-right: 0;
     opacity: 0.8;
     font-style: italic;
+    /* Make category name the lowest priority for space: allow shrinking and ellipsis */
+    flex: 0 1 160px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Search Container */
@@ -436,11 +443,25 @@ body {
 
     .category-header,
     .post-link {
-        padding: 16px 20px;
+        /* Halve right padding on mobile to reduce space to the right of the date badge */
+        padding: 16px 10px 16px 20px; /* top right bottom left (right: 10px, left stays 20px) */
     }
 
     .category-title {
         font-size: 1.2rem;
+    }
+
+    /* Mobile-only adjustments for document date and category in list */
+    .new-datetime {
+        white-space: nowrap;         /* 1) Never wrap date on mobile */
+        /* Show full date without ellipsis on mobile as requested */
+        /* No overflow/text-overflow here to avoid "..." */
+        /* Keep exactly two-space visual gap to the previous element (1em) */
+        margin-left: 1em;
+    }
+    /* 3) In mobile + All view, hide the right-side category name */
+    body[data-view="all"] .category-name {
+        display: none;
     }
 }
 
@@ -451,7 +472,8 @@ body {
 
     .category-header,
     .post-link {
-        padding: 12px 16px;
+        /* Halve right padding further on very small screens (16px -> 8px) */
+        padding: 12px 8px 12px 16px; /* top right bottom left */
     }
 
     .category-title {

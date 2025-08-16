@@ -91,11 +91,30 @@ async function renderDocuments() {
         const perPage = getPerPage();
         const allFlat = buildAllDocsFlat();
 
+        // Enrich missing dates for proper sorting in All/Search view (use file modified date when toc date is absent)
+        const enriched = await Promise.all(allFlat.map(async (it) => {
+            if (!it.tocDate) {
+                const md = await getFileModifiedDate(it.file.path);
+                if (md && md instanceof Date && !isNaN(md.getTime())) {
+                    it.sortDate = md;
+                }
+            }
+            return it;
+        }));
+        // Ensure newest first sort
+        enriched.sort((a, b) => b.sortDate - a.sortDate);
+
         // 필터링: 검색어가 있으면 전체 영역에서 검색
         const term = (currentSearchTerm || '').trim().toLowerCase();
         let filtered = term
-            ? allFlat.filter(it => (it.file.title || '').toLowerCase().includes(term) || (it.categoryTitle || '').toLowerCase().includes(term))
-            : allFlat;
+            ? enriched.filter(it => (it.file.title || '').toLowerCase().includes(term) || (it.categoryTitle || '').toLowerCase().includes(term))
+            : enriched;
+
+        // Update body data attribute to reflect current view for responsive CSS rules
+        try {
+            const viewModeForCss = term ? 'search' : currentViewMode;
+            document.body.setAttribute('data-view', viewModeForCss);
+        } catch (e) { /* ignore */ }
 
         // 표시 모드에 따른 그룹화 / 섹션 타이틀
         const totalItems = filtered.length;
@@ -232,9 +251,11 @@ async function createFlatListSection(titleText, flattenedItems) {
 
     const fileListPromises = flattenedItems.map(async (wrap) => {
         const file = wrap.file;
-        const showNew = wrap.tocDate ? await shouldShowNewIndicator(file.path, wrap.tocDate) : false;
+        // Use tocDate if available, otherwise fallback to file modified date to match category view behavior
+        const baseDate = wrap.tocDate || await getFileModifiedDate(file.path);
+        const showNew = baseDate ? await shouldShowNewIndicator(file.path, baseDate) : false;
         const newIndicator = showNew ? createNewIndicator() : '';
-        const displayDate = mainConfig.show_document_date ? wrap.tocDate : null;
+        const displayDate = mainConfig.show_document_date ? baseDate : null;
         const dateTimeDisplay = createDateTimeDisplay(displayDate);
         const categoryName = `<span class="category-name">${wrap.categoryTitle}</span>`;
         return `

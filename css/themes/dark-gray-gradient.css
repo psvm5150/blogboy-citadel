@@ -6,12 +6,12 @@
 
 /* Common header/footer for both pages */
 .header {
-  /* Darker-feel neutral gray gradient based on dark-gray (#2b2b2b) */
-  background: linear-gradient(135deg, #0a0a0a 0%, #2b2b2b 30%, #4a4a4a 60%, #0e0e0e 100%) !important;
+  /* Neutral gray gradient with more noticeable contrast */
+  background: linear-gradient(135deg, #0a0a0a 0%, #2b2b2b 25%, #5e5e5e 55%, #1a1a1a 100%) !important;
   color: #ffffff !important;
 }
 .footer {
-  background: linear-gradient(135deg, #0a0a0a 0%, #2b2b2b 30%, #4a4a4a 60%, #0e0e0e 100%) !important;
+  background: linear-gradient(135deg, #0a0a0a 0%, #2b2b2b 25%, #5e5e5e 55%, #1a1a1a 100%) !important;
   color: #ffffff !important;
 }
 .footer p { color: rgba(255,255,255,0.9) !important; }
@@ -63,6 +63,11 @@ body[data-page="main"] .site-badge:not(.image-badge) {
 }
 body[data-page="main"] .site-badge.image-badge { background: transparent !important; }
 
+
+/* Light mode only: make main page document titles a darker gray (font color only) */
+body:not(.darkmode)[data-page="main"] .post-link {
+  color: #6b7280 !important; /* darker slate gray for better contrast */
+}
 
 /* Light mode only: on hover make title text slightly darker; keep bg and left bar as is */
 body:not(.darkmode)[data-page="main"] .post-link:hover {

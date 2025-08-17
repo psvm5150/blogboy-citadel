@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+<channel>
+<title>Main Max: Fury Load</title>
+<link>/</link>
+<description>You will code eternal, shiny and RESTful!</description>
+<language>default</language>
+<lastBuildDate>Sun, 17 Aug 2025 16:52:31 GMT</lastBuildDate>
+<item>
+<title>Spring Initializr 가이드</title>
+<link>/viewer.html?file=posts/spring-init/SpringInitializrGuide.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/spring-init/SpringInitializrGuide.md</guid>
+<pubDate>Sun, 10 Aug 2025 10:24:18 GMT</pubDate>
+<description>폐쇄망에서 Spring Boot Project 시작 하기 ===================</description>
+</item>
+<item>
+<title>Swagger API 문서화 가이드</title>
+<link>/viewer.html?file=posts/swagger/swagger.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/swagger/swagger.md</guid>
+<pubDate>Sun, 10 Aug 2025 09:24:51 GMT</pubDate>
+<description>본 Guide는 Spring Boot 어플리케이션에서 Swagger 를 적용하고 사용 하는 방법에 대한 안내서다.</description>
+</item>
+<item>
+<title>SublimeText 단축키 모음</title>
+<link>/viewer.html?file=posts/sltext-shortcuts/shortcusts.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/sltext-shortcuts/shortcusts.md</guid>
+<pubDate>Sun, 10 Aug 2025 09:24:39 GMT</pubDate>
+<description>[](https://creativecommons.org/licenses/by/2.0/kr/) 본 웹사이트는 크리에이티브 커먼즈 저작자표시 2.0 대한민국 라이선스에 따라 이용할 수 있습니다.</description>
+</item>
+<item>
+<title>인증서 생성 및 관리 가이드</title>
+<link>/viewer.html?file=posts/cert/cert.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/cert/cert.md</guid>
+<pubDate>Sun, 10 Aug 2025 09:24:17 GMT</pubDate>
+<description>매번 개발서버의 비밀번호가 바뀔 때 마다 서버접근제어에 들어가 비번을 복사하고 Editor, FTP, 터미널(CRT) 클라이언트에 비번을 바꿔서 적용하는 것은 여간 귀찮은 일이 아니다. 비번이 바뀌던 말던 내가 쓰는 개발 도구에 영향을 미치지 않고 인증서를 사용하여 편리하게 개발 업무에 집중해 보자. 심지어 ID/Password 방식 보다 인증서 방식이 보안 레벨이 높다. 그래서 클라우드나 보안 레벨이 높은 곳에서는 ID/Password 방식을 불허 하기도 한다.</description>
+</item>
+<item>
+<title>Git 서버 구축 가이드</title>
+<link>/viewer.html?file=posts/git-server/GitServer.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/git-server/GitServer.md</guid>
+<pubDate>Sun, 10 Aug 2025 09:24:05 GMT</pubDate>
+<description>Git을 활용하여 다양한 개발 관련 업무에서 형상관리를 할 수 있다. Harvest 와는 다르게 빠르고 IDE나 Editor 와 같은 도구에 통합되어 있어 보다 편리하게 쓸 수 있다. 또한 인터넷에서 Reference를 쉽게 찾을 수 있으며 현 시점에서 사실상 형상관리의 표준 이라 할 수 있다. 그리고 우리도 차세대 업무에서 Git을 표준 형상관리 도구로 사용하게 될 것이다.</description>
+</item>
+<item>
+<title>IntelliJ IDEA 사용자 가이드</title>
+<link>/viewer.html?file=posts/idea/IntelliJIdeaUsersGuide.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/idea/IntelliJIdeaUsersGuide.md</guid>
+<pubDate>Sun, 10 Aug 2025 09:23:54 GMT</pubDate>
+<description>설치본 디렉토리에는 idea , install 2가지 폴더 가 있다.</description>
+</item>
+<item>
+<title>IntelliJ IDEA 단축키 모음</title>
+<link>/viewer.html?file=posts/idea-shortcuts/shortcuts.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/idea-shortcuts/shortcuts.md</guid>
+<pubDate>Sun, 10 Aug 2025 09:23:41 GMT</pubDate>
+<description>| 기능 | 단축키|비고 | | |: :| | | 우측 Project 탐색창 이동&lt;br 코드 에디터 이동 | ALT+1 &lt;br ESC | | | 탭이동 최근연탭&lt;BR 탭이동 순서대로 | CTRL+SHIFT &lt;br ALT + ←/→ | | | 최근 연 파일 및 메뉴&lt;br 최근 Editor 작업 위치 | CTRL+E &lt;br CTRL+SHIFT+E | | | 새로(NEW) 만들기| ALT+INS |현재 위치에 적합한 새 개체 목록| | 좌측 또는 하단 창 닫기| SHIFT+ESC | | | 환경설정 전체| CTRL+ALT+S | | | Project/Module 환경 설정| F4 |Project 창에서 Project/Module 명 선택 후 |</description>
+</item>
+<item>
+<title>Subversion 완벽 가이드</title>
+<link>/viewer.html?file=posts/svn/svn.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/svn/svn.md</guid>
+<pubDate>Sun, 10 Aug 2025 08:10:41 GMT</pubDate>
+<description>아키텍처 팀에 SVN Repository 생성 요청을 한다. 사용 신청 후 아래와 같은 형식의 주소를 부여 받게 된다. svn://jenkins.axa.co.kr/{repo name}</description>
+</item>
+<item>
+<title>SublimeText 사용자 가이드</title>
+<link>/viewer.html?file=posts/sltext/SubLimeTextUsersGuide.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/sltext/SubLimeTextUsersGuide.md</guid>
+<pubDate>Sun, 10 Aug 2025 00:00:00 GMT</pubDate>
+<description>1. sublime text build 41xx x64 setup.exe 를 설치 2. 설치 시 Add to explorer context menu 가 나오면 Check 해 준다(우측 클릭 문서열기 기능).</description>
+</item>
+<item>
+<title>MarkDown 완벽 가이드</title>
+<link>/viewer.html?file=posts/md/MarkDownGuide.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/md/MarkDownGuide.md</guid>
+<pubDate>Fri, 01 Aug 2025 00:00:00 GMT</pubDate>
+<description>MS Office로 복잡한 문서를 만들어야 할 때도 있지만 여튼 개인적으로 무엇인가를 빠르게 정리할 때는 Plain Text 파일 만큼 편리 한 것이 없다. 윈도우 메모장만 쓰지 않으면 암호화도 안 되니 여러모로 편리하다. 이러한 편리함은 유지한 채로 최소한의 노력으로 어느정도 갖춰진 문서(지금 보고 있는)를 만들 수 있다면 더욱 좋은 일이다. 무엇보다 복잡하고 까다로운 MS Office 대신 개발자에게 익숙한 Editor 프로그램 하나로 모든 문서를 만들 수 있다.</description>
+</item>
+<item>
+<title>Vi/Vim 완벽 사용법</title>
+<link>/viewer.html?file=posts/vi/ViQuickStart.md</link>
+<guid isPermaLink="false">/viewer.html?file=posts/vi/ViQuickStart.md</guid>
+<pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

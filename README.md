@@ -205,7 +205,7 @@ Viewer page settings for theme options and UI elements. Note: page_title has bee
     "license_badge_image": "https://ccl.cckorea.org/images/ico-cc.png",
     "license_badge_link": "https://creativecommons.org/licenses/by/4.0/deed.ko",
     "license_description": "이 저작물은 Creative Commons 저작자표시 4.0 국제 라이선스에 따라 이용할 수 있습니다.",
-    "rss_feed_url": "/rss.xml"
+    "rss_feed_url": "/feed.xml"
   },
   "footer": {
     "copyright_text": "© 2025 psvm5150.github.io. All rights reserved."
@@ -297,3 +297,34 @@ MIT License. See the [LICENSE](LICENSE) file for details.
     <a href="https://github.com/psvm5150/blogboy-citadel/issues">Request Feature</a>
   </p>
 </div>
+
+## RSS Feed Generation
+
+This project can automatically generate an RSS feed from Markdown posts under the configured document_root.
+
+Behavior
+- When properties/viewer-config.json has "viewer.rss_feed_url": "" (empty) or the specified output path cannot be created/written, RSS generation is skipped.
+- When "viewer.rss_feed_url" is set (e.g., "/feed.xml"), an RSS 2.0 feed will be generated at that file path relative to the repository root.
+- Generation happens at build-time by a Node.js script to avoid runtime performance impact in the browser. The script also skips writing if the content is unchanged.
+
+How to use
+1. Set document root in properties/main-config.json (already used by the site):
+   - list.document_root, e.g., "posts/"
+2. Set the feed output path in properties/viewer-config.json:
+   - viewer.rss_feed_url, e.g., "/feed.xml" to generate at the site root.
+3. Run the generator locally or in CI:
+
+```bash
+node scripts/generate-rss.js
+```
+
+Details
+- The script scans all .md files under document_root.
+- Item title is taken from properties/toc.json (if available), otherwise from the first H1 in the Markdown, then falls back to the filename.
+- Item date prefers properties/toc.json date; otherwise uses the file's last modified time.
+- Item description is derived from the first paragraph (Markdown stripped).
+- Item link uses the same scheme as the site: /viewer.html?file=posts/<relative-path>.
+
+Example
+- If viewer.rss_feed_url is "/feed.xml": the file feed.xml will be generated at the repository root.
+- If viewer.rss_feed_url is empty: no feed is generated.

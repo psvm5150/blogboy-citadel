@@ -401,7 +401,7 @@ async function generateTableOfContents(contentDiv, markdown, filePath) {
         const indentClass = indent > 0 ? ` toc-indent-${Math.min(indent, 4)}` : '';
 
         tocHtml += `<li class="toc-item${indentClass}">`;
-        tocHtml += `<a href="#${anchorId}" class="toc-link">${heading.text}</a>`;
+        tocHtml += `<a href="#${anchorId}" class="toc-link post-link">${heading.text}</a>`;
         tocHtml += '</li>';
     });
 
@@ -763,7 +763,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadMainConfig('.');
 
     await initializeI18nFromLocalePref(config.site_locale);
-    await initializePageTheme('viewer', config);
+    await initializePageTheme('main', config);
 
     // Setup Google AdSense if configured
     if (config.adsense) {

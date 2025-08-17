@@ -154,7 +154,7 @@ body {
     margin: 0 0 0.75rem 0;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #24292e;
+    color: inherit;
     border-bottom: 1px solid #e9ecef;
     padding-bottom: 0.4rem;
 }
@@ -171,7 +171,7 @@ body {
 }
 
 .toc-link {
-    color: #2f5f8f;
+    color: inherit;
     text-decoration: none;
     display: block;
     padding: 0.25rem 0;
@@ -180,8 +180,6 @@ body {
 }
 
 .toc-link:hover {
-    color: #2f5f8f;
-    background-color: rgba(47, 95, 143, 0.1);
     text-decoration: none;
     padding-left: 0.5rem;
 }
@@ -205,18 +203,18 @@ body {
 
 .toc-indent-1 .toc-link {
     font-size: 1rem;
-    color: #2f5f8f;
+    color: inherit;
 }
 
 .toc-indent-2 .toc-link {
     font-size: 0.95rem;
-    color: #505a64;
+    color: inherit;
 }
 
 .toc-indent-3 .toc-link,
 .toc-indent-4 .toc-link {
     font-size: 0.9rem;
-    color: #616971;
+    color: inherit;
 }
 
 /* 문서 메타 정보 스타일 */

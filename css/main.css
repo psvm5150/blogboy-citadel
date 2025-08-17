@@ -1,9 +1,6 @@
+@import "./common.css";
+
 /* Reset & Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -483,10 +480,6 @@ body {
 }
 
 /* Dark Mode Styles */
-.darkmode {
-    background-color: #0d1117;
-    color: #e6edf3;
-}
 
 /* Pagination (Dark Mode) - slightly darker gray for better aesthetics */
 .darkmode .pagination button {
@@ -602,9 +595,6 @@ body {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
 }
 
-.darkmode .loading {
-    color: #8b949e;
-}
 
 .darkmode .footer {
     background: #0d1117;
@@ -631,13 +621,6 @@ body {
     margin-right: 8px;
 }
 
-.darkmode-toggle:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-}
 
 /* Footer Controls Layout */
 .footer-controls {
@@ -658,14 +641,5 @@ body {
     .footer-controls {
         flex-direction: row; /* keep in a row like viewer header */
         gap: 0.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .darkmode-toggle,
-    .home-button {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
-        height: 36px;
     }
 }

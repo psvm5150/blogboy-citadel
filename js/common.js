@@ -525,11 +525,13 @@ async function setDarkMode(on) {
     if (on) {
         document.body.classList.add('darkmode');
         try { sessionStorage.setItem('theme_mode', 'dark'); } catch (e) {}
+        try { document.documentElement.setAttribute('data-theme-dark', '1'); } catch (e) {}
         const toggle = document.getElementById('darkmode-toggle');
         if (toggle) toggle.innerText = t('btn_light_mode');
     } else {
         document.body.classList.remove('darkmode');
         try { sessionStorage.setItem('theme_mode', 'light'); } catch (e) {}
+        try { document.documentElement.removeAttribute('data-theme-dark'); } catch (e) {}
         const toggle = document.getElementById('darkmode-toggle');
         if (toggle) toggle.innerText = t('btn_dark_mode');
     }
@@ -540,12 +542,29 @@ async function setDarkMode(on) {
     const hlLight = document.getElementById('highlight-light');
     const hlDark = document.getElementById('highlight-dark');
     if (mdLight && mdDark && hlLight && hlDark) {
-        if (on) {
-            mdLight.disabled = true; mdDark.disabled = false;
-            hlLight.disabled = true; hlDark.disabled = false;
+        // Prefer media switching to override OS preference instantly (prevents white flash)
+        const canUseMedia = 'media' in mdLight && 'media' in mdDark && 'media' in hlLight && 'media' in hlDark;
+        if (canUseMedia) {
+            if (on) {
+                mdLight.media = 'not all';
+                mdDark.media = 'all';
+                hlLight.media = 'not all';
+                hlDark.media = 'all';
+            } else {
+                mdLight.media = 'all';
+                mdDark.media = 'not all';
+                hlLight.media = 'all';
+                hlDark.media = 'not all';
+            }
         } else {
-            mdLight.disabled = false; mdDark.disabled = true;
-            hlLight.disabled = false; hlDark.disabled = true;
+            // Backward compatibility: fall back to disabled toggling if media not available
+            if (on) {
+                mdLight.disabled = true; mdDark.disabled = false;
+                hlLight.disabled = true; hlDark.disabled = false;
+            } else {
+                mdLight.disabled = false; mdDark.disabled = true;
+                hlLight.disabled = false; hlDark.disabled = true;
+            }
         }
     }
 }

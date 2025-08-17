@@ -244,6 +244,13 @@ body {
     box-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
 
+/* Early-paint: prevent white flash before JS sets .darkmode */
+html[data-theme-dark="1"] .markdown-body {
+    background-color: #161b22;
+    color: #e6edf3;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
 /* Footer inherits button styles from .home-button defined above; keep theme-invariant */
 
 

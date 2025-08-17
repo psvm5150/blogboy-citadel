@@ -6,15 +6,29 @@
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
     <!-- viewer-config.json: page_title -->
     <title></title>
+    <script>
+    // Apply dark mode attribute before any CSS loads to avoid white flash
+    (function(){
+      try {
+        var m = null;
+        try { m = sessionStorage.getItem('theme_mode'); } catch(e) {}
+        var preferDark = false;
+        try { preferDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch(e) {}
+        if (m === 'dark' || (!m && preferDark)) {
+          document.documentElement.setAttribute('data-theme-dark','1');
+        }
+      } catch(e){}
+    })();
+    </script>
     <script src="lib/js/marked.min.js" defer></script>
     <!-- GitHub 마크다운 CSS - 라이트모드 (항상 적용) -->
-<link rel="stylesheet" href="lib/css/github-markdown-light.min.css" id="md-light">
-<!-- GitHub 마크다운 CSS - 다크모드 (JS로만 켜짐) -->
-<link rel="stylesheet" href="lib/css/github-markdown-dark.min.css" id="md-dark" disabled>
-<!-- Syntax Highlighting - 라이트모드 (항상 적용) -->
-<link rel="stylesheet" href="lib/css/github.min.css" id="highlight-light">
-<!-- Syntax Highlighting - 다크모드 (JS로만 켜짐) -->
-<link rel="stylesheet" href="lib/css/github-dark.min.css" id="highlight-dark" disabled>
+<link rel="stylesheet" href="lib/css/github-markdown-light.min.css" id="md-light" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<!-- GitHub 마크다운 CSS - 다크모드: OS 선호에 따라 자동 적용, JS 토글 시 media 변경 -->
+<link rel="stylesheet" href="lib/css/github-markdown-dark.min.css" id="md-dark" media="(prefers-color-scheme: dark)">
+<!-- Syntax Highlighting - 라이트모드 (OS 선호에 따라) -->
+<link rel="stylesheet" href="lib/css/github.min.css" id="highlight-light" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)">
+<!-- Syntax Highlighting - 다크모드 (OS 선호에 따라) -->
+<link rel="stylesheet" href="lib/css/github-dark.min.css" id="highlight-dark" media="(prefers-color-scheme: dark)">
     <script src="lib/js/highlight.min.js" defer></script>
     <link rel="stylesheet" href="./css/viewer.css">
     <script>

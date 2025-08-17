@@ -13,8 +13,15 @@
     color: #e6edf3;
 }
 
+/* Early-paint Dark Mode (before JS adds .darkmode) */
+html[data-theme-dark="1"] body {
+    background-color: #0d1117;
+    color: #e6edf3;
+}
+
 /* Dark Mode Loading Color */
-.darkmode .loading {
+.darkmode .loading,
+html[data-theme-dark="1"] .loading {
     color: #8b949e;
 }
 

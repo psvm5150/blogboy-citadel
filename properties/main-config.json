@@ -20,7 +20,7 @@
   },
   "footer": {
     "show_colour_toggle": true,
-    "default_colour_mode": "light",
+    "default_colour_mode": "dark",
     "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
     "show_home_button": true
   },

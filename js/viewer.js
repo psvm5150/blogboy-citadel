@@ -42,6 +42,9 @@ async function loadViewerConfig() {
         if (viewer.license_badge_link != null) normalized.license_badge_link = String(viewer.license_badge_link);
         if (viewer.license_description != null) normalized.license_description = String(viewer.license_description);
         if (viewer.rss_feed_url != null) normalized.rss_feed_url = String(viewer.rss_feed_url);
+        // Social share URLs (empty string hides the button)
+        if (typeof viewer.facebook_share_url !== 'undefined') normalized.facebook_share_url = String(viewer.facebook_share_url);
+        if (typeof viewer.x_share_url !== 'undefined') normalized.x_share_url = String(viewer.x_share_url);
     }
 
     // Adsense mappings (pass-through with defaults)
@@ -511,6 +514,56 @@ async function generateDocumentMeta(filePath) {
             line = dateText; // author가 비어도 날짜는 표시
         }
 
+        // Build Social share buttons (Facebook, X, Copy) to the left of RSS
+        let shareHtml = '';
+        const sepFirst = '&nbsp;&nbsp;&nbsp;';
+        // Reduce inter-icon spacing by one space as requested
+        const sep = '';
+        let hasShare = false;
+        const currentUrl = window.location.href;
+        const shareTitle = document.title || '';
+
+        // Facebook share (config.viewer.facebook_share_url; empty string hides)
+        const fbTpl = (typeof config.facebook_share_url !== 'undefined') ? String(config.facebook_share_url) : '';
+        if (fbTpl && fbTpl.trim() !== '') {
+            const fbUrl = fbTpl
+                .replace('{url}', encodeURIComponent(currentUrl))
+                .replace('{title}', encodeURIComponent(shareTitle));
+            shareHtml += `${hasShare ? sep : sepFirst}<a class="share-link share-facebook" href="${fbUrl}" target="_blank" rel="noopener" title="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
+                    <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.06 5.66 21.19 10.44 22v-7.03H7.9v-2.9h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.62.76-1.62 1.55v1.86h2.77l-.44 2.9h-2.33V22C18.34 21.19 22 17.06 22 12.07z"/>
+                </svg>
+                <span class="sr-only">Facebook</span>
+            </a>`;
+            hasShare = true;
+        }
+
+        // X (Twitter) share (config.viewer.x_share_url; empty string hides)
+        const xTpl = (typeof config.x_share_url !== 'undefined') ? String(config.x_share_url) : '';
+        if (xTpl && xTpl.trim() !== '') {
+            const xUrl = xTpl
+                .replace('{url}', encodeURIComponent(currentUrl))
+                .replace('{title}', encodeURIComponent(shareTitle));
+            shareHtml += `${hasShare ? sep : sepFirst}<a class="share-link share-x" href="${xUrl}" target="_blank" rel="noopener" title="X">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
+                    <path d="M4 4h4.5l4.1 5.6L17.3 4H20l-6.1 8L20 20h-4.5l-4.1-5.6L6.7 20H4l6.1-8L4 4z"/>
+                </svg>
+                <span class="sr-only">X</span>
+            </a>`;
+            hasShare = true;
+        }
+
+        // Copy link (always visible)
+        shareHtml += `${hasShare ? sep : sepFirst}<a id="copyLink" class="share-link share-copy" href="#" title="Copy link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
+                <path d="M15 7h3a5 5 0 1 1 0 10h-3"/>
+                <path d="M9 17H6a5 5 0 0 1 0-10h3"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+            <span class="sr-only">Copy</span>
+        </a>`;
+        hasShare = true;
+
         // RSS 아이콘/링크: viewer-config.json 의 rss_feed_url 이 있으면 표시 (작성일 뒤, 공백 2칸)
         let rssHtml = '';
         const rssUrlRaw = config.rss_feed_url;
@@ -523,16 +576,12 @@ async function generateDocumentMeta(filePath) {
             } catch (e) {
                 // URL 파싱 실패 시 그대로 사용
             }
-            rssHtml = `&nbsp;&nbsp;<a class="rss-link" href="${rssUrl}" target="_blank" rel="noopener" title="${t('lbl_rss_subscribe')}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
-                    <path d="M6.18 17.82A2.18 2.18 0 1 1 4 20a2.18 2.18 0 0 1 2.18-2.18M4 10.5a9.5 9.5 0 0 1 9.5 9.5h-3A6.5 6.5 0 0 0 4 13.5zm0-6A15.5 15.5 0 0 1 19.5 20h-3A12.5 12.5 0 0 0 4 7.5z"/>
-                </svg>
-                <span class="sr-only">RSS</span>
-            </a>`;
+            rssHtml = `${hasShare ? sep : sepFirst}<a class="rss-link" href="${rssUrl}" target="_blank" rel="noopener" title="${t('lbl_rss_subscribe')}">
+                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align: -2px;\">\n                    <path d=\"M6.18 17.82A2.18 2.18 0 1 1 4 20a2.18 2.18 0 0 1 2.18-2.18M4 10.5a9.5 9.5 0 0 1 9.5 9.5h-3A6.5 6.5 0 0 0 4 13.5zm0-6A15.5 15.5 0 0 1 19.5 20h-3A12.5 12.5 0 0 0 4 7.5z\"/>\n                </svg>\n                <span class=\"sr-only\">RSS</span>\n            </a>`;
         }
 
         const metaHtml = `
-            <div class="document-meta">${line}${rssHtml}</div>
+            <div class="document-meta">${line}${shareHtml}${rssHtml}</div>
         `;
 
         return metaHtml;
@@ -603,6 +652,34 @@ async function insertDocumentMeta(contentDiv, filePath) {
         if (metaHtml) {
             // 제목 바로 다음 위치에 삽입
             firstHeading.insertAdjacentHTML('afterend', metaHtml);
+            // Attach copy-link handler
+            const copyBtn = document.getElementById('copyLink');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    const url = window.location.href;
+                    try {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            await navigator.clipboard.writeText(url);
+                        } else {
+                            // Fallback method
+                            const ta = document.createElement('textarea');
+                            ta.value = url;
+                            ta.setAttribute('readonly', '');
+                            ta.style.position = 'absolute';
+                            ta.style.left = '-9999px';
+                            document.body.appendChild(ta);
+                            ta.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(ta);
+                        }
+                        alert(t('msg_link_copied'));
+                    } catch (err) {
+                        console.warn('Clipboard copy failed:', err);
+                        alert(t('msg_link_copied'));
+                    }
+                });
+            }
         }
     } catch (e) {
         console.error('Failed to insert document meta:', e);

@@ -24,6 +24,7 @@
   "msg_failed_load_documents": "❌ 문서 목록을 불러오는데 실패했습니다.",
   "msg_failed_load_theme_css": "테마 CSS를 불러오지 못했습니다: {file}",
   "msg_failed_render_documents": "❌ 문서 목록을 렌더링하는데 실패했습니다.",
+  "msg_link_copied": "링크가 복사되었습니다.",
   "msg_loading_document_viewer": "📖 문서를 불러오는 중...",
   "msg_loading_documents": "📄 문서 목록을 불러오는 중...",
   "msg_loading_documents_main": "📚 문서 목록을 불러오는 중...",

@@ -216,13 +216,26 @@ body {
     display: block; /* 단일 라인 텍스트 표시 */
     text-align: right; /* 기존 우측정렬 유지 */
 }
-/* 문서 메타 내 RSS 링크 스타일 */
-.document-meta .rss-link {
+/* 문서 메타 내 공유/구독 링크 스타일 */
+.document-meta .rss-link,
+.document-meta .share-link {
     color: inherit;
     text-decoration: none;
 }
-.document-meta .rss-link:hover {
+.document-meta .rss-link:hover,
+.document-meta .share-link:hover {
     text-decoration: underline;
+}
+.document-meta .share-link .icon {
+    font-size: 16px;
+    line-height: 16px;
+    vertical-align: -2px;
+}
+/* 아이콘 간격을 0.25em(약 반 칸) 추가 */
+.document-meta .share-link + .share-link,
+.document-meta .share-link + .rss-link,
+.document-meta .rss-link + .share-link {
+    margin-left: 0.25em;
 }
 
 /* 제목과 메타 사이 간격을 절반으로 줄이기 */

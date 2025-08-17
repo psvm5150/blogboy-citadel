@@ -24,6 +24,7 @@
   "msg_failed_load_documents": "❌ Failed to load document list.",
   "msg_failed_load_theme_css": "Failed to load theme CSS: {file}",
   "msg_failed_render_documents": "❌ Failed to render document list.",
+  "msg_link_copied": "Link copied to clipboard.",
   "msg_loading_document_viewer": "📖 Loading document...",
   "msg_loading_documents": "📄 Loading document list...",
   "msg_loading_documents_main": "📚 Loading document list...",

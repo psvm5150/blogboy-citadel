@@ -25,6 +25,7 @@
   "msg_failed_load_documents": "❌ Error al cargar la lista de documentos.",
   "msg_failed_load_theme_css": "No se pudo cargar el tema CSS: {file}",
   "msg_failed_render_documents": "❌ Error al renderizar la lista de documentos.",
+  "msg_link_copied": "Enlace copiado al portapapeles.",
   "msg_loading_document_viewer": "📖 Cargando documento...",
   "msg_loading_documents": "📄 Cargando lista de documentos...",
   "msg_loading_documents_main": "📚 Cargando lista de documentos...",

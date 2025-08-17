@@ -68,3 +68,16 @@ body[data-page="main"] .site-badge.image-badge { background: transparent !import
 body:not(.darkmode)[data-page="main"] .post-link:hover {
   color: #1a624c !important; /* slightly darker than #1f6f56 */
 }
+
+
+/* Dark mode only: slightly brighter main title and viewer TOC text; keep light mode unchanged */
+body.darkmode[data-page="main"] .post-link {
+  color: #238665 !important; /* slightly brighter than #1f7a5b */
+}
+
+/* Viewer auto TOC slight brighten in dark mode */
+body.darkmode .toc-title { color: #f0f5fa !important; }
+body.darkmode .toc-link { color: #66b0ff !important; }
+body.darkmode .toc-indent-2 .toc-link { color: #959faa !important; }
+body.darkmode .toc-indent-3 .toc-link,
+body.darkmode .toc-indent-4 .toc-link { color: #87909b !important; }

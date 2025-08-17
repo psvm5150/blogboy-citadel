@@ -494,14 +494,6 @@ body {
     color: #8b949e;
 }
 
-.darkmode .site-badge {
-    background: rgba(102, 126, 234, 0.8);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-.darkmode .site-badge.image-badge {
-    background: transparent;
-    box-shadow: none;
-}
 
 .darkmode .view-mode-select {
     background: #21262d;
@@ -596,11 +588,6 @@ body {
 }
 
 
-.darkmode .footer {
-    background: #0d1117;
-    color: #e6edf3;
-    border-top: 1px solid #30363d;
-}
 
 /* Dark Mode Toggle Button */
 .darkmode-toggle {

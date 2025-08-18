@@ -25,5 +25,6 @@
   },
   "colour_theme": "dark-green-gradient",
   "default_colour_mode": "light",
+  "rss_feed_url": "/feed.xml",
   "site_locale": "default"
 }

@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /*
  * RSS feed generator for blogboy-citadel
- * - Reads properties/main-config.json (document_root) and properties/viewer-config.json (rss_feed_url, header)
+ * - Reads properties/main-config.json (document_root, rss_feed_url, header)
  * - Scans Markdown files under document_root and generates RSS 2.0 feed
  * - If rss_feed_url is empty or output path cannot be created, generation is skipped silently
+ * - Backward compatibility: falls back to properties/viewer-config.json rss_feed_url if not present in main-config
  * - Designed to be run manually or in CI (build-time), not in browser
  */
 
@@ -113,10 +114,12 @@ async function main() {
 
   const docRoot = normalizePath((mainCfg.list && mainCfg.list.document_root) || mainCfg.document_root || 'posts/');
 
-  // rss_feed_url rules
-  const rssFeedUrl = (viewerCfg.viewer && typeof viewerCfg.viewer.rss_feed_url !== 'undefined')
-    ? String(viewerCfg.viewer.rss_feed_url || '')
-    : String(viewerCfg.rss_feed_url || '');
+  // rss_feed_url rules (prefer main-config, fallback to legacy viewer-config for backward compatibility)
+  const rssFeedUrl = (typeof mainCfg.rss_feed_url !== 'undefined')
+    ? String(mainCfg.rss_feed_url || '')
+    : ((viewerCfg.viewer && typeof viewerCfg.viewer.rss_feed_url !== 'undefined')
+      ? String(viewerCfg.viewer.rss_feed_url || '')
+      : String(viewerCfg.rss_feed_url || ''));
 
   if (!rssFeedUrl || !rssFeedUrl.trim()) {
     console.log('[RSS] rss_feed_url is empty - skipping generation.');

@@ -445,6 +445,41 @@ function initializeViewModeControls() {
     const viewControls = document.querySelector('.view-controls');
     
     if (viewModeSelect) {
+        // Insert RSS icon to the left of the listbox (two spaces gap) using mainConfig.rss_feed_url
+        try {
+            if (viewControls && !document.getElementById('rssLinkMain')) {
+                const rssUrlRaw = (mainConfig && typeof mainConfig.rss_feed_url !== 'undefined') ? String(mainConfig.rss_feed_url || '') : '';
+                const rssUrl = rssUrlRaw.trim();
+                if (rssUrl) {
+                    const a = document.createElement('a');
+                    a.id = 'rssLinkMain';
+                    a.className = 'rss-link';
+                    a.href = rssUrl;
+                    a.target = '_blank';
+                    a.rel = 'noopener';
+                    a.title = t('lbl_rss_subscribe');
+                    a.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;"><path d="M6.18 17.82A2.18 2.18 0 1 1 4 20a2.18 2.18 0 0 1 2.18-2.18M4 10.5a9.5 9.5 0 0 1 9.5 9.5h-3A6.5 6.5 0 0 0 4 13.5zm0-6A15.5 15.5 0 0 1 19.5 20h-3A12.5 12.5 0 0 0 4 7.5z"/></svg><span class="rss-text">RSS</span>';
+                    // Insert after select with a double NBSP gap, grouped on the right
+                    let rightControls = document.querySelector('.view-controls .right-controls');
+                    if (!rightControls) {
+                        rightControls = document.createElement('span');
+                        rightControls.className = 'right-controls';
+                        rightControls.style.display = 'inline-flex';
+                        rightControls.style.alignItems = 'center';
+                        // Move the select into the rightControls group and append to container (right side)
+                        viewControls.appendChild(rightControls);
+                    }
+                    // Ensure select is placed first
+                    rightControls.appendChild(viewModeSelect);
+                    // Double space gap
+                    rightControls.appendChild(document.createTextNode('\u00A0'));
+                    rightControls.appendChild(document.createTextNode('\u00A0'));
+                    // Place RSS link after the select
+                    rightControls.appendChild(a);
+                }
+            }
+        } catch (e) { /* ignore */ }
+
         // show_view_filter 설정에 따라 뷰 필터 표시/숨김
         if (mainConfig.show_view_filter === false) {
             viewModeSelect.style.display = 'none';

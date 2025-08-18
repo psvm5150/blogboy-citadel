@@ -41,7 +41,6 @@ async function loadViewerConfig() {
         if (viewer.license_badge_image != null) normalized.license_badge_image = String(viewer.license_badge_image);
         if (viewer.license_badge_link != null) normalized.license_badge_link = String(viewer.license_badge_link);
         if (viewer.license_description != null) normalized.license_description = String(viewer.license_description);
-        if (viewer.rss_feed_url != null) normalized.rss_feed_url = String(viewer.rss_feed_url);
         // Social share URLs (empty string hides the button)
         if (typeof viewer.facebook_share_url !== 'undefined') normalized.facebook_share_url = String(viewer.facebook_share_url);
         if (typeof viewer.x_share_url !== 'undefined') normalized.x_share_url = String(viewer.x_share_url);
@@ -564,24 +563,9 @@ async function generateDocumentMeta(filePath) {
         </a>`;
         hasShare = true;
 
-        // RSS 아이콘/링크: viewer-config.json 의 rss_feed_url 이 있으면 표시 (작성일 뒤, 공백 2칸)
-        let rssHtml = '';
-        const rssUrlRaw = config.rss_feed_url;
-        if (rssUrlRaw && String(rssUrlRaw).trim() !== '') {
-            let rssUrl = String(rssUrlRaw).trim();
-            try {
-                // 절대/상대 모두 허용
-                const u = new URL(rssUrl, window.location.origin);
-                rssUrl = u.pathname + u.search + u.hash || u.toString();
-            } catch (e) {
-                // URL 파싱 실패 시 그대로 사용
-            }
-            rssHtml = `${hasShare ? sep : sepFirst}<a class="rss-link" href="${rssUrl}" target="_blank" rel="noopener" title="${t('lbl_rss_subscribe')}">
-                <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" focusable=\"false\" style=\"vertical-align: -2px;\">\n                    <path d=\"M6.18 17.82A2.18 2.18 0 1 1 4 20a2.18 2.18 0 0 1 2.18-2.18M4 10.5a9.5 9.5 0 0 1 9.5 9.5h-3A6.5 6.5 0 0 0 4 13.5zm0-6A15.5 15.5 0 0 1 19.5 20h-3A12.5 12.5 0 0 0 4 7.5z\"/>\n                </svg>\n                <span class=\"sr-only\">RSS</span>\n            </a>`;
-        }
-
+        // RSS feature removed from viewer. Only share buttons remain.
         const metaHtml = `
-            <div class="document-meta">${line}${shareHtml}${rssHtml}</div>
+            <div class="document-meta">${line}${shareHtml}</div>
         `;
 
         return metaHtml;

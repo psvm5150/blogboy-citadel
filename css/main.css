@@ -107,6 +107,47 @@ body {
     align-items: center;
     margin-bottom: 8px;
 }
+/* RSS button near view controls (main page only) */
+.view-controls .rss-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #6a737d; /* keep existing color */
+    text-decoration: none;
+    background: white;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 9px 10px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+.view-controls .rss-link:hover {
+    text-decoration: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+.view-controls .rss-link:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+.view-controls .rss-link .rss-text {
+    display: inline-block;
+    margin-left: 0px; /* fallback if gap unsupported */
+}
+/* Screen reader only text utility (main page) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 
 /* Pagination */
 .pagination {

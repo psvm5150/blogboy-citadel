@@ -58,7 +58,7 @@ body[data-page="main"] .new-indicator::before {
 /* Badge text color block for text badge only; image badges unaffected */
 /* Do not style .image-badge (image mode) */
 body[data-page="main"] .site-badge:not(.image-badge) {
-  background: rgba(91, 109, 170, 0.95) !important; /* match Gram badge color (~#5B6DAA) */
+  background: rgba(51, 78, 130, 0.95) !important; /* match Gram badge color (~#5B6DAA) */
   color: #ffffff !important;
 }
 body[data-page="main"] .site-badge.image-badge { background: transparent !important; }

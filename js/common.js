@@ -311,7 +311,7 @@ async function getFileModifiedDate(filePath) {
  * @returns {Array<string>} - Array of available language codes
  */
 function getAvailableLanguages() {
-    return ['en', 'es', 'ko'];
+    return ['en', 'es', 'ko', 'fr', 'de'];
 }
 
 /**

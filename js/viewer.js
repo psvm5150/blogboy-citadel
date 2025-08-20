@@ -528,7 +528,7 @@ async function generateDocumentMeta(filePath) {
             const fbUrl = fbTpl
                 .replace('{url}', encodeURIComponent(currentUrl))
                 .replace('{title}', encodeURIComponent(shareTitle));
-            shareHtml += `${hasShare ? sep : sepFirst}<a class="share-link share-facebook" href="${fbUrl}" target="_blank" rel="noopener" title="Facebook">
+            shareHtml += `${hasShare ? sep : sepFirst}<a class="share-link share-facebook" href="${fbUrl}" target="_blank" rel="noopener" title="${t('lbl_share_facebook')}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
                     <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.06 5.66 21.19 10.44 22v-7.03H7.9v-2.9h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.62.76-1.62 1.55v1.86h2.77l-.44 2.9h-2.33V22C18.34 21.19 22 17.06 22 12.07z"/>
                 </svg>
@@ -543,7 +543,7 @@ async function generateDocumentMeta(filePath) {
             const xUrl = xTpl
                 .replace('{url}', encodeURIComponent(currentUrl))
                 .replace('{title}', encodeURIComponent(shareTitle));
-            shareHtml += `${hasShare ? sep : sepFirst}<a class="share-link share-x" href="${xUrl}" target="_blank" rel="noopener" title="X">
+            shareHtml += `${hasShare ? sep : sepFirst}<a class="share-link share-x" href="${xUrl}" target="_blank" rel="noopener" title="${t('lbl_share_x')}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
                     <path d="M4 4h4.5l4.1 5.6L17.3 4H20l-6.1 8L20 20h-4.5l-4.1-5.6L6.7 20H4l6.1-8L4 4z"/>
                 </svg>
@@ -553,7 +553,7 @@ async function generateDocumentMeta(filePath) {
         }
 
         // Copy link (always visible)
-        shareHtml += `${hasShare ? sep : sepFirst}<a id="copyLink" class="share-link share-copy" href="#" title="Copy link">
+        shareHtml += `${hasShare ? sep : sepFirst}<a id="copyLink" class="share-link share-copy" href="#" title="${t('lbl_copy_link')}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
                 <path d="M15 7h3a5 5 0 1 1 0 10h-3"/>
                 <path d="M9 17H6a5 5 0 0 1 0-10h3"/>
@@ -563,7 +563,6 @@ async function generateDocumentMeta(filePath) {
         </a>`;
         hasShare = true;
 
-        // RSS feature removed from viewer. Only share buttons remain.
         const metaHtml = `
             <div class="document-meta">${line}${shareHtml}</div>
         `;

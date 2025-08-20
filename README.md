@@ -14,7 +14,7 @@ A lightweight and simple blog management system for GitHub Pages blogs. Built as
 ## Features
 
 - **Pure web technologies**: Built with HTML, CSS, and JavaScript without Jekyll
-- **GitHub Pages compatible**: Uses `.nojekyll` file for static site hosting
+- **GitHub Pages compatible**: Static site hosting on GitHub Pages (no Jekyll required)
 - **Dynamic markdown rendering**: Real-time document loading from local markdown files
 - **Responsive design**: Works seamlessly across all devices
 - **Lightweight and simple**: A minimalist blog management system for easy content organization
@@ -23,8 +23,10 @@ A lightweight and simple blog management system for GitHub Pages blogs. Built as
 ```
 blogboy-citadel/
 ├── 📁 css/
+│   └── 📁 themes/            # Colour theme styles
+│   ├── 🎨 common.css         # Shared base styles
 │   ├── 🎨 main.css           # Main page styles
-│   └── 🎨 viewer.css         # Viewer page styles
+│   ├── 🎨 viewer.css         # Viewer page styles
 ├── 📁 js/
 │   ├── ⚡ common.js          # Shared utilities and functions
 │   ├── ⚡ main.js            # Main page logic
@@ -46,10 +48,12 @@ blogboy-citadel/
 │   ├── ⚙️ main-config.json   # Main page configuration
 │   ├── ⚙️ toc.json           # Table of contents
 │   └── ⚙️ viewer-config.json # Viewer page configuration
+├──  📁 scripts/
+│   └── ⚡ generate-rss.js  # Build-time RSS feed generator
 ├── 📄 index.html          # Main page
 ├── 📄 viewer.html         # Markdown viewer
+├── 📄 feed.xml            # Generated RSS feed (output file)
 ├── 📄 favicon.svg         # Site icon
-├── 📄 .nojekyll           # GitHub Pages configuration
 └── 📄 README.md           # This file
 ```
 
@@ -59,6 +63,7 @@ blogboy-citadel/
 - **CSS Framework**: None (pure CSS)
 - **JavaScript Libraries**: 
   - [marked.js](https://marked.js.org/) - Markdown parser
+  - [highlight.js](https://highlightjs.org/) - Code syntax highlighting
 - **Hosting**: GitHub Pages
 
 ## Responsive Design
@@ -149,7 +154,9 @@ Site-wide configuration settings grouped into header, list, and footer sections.
     "title": "Main Max: Fury Load",
     "subtitle": "You will code eternal, shiny and RESTful!",
     "show_badge": true,
+    "badge_type": "text",
     "badge_text": "psvm5150.github.io",
+    "badge_image": "tmp/kt3.png",
     "badge_url": "https://github.com/psvm5150"
   },
   "list": {
@@ -163,11 +170,13 @@ Site-wide configuration settings grouped into header, list, and footer sections.
     "show_document_date": true
   },
   "footer": {
-    "show_theme_toggle": true,
-    "default_colour_mode": "light",
+    "show_colour_toggle": true,
     "copyright_text": "© 2025 psvm5150.github.io. All rights reserved.",
     "show_home_button": true
   },
+  "colour_theme": "dark-green-gradient",
+  "default_colour_mode": "auto",
+  "rss_feed_url": "/feed.xml",
   "site_locale": "default"
 }
 ```
@@ -196,8 +205,7 @@ Viewer page settings for theme options and UI elements. Note: page_title has bee
 {
   "header": {
     "title": "Main Max: Fury Load",
-    "show_theme_toggle": true,
-    "default_colour_mode": "light"
+    "show_colour_toggle": true
   },
   "viewer": {
     "author": "psvm5150",
@@ -205,11 +213,18 @@ Viewer page settings for theme options and UI elements. Note: page_title has bee
     "license_badge_image": "https://ccl.cckorea.org/images/ico-cc.png",
     "license_badge_link": "https://creativecommons.org/licenses/by/4.0/deed.ko",
     "license_description": "이 저작물은 Creative Commons 저작자표시 4.0 국제 라이선스에 따라 이용할 수 있습니다.",
-    "rss_feed_url": "/feed.xml"
+    "facebook_share_url": "https://www.facebook.com/sharer/sharer.php?u={url}",
+    "x_share_url": "https://twitter.com/intent/tweet?url={url}&text={title}"
   },
   "footer": {
     "copyright_text": "© 2025 psvm5150.github.io. All rights reserved."
   },
+  "adsense": {
+    "enabled": false,
+    "client_id": "ca-pub-XXXXXXXXXXXXXXXX",
+    "auto_ads": true
+  },
+  "colour_theme": "dark-green-gradient",
   "site_locale": "default"
 }
 ```
@@ -255,7 +270,7 @@ Available locale values: `"ko"` (Korean), `"en"` (English), `"es"` (Spanish), or
 ### Setup
 ```bash
 # Clone repository
-git clone https://github.com/blogboy-citadel.git
+git clone https://github.com/psvm5150/blogboy-citadel.git
 cd blogboy-citadel
 
 # Run local server (Python 3 example)
@@ -303,15 +318,15 @@ MIT License. See the [LICENSE](LICENSE) file for details.
 This project can automatically generate an RSS feed from Markdown posts under the configured document_root.
 
 Behavior
-- When properties/viewer-config.json has "viewer.rss_feed_url": "" (empty) or the specified output path cannot be created/written, RSS generation is skipped.
-- When "viewer.rss_feed_url" is set (e.g., "/feed.xml"), an RSS 2.0 feed will be generated at that file path relative to the repository root.
+- Preferred: properties/main-config.json "rss_feed_url" controls feed output. If empty or unwritable, generation is skipped.
+- Legacy fallback: if main-config.rss_feed_url is undefined, viewer-config.json viewer.rss_feed_url (or viewer-config.rss_feed_url) will be used.
 - Generation happens at build-time by a Node.js script to avoid runtime performance impact in the browser. The script also skips writing if the content is unchanged.
 
 How to use
 1. Set document root in properties/main-config.json (already used by the site):
    - list.document_root, e.g., "posts/"
-2. Set the feed output path in properties/viewer-config.json:
-   - viewer.rss_feed_url, e.g., "/feed.xml" to generate at the site root.
+2. Set the feed output path in properties/main-config.json:
+   - rss_feed_url, e.g., "/feed.xml" to generate at the site root.
 3. Run the generator locally or in CI:
 
 ```bash
@@ -326,5 +341,5 @@ Details
 - Item link uses the same scheme as the site: /viewer.html?file=posts/<relative-path>.
 
 Example
-- If viewer.rss_feed_url is "/feed.xml": the file feed.xml will be generated at the repository root.
-- If viewer.rss_feed_url is empty: no feed is generated.
+- If main-config.rss_feed_url is "/feed.xml": the file feed.xml will be generated at the repository root.
+- If rss_feed_url is empty: no feed is generated.

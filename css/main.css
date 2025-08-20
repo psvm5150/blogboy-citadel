@@ -139,7 +139,7 @@ body {
 .darkmode .view-controls .rss-link {
     background: #21262d;
     border: 1px solid #30363d;
-    color: #e6edf3;
+    color: #757575;
 }
 .darkmode .view-controls .rss-link:hover {
     border-color: #667eea;
@@ -594,7 +594,7 @@ body {
 .darkmode .view-mode-select {
     background: #21262d;
     border: 1px solid #30363d;
-    color: #e6edf3;
+    color: #757575;
 }
 
 .darkmode .view-mode-select:hover {

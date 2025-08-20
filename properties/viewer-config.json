@@ -1,8 +1,7 @@
 {
   "header": {
     "title": "Main Max: Fury Load",
-    "show_colour_toggle": true,
-    "default_colour_mode": "light"
+    "show_colour_toggle": true
   },
   "viewer": {
     "author": "psvm5150",

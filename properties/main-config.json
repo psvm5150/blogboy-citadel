@@ -24,7 +24,7 @@
     "show_home_button": true
   },
   "colour_theme": "dark-green-gradient",
-  "default_colour_mode": "light",
+  "default_colour_mode": "auto",
   "rss_feed_url": "/feed.xml",
   "site_locale": "default"
 }

@@ -107,19 +107,22 @@ body {
     align-items: center;
     margin-bottom: 8px;
 }
-/* RSS button near view controls (main page only) */
+/* RSS button near view controls (main page only)
+   요구사항: 분류보기/전체보기 컨트롤과 동일한 방식/높이로 동작하도록 설정 */
 .view-controls .rss-link {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     color: #6a737d; /* keep existing color */
     text-decoration: none;
     background: white;
     border: 1px solid #d0d7de;
     border-radius: 6px;
-    padding: 9px 10px;
-    font-size: 14px;
-    line-height: 1;
+    /* .view-mode-select와 동일한 타이포/패딩 적용 */
+    padding: 8px 12px; /* match .view-mode-select */
+    font-size: 14px;   /* match .view-mode-select */
+    line-height: 1;    /* avoid extra height from line box */
     cursor: pointer;
 }
 .view-controls .rss-link:hover {
@@ -131,6 +134,20 @@ body {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+/* 다크모드에서도 .view-mode-select와 동일한 톤으로 */
+.darkmode .view-controls .rss-link {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+}
+.darkmode .view-controls .rss-link:hover {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+.darkmode .view-controls .rss-link:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
 }
 .view-controls .rss-link .rss-text {
     display: inline-block;

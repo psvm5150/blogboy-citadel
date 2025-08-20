@@ -669,16 +669,56 @@ async function initializePageTheme(pageName, configLike) {
         themeToggleBtn.style.display = configLike.show_theme_toggle ? '' : 'none';
     }
 
-    // Determine dark mode from session or config defaults
+    // Determine dark mode from session or config defaults (with 'auto' support)
     const sessionTheme = sessionStorage.getItem('theme_mode');
     let isDarkMode;
     if (sessionTheme) {
+        // Session override has the highest priority
         isDarkMode = sessionTheme === 'dark';
     } else {
-        const defaultMode = (configLike && typeof configLike.default_colour_mode !== 'undefined')
+        const defaultModeRaw = (configLike && typeof configLike.default_colour_mode !== 'undefined')
             ? configLike.default_colour_mode
             : (configLike ? configLike.default_theme : undefined);
-        isDarkMode = defaultMode === 'dark';
+        const defaultMode = (defaultModeRaw == null ? '' : String(defaultModeRaw)).trim().toLowerCase();
+
+        if (defaultMode === 'auto') {
+            // Resolve using browser/OS preference
+            let prefersDark = false;
+            try {
+                if (typeof window.matchMedia === 'function') {
+                    prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                }
+            } catch (e) { /* ignore */ }
+            isDarkMode = prefersDark;
+
+            // Listen for future OS preference changes only when no session override exists
+            try {
+                if (typeof window.matchMedia === 'function') {
+                    const mql = window.matchMedia('(prefers-color-scheme: dark)');
+                    // Modern browsers
+                    if (typeof mql.addEventListener === 'function') {
+                        mql.addEventListener('change', (e) => {
+                            // Only auto-follow if user hasn't clicked the toggle in this session
+                            const st = sessionStorage.getItem('theme_mode');
+                            if (!st || (st !== 'dark' && st !== 'light')) {
+                                setDarkMode(!!e.matches);
+                            }
+                        });
+                    } else if (typeof mql.addListener === 'function') {
+                        // Legacy API
+                        mql.addListener((e) => {
+                            const st = sessionStorage.getItem('theme_mode');
+                            if (!st || (st !== 'dark' && st !== 'light')) {
+                                setDarkMode(!!e.matches);
+                            }
+                        });
+                    }
+                }
+            } catch (e) { /* ignore */ }
+        } else {
+            // Explicit 'dark' or anything else treated as 'light'
+            isDarkMode = defaultMode === 'dark';
+        }
     }
 
     await setDarkMode(isDarkMode);

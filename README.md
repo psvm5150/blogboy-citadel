@@ -268,8 +268,6 @@ To set the site language, configure the `site_locale` property in `main-config.j
 }
 ```
 
-Available locale values: `"ko"` (Korean), `"en"` (English), `"es"` (Spanish), or `"default"`
-
 **Note**: When `site_locale` is set to "default", the system will determine by browser settings
 
 ## Live Site

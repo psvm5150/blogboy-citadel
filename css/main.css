@@ -153,6 +153,44 @@ body {
     display: inline-block;
     margin-left: 0px; /* fallback if gap unsupported */
 }
+/* Ensure the RSS icon does not force taller height than the select */
+.view-controls .rss-link svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+/* Mobile: align RSS button height with native select on iOS Safari and small screens */
+@media (max-width: 768px) {
+    .view-controls .rss-link {
+        padding: 6px 10px;
+    }
+    .view-controls .rss-link svg {
+        width: 13px;
+        height: 13px;
+    }
+}
+@media (max-width: 480px) {
+    .view-controls .rss-link {
+        padding: 5px 10px;
+    }
+    .view-controls .rss-link svg {
+        width: 12px;
+        height: 12px;
+    }
+}
+/* iOS Safari specific tweak to better match native select height */
+@supports (-webkit-touch-callout: none) {
+    @media (max-width: 768px) {
+        .view-controls .rss-link {
+            padding: 4px 10px;
+        }
+        .view-controls .rss-link svg {
+            width: 12px;
+            height: 12px;
+        }
+    }
+}
 /* Screen reader only text utility (main page) */
 .sr-only {
     position: absolute;

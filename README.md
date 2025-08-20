@@ -233,9 +233,24 @@ Viewer page settings for theme options and UI elements. Note: page_title has bee
 Internationalization support for multiple languages. The system supports Korean (ko), English (en), and Spanish (es) language packs.
 
 Language files are located in `properties/i18n/` directory. 
-- `ko.json` - Korean language pack
+- `ar.json` - Arabic language pack
+- `da.json` - Danish language pack
+- `de.json` - German language pack
 - `en.json` - English language pack  
 - `es.json` - Spanish language pack
+- `fi.json` - Finnish language pack
+- `fr.json` - French language pack
+- `hi.json` - Hindi language pack
+- `it.json` - Italian language pack
+- `ja.json` - Japanese language pack
+- `ko.json` - Korean language pack
+- `nl.json` - Dutch language pack
+- `no.json` - Norwegian language pack
+- `pt.json` - Portuguese language pack
+- `ru.json` - Russian language pack
+- `sv.json` - Swedish language pack
+- `tr.json` - Turkish language pack
+- `zh.json` - Chinese language pack
 
 Additional language files can be added as needed.
 

@@ -1,0 +1,35 @@
+{
+  "btn_dark_mode": "🌙 الوضع الداكن",
+  "btn_home_main": "🏠 الصفحة الرئيسية",
+  "btn_home_viewer": "🏠 العودة للصفحة الرئيسية",
+  "btn_light_mode": "☀️ الوضع الفاتح",
+  "btn_next_page": "التالي",
+  "btn_prev_page": "السابق",
+  "lbl_all_documents": "📚 كل المستندات",
+  "lbl_all_view": "عرض الكل",
+  "lbl_back": "رجوع",
+  "lbl_category_view": "عرض حسب الفئة",
+  "lbl_copy_link": "نسخ الرابط",
+  "lbl_document_count": "عناصر",
+  "lbl_document_search": "🔍 ابحث في المستندات...",
+  "lbl_error": "خطأ:",
+  "lbl_file": "ملف:",
+  "lbl_new_indicator": "new",
+  "lbl_page_info": "الصفحة {current}/{total}",
+  "lbl_share_facebook": "مشاركة على Facebook",
+  "lbl_share_x": "مشاركة على X",
+  "lbl_rss_subscribe": "اشترك في RSS",
+  "lbl_search_result": "نتائج البحث",
+  "lbl_total_documents": "الإجمالي {count} مستند ({categories} فئات)",
+  "msg_error_load_document": "❌ تعذر تحميل المستند",
+  "msg_error_no_file_path": "❌ لم يتم تحديد مسار الملف",
+  "msg_error_provide_file_path": "يرجى تقديم مسار ملف صالح كمعامل في عنوان URL.",
+  "msg_failed_load_documents": "❌ فشل تحميل قائمة المستندات.",
+  "msg_failed_load_theme_css": "فشل تحميل ملف CSS الخاص بالثيم: {file}",
+  "msg_failed_render_documents": "❌ فشل في عرض قائمة المستندات.",
+  "msg_link_copied": "تم نسخ الرابط إلى الحافظة.",
+  "msg_loading_document_viewer": "📖 جارٍ تحميل المستند...",
+  "msg_loading_documents": "📄 جارٍ تحميل قائمة المستندات...",
+  "msg_loading_documents_main": "📚 جارٍ تحميل قائمة المستندات...",
+  "msg_no_documents": "❌ لا توجد مستندات لعرضها."
+}

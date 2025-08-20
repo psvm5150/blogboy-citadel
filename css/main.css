@@ -113,14 +113,14 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 36px;
     color: #6a737d; /* keep existing color */
     text-decoration: none;
     background: white;
     border: 1px solid #d0d7de;
     border-radius: 6px;
     /* .view-mode-select와 동일한 타이포/패딩 적용 */
-    padding: 8px 12px; /* match .view-mode-select */
+    padding: 7px 9px; /* match .view-mode-select */
     font-size: 14px;   /* match .view-mode-select */
     line-height: 1;    /* avoid extra height from line box */
     cursor: pointer;
@@ -155,8 +155,8 @@ body {
 }
 /* Ensure the RSS icon does not force taller height than the select */
 .view-controls .rss-link svg {
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 21px;
     flex-shrink: 0;
 }
 
@@ -172,7 +172,7 @@ body {
 }
 @media (max-width: 480px) {
     .view-controls .rss-link {
-        padding: 5px 10px;
+        padding: 9px 10px;
     }
     .view-controls .rss-link svg {
         width: 12px;
@@ -183,11 +183,11 @@ body {
 @supports (-webkit-touch-callout: none) {
     @media (max-width: 768px) {
         .view-controls .rss-link {
-            padding: 4px 10px;
+            padding: 5px 10px;
         }
         .view-controls .rss-link svg {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
         }
     }
 }

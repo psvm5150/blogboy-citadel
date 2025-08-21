@@ -269,6 +269,36 @@ To set the site language, configure the `site_locale` property in `main-config.j
 ```
 
 **Note**: When `site_locale` is set to "default", the system will determine by browser settings
+## RSS Feed Generation
+
+This project can automatically generate an RSS feed from Markdown posts under the configured document_root.
+
+Behavior
+- Preferred: properties/main-config.json "rss_feed_url" controls feed output. If empty or unwritable, generation is skipped.
+- Legacy fallback: if main-config.rss_feed_url is undefined, viewer-config.json viewer.rss_feed_url (or viewer-config.rss_feed_url) will be used.
+- Generation happens at build-time by a Node.js script to avoid runtime performance impact in the browser. The script also skips writing if the content is unchanged.
+
+How to use
+1. Set document root in properties/main-config.json (already used by the site):
+   - list.document_root, e.g., "posts/"
+2. Set the feed output path in properties/main-config.json:
+   - rss_feed_url, e.g., "/feed.xml" to generate at the site root.
+3. Run the generator locally or in CI:
+
+```bash
+node scripts/generate-rss.js
+```
+
+Details
+- The script scans all .md files under document_root.
+- Item title is taken from properties/toc.json (if available), otherwise from the first H1 in the Markdown, then falls back to the filename.
+- Item date prefers properties/toc.json date; otherwise uses the file's last modified time.
+- Item description is derived from the first paragraph (Markdown stripped).
+- Item link uses the same scheme as the site: /viewer.html?file=posts/<relative-path>.
+
+Example
+- If rss_feed_url is "/feed.xml": the file feed.xml will be generated at the site root.
+- If rss_feed_url is empty: no feed is generated.
 
 ## Live Site
 
@@ -326,33 +356,4 @@ MIT License. See the [LICENSE](LICENSE) file for details.
   </p>
 </div>
 
-## RSS Feed Generation
 
-This project can automatically generate an RSS feed from Markdown posts under the configured document_root.
-
-Behavior
-- Preferred: properties/main-config.json "rss_feed_url" controls feed output. If empty or unwritable, generation is skipped.
-- Legacy fallback: if main-config.rss_feed_url is undefined, viewer-config.json viewer.rss_feed_url (or viewer-config.rss_feed_url) will be used.
-- Generation happens at build-time by a Node.js script to avoid runtime performance impact in the browser. The script also skips writing if the content is unchanged.
-
-How to use
-1. Set document root in properties/main-config.json (already used by the site):
-   - list.document_root, e.g., "posts/"
-2. Set the feed output path in properties/main-config.json:
-   - rss_feed_url, e.g., "/feed.xml" to generate at the site root.
-3. Run the generator locally or in CI:
-
-```bash
-node scripts/generate-rss.js
-```
-
-Details
-- The script scans all .md files under document_root.
-- Item title is taken from properties/toc.json (if available), otherwise from the first H1 in the Markdown, then falls back to the filename.
-- Item date prefers properties/toc.json date; otherwise uses the file's last modified time.
-- Item description is derived from the first paragraph (Markdown stripped).
-- Item link uses the same scheme as the site: /viewer.html?file=posts/<relative-path>.
-
-Example
-- If main-config.rss_feed_url is "/feed.xml": the file feed.xml will be generated at the repository root.
-- If rss_feed_url is empty: no feed is generated.

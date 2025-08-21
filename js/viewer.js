@@ -44,6 +44,7 @@ async function loadViewerConfig() {
         // Social share URLs (empty string hides the button)
         if (typeof viewer.facebook_share_url !== 'undefined') normalized.facebook_share_url = String(viewer.facebook_share_url);
         if (typeof viewer.x_share_url !== 'undefined') normalized.x_share_url = String(viewer.x_share_url);
+        if (typeof viewer.show_instagram_share !== 'undefined') normalized.show_instagram_share = !!viewer.show_instagram_share;
     }
 
     // Adsense mappings (pass-through with defaults)
@@ -537,6 +538,17 @@ async function generateDocumentMeta(filePath) {
             hasShare = true;
         }
 
+        // Instagram share via Web Share API (falls back to copy)
+        if (config.show_instagram_share === true) {
+            shareHtml += `${hasShare ? sep : sepFirst}<a id="shareInstagram" class="share-link share-instagram" href="#" title="${t('lbl_share_instagram')}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" style="vertical-align: -2px;">
+                    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11zm0 2a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7zm5-3a1 1 0 1 1 0 2a1 1 0 0 1 0-2z"/>
+                </svg>
+                <span class="sr-only">Instagram</span>
+            </a>`;
+            hasShare = true;
+        }
+
         // X (Twitter) share (config.viewer.x_share_url; empty string hides)
         const xTpl = (typeof config.x_share_url !== 'undefined') ? String(config.x_share_url) : '';
         if (xTpl && xTpl.trim() !== '') {
@@ -659,6 +671,43 @@ async function insertDocumentMeta(contentDiv, filePath) {
                         alert(t('msg_link_copied'));
                     } catch (err) {
                         console.warn('Clipboard copy failed:', err);
+                        alert(t('msg_link_copied'));
+                    }
+                });
+            }
+            // Attach Instagram share handler (Web Share API with copy fallback)
+            const igBtn = document.getElementById('shareInstagram');
+            if (igBtn) {
+                igBtn.addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    const url = window.location.href;
+                    const title = document.title || '';
+                    if (navigator.share && typeof navigator.share === 'function') {
+                        try {
+                            await navigator.share({ title, url });
+                            return;
+                        } catch (err) {
+                            // User may cancel or sharing may fail; fallback to copy below
+                        }
+                    }
+                    try {
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            await navigator.clipboard.writeText(url);
+                        } else {
+                            // Fallback method
+                            const ta = document.createElement('textarea');
+                            ta.value = url;
+                            ta.setAttribute('readonly', '');
+                            ta.style.position = 'absolute';
+                            ta.style.left = '-9999px';
+                            document.body.appendChild(ta);
+                            ta.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(ta);
+                        }
+                        alert(t('msg_link_copied'));
+                    } catch (err) {
+                        console.warn('Instagram share/copy failed:', err);
                         alert(t('msg_link_copied'));
                     }
                 });

@@ -10,6 +10,7 @@
     "license_badge_link": "https://creativecommons.org/licenses/by/4.0/deed.ko",
     "license_description": "이 저작물은 Creative Commons 저작자표시 4.0 국제 라이선스에 따라 이용할 수 있습니다.",
     "facebook_share_url": "https://www.facebook.com/sharer/sharer.php?u={url}",
+    "show_instagram_share": true,
     "x_share_url": "https://twitter.com/intent/tweet?url={url}&text={title}"
   },
   "footer": {

@@ -5,6 +5,50 @@
  * This file contains shared functions and variables to avoid code duplication
  */
 
+/**
+ * Early theme application (to be called inline in HTML head to prevent flash)
+ * This is a minified utility that can be stringified and embedded
+ */
+function applyEarlyDarkMode() {
+    try {
+        const m = sessionStorage.getItem('theme_mode');
+        const preferDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (m === 'dark' || (!m && preferDark)) {
+            document.documentElement.setAttribute('data-theme-dark', '1');
+        }
+    } catch (e) { /* ignore */ }
+}
+
+/**
+ * Early theme CSS injection (to be called inline in HTML head)
+ * @param {string} configPath - Path to config JSON file
+ */
+function injectEarlyThemeCSS(configPath) {
+    try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', configPath, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status >= 200 && xhr.status < 300) {
+                try {
+                    const cfg = JSON.parse(xhr.responseText || '{}');
+                    const theme = (cfg && (cfg.colour_theme || cfg.color_theme)) ? String(cfg.colour_theme || cfg.color_theme).trim() : '';
+                    if (theme) {
+                        const safe = theme.toLowerCase().replace(/[^a-z0-9-_]/g, '');
+                        if (safe) {
+                            const link = document.createElement('link');
+                            link.id = 'colour-theme';
+                            link.rel = 'stylesheet';
+                            link.href = './css/themes/' + safe + '.css';
+                            document.head.appendChild(link);
+                        }
+                    }
+                } catch (e) { /* ignore */ }
+            }
+        };
+        xhr.send();
+    } catch (e) { /* ignore */ }
+}
+
 // Simple in-memory JSON cache to avoid redundant fetches
 // Map<url, Promise<any>> ensures single flight per URL
 const __jsonCache = new Map();
@@ -12,14 +56,14 @@ const __jsonCache = new Map();
 async function fetchJsonCached(url) {
     if (!url) throw new Error('fetchJsonCached: url is required');
     if (__jsonCache.has(url)) {
-        return __jsonCache.get(url);
+        return await __jsonCache.get(url);
     }
     const p = (async () => {
         const res = await fetch(url);
         if (!res.ok) {
             throw new Error(`Failed to load JSON ${url}: ${res.status}`);
         }
-        return res.json();
+        return await res.json();
     })();
     __jsonCache.set(url, p);
     try {

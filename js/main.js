@@ -13,9 +13,9 @@ function getPerPage() {
 // Flatten all docs once TOC is loaded
 function buildAllDocsFlat() {
     const all = [];
-    for (const [, categoryInfo] of Object.entries(documentCategories)) {
+    for (const categoryInfo of Object.values(documentCategories)) {
         if (categoryInfo.files && categoryInfo.files.length > 0) {
-            categoryInfo.files.forEach(file => {
+            for (const file of categoryInfo.files) {
                 const tocDate = file && file.date ? parseFlexibleDate(String(file.date)) : null;
                 all.push({
                     file,
@@ -23,7 +23,7 @@ function buildAllDocsFlat() {
                     tocDate,
                     sortDate: tocDate || new Date('1970-01-01')
                 });
-            });
+            }
         }
     }
     // For All view and search, keep newest first by tocDate if available
@@ -99,9 +99,14 @@ async function renderDocuments() {
 
         // 필터링: 검색어가 있으면 전체 영역에서 검색
         const term = (currentSearchTerm || '').trim().toLowerCase();
-        let filtered = term
-            ? enriched.filter(it => (it.file.title || '').toLowerCase().includes(term) || (it.categoryTitle || '').toLowerCase().includes(term))
-            : enriched;
+        let filtered = enriched;
+        if (term) {
+            filtered = enriched.filter(it => {
+                const title = (it.file.title || '').toLowerCase();
+                const category = (it.categoryTitle || '').toLowerCase();
+                return title.includes(term) || category.includes(term);
+            });
+        }
 
         // Update body data attribute to reflect current view for responsive CSS rules
         try {

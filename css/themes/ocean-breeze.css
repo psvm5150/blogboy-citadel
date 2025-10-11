@@ -1,0 +1,112 @@
+/* Theme: ocean-breeze
+   A clean and sophisticated theme inspired by coastal serenity
+   Features: Deep ocean blues with coral accents for excellent readability
+   - Viewer: header/footer with calming ocean gradient and refined button styles
+   - Main: elegant sea-inspired colors for titles, lists, and indicators
+   Note: Dimensions remain unchanged. Image badges are not themed. */
+
+/* Common header/footer for both pages */
+.header {
+  /* Sophisticated ocean gradient: deep navy to azure with seafoam highlights */
+  background: linear-gradient(135deg, #0a1f3d 0%, #1a4d7a 25%, #2c7aaf 60%, #4a90b8 85%, #0d2743 100%) !important;
+  color: #ffffff !important;
+}
+.footer {
+  background: linear-gradient(135deg, #0a1f3d 0%, #1a4d7a 25%, #2c7aaf 60%, #4a90b8 85%, #0d2743 100%) !important;
+  color: #ffffff !important;
+}
+.footer p { color: rgba(255, 255, 255, 0.88) !important; }
+
+/* Header/footer controls (buttons) */
+.header .darkmode-toggle,
+.header .home-button,
+.footer .darkmode-toggle,
+.footer .home-button {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease !important;
+}
+.header .darkmode-toggle:hover,
+.header .home-button:hover,
+.footer .darkmode-toggle:hover,
+.footer .home-button:hover {
+  background: rgba(255, 255, 255, 0.28) !important;
+  border-color: rgba(255, 255, 255, 0.55) !important;
+  transform: translateY(-1px);
+}
+
+/* MAIN PAGE ONLY: elegant ocean-inspired link colors with coral accents */
+body[data-page="main"] .post-link {
+  color: #2a7ba6 !important; /* sophisticated ocean blue for titles */
+  border-left: 4px solid transparent;
+  transition: all 0.25s ease !important;
+}
+body[data-page="main"] .post-link:hover {
+  background-color: #e8f4f8 !important; /* soft seafoam background */
+  border-left-color: #ff7a5c !important; /* warm coral accent */
+  color: #1d5a7a !important; /* deeper ocean blue on hover */
+}
+
+/* New indicator with coral/peach accent for visibility */
+body[data-page="main"] .new-indicator {
+  background: linear-gradient(135deg, rgba(255, 148, 120, 0.14), rgba(255, 148, 120, 0.06)) !important;
+  color: #d45a3a !important; /* warm terracotta text */
+  border: 1px solid rgba(255, 122, 92, 0.4) !important;
+}
+body[data-page="main"] .new-indicator::before { 
+  background: #ff7a5c !important; /* coral glow */
+  box-shadow: 0 0 0 3px rgba(255, 122, 92, 0.2) !important;
+}
+
+/* Badge text color block for text badge only; image badges unaffected */
+body[data-page="main"] .site-badge:not(.image-badge) {
+  background: rgba(26, 77, 122, 0.92) !important; /* deep ocean badge */
+  color: #ffffff !important;
+  border: 1px solid rgba(74, 144, 184, 0.4) !important;
+}
+body[data-page="main"] .site-badge.image-badge { background: transparent !important; }
+
+/* Light mode only: enhanced hover for better interactivity */
+body:not(.darkmode)[data-page="main"] .post-link:hover {
+  color: #164d68 !important; /* even deeper ocean on light mode hover */
+  box-shadow: 0 2px 8px rgba(42, 123, 166, 0.08) !important;
+}
+
+/* Dark mode only: brighter colors for better contrast and readability */
+body.darkmode[data-page="main"] .post-link {
+  color: #5ba8d4 !important; /* brighter azure for dark backgrounds */
+}
+
+body.darkmode[data-page="main"] .post-link:hover {
+  background-color: rgba(42, 123, 166, 0.15) !important;
+  border-left-color: #ff9478 !important; /* lighter coral for dark mode */
+  color: #7cc0e8 !important;
+}
+
+/* Viewer auto TOC styling for dark mode - enhanced readability */
+body.darkmode .toc-title { 
+  color: #e8f2f7 !important; 
+  font-weight: 600 !important;
+}
+body.darkmode .toc-link { 
+  color: #7cc0e8 !important; /* bright ocean blue for primary links */
+}
+body.darkmode .toc-indent-2 .toc-link { 
+  color: #a0c4d8 !important; /* softer blue for secondary level */
+}
+body.darkmode .toc-indent-3 .toc-link,
+body.darkmode .toc-indent-4 .toc-link { 
+  color: #96a8b5 !important; /* muted blue-gray for deeper levels */
+}
+
+/* Light mode TOC - subtle refinements */
+body:not(.darkmode) .toc-title {
+  color: #1a4d7a !important;
+}
+body:not(.darkmode) .toc-link {
+  color: #2a7ba6 !important;
+}
+body:not(.darkmode) .toc-link:hover {
+  color: #ff7a5c !important; /* coral accent on hover */
+}

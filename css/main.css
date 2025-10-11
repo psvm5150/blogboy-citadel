@@ -3,23 +3,16 @@
 /* Reset & Base Styles */
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background-color: #fafafa;
     color: #2c3e50;
-    line-height: 1.6;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
     padding: 0 24px;
 }
 
 /* Header - 하단과 같은 색상으로 변경 */
 .header {
-    /* Neutral base header; theme will style */
-    background: transparent;
-    color: inherit;
     padding: 32px 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
@@ -190,18 +183,6 @@ body {
             height: 14px;
         }
     }
-}
-/* Screen reader only text utility (main page) */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
 }
 
 /* Pagination */
@@ -451,50 +432,17 @@ body {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
-/* Loading State */
-.loading {
-    text-align: center;
-    padding: 80px 0;
-    color: #6c757d;
-    font-size: 1.1rem;
-}
 
 /* Footer */
 .footer {
     background: #2c3e50;
     color: white;
-    text-align: center;
     padding: 32px 0;
     margin-top: 48px;
 }
 
 .footer p {
-    margin-bottom: 16px;
     opacity: 0.8;
-}
-
-.home-button {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 24px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.home-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    text-decoration: none;
-    color: white;
-    transform: translateY(-2px);
 }
 
 /* Responsive Design */
@@ -685,38 +633,16 @@ body {
 
 
 
-/* Dark Mode Toggle Button */
-.darkmode-toggle {
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 24px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    margin-right: 8px;
-}
-
-
 /* Footer Controls Layout */
 .footer-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.25rem; /* reduced by half */
+    gap: 0.25rem;
 }
 
-/* Prevent button text from wrapping and align with viewer header look */
-.darkmode-toggle,
-.home-button {
-    white-space: nowrap;
+.darkmode-toggle {
+    margin-right: 8px;
 }
 
 /* Responsive Footer Controls (align with viewer header behavior) */

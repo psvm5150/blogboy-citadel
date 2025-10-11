@@ -98,9 +98,9 @@ async function isAutoTocDisabled(filePath) {
         const normalizedPath = filePath.startsWith(documentRoot) ? filePath.substring(documentRoot.length) : filePath;
         
         // 모든 카테고리에서 해당 파일 찾기
-        for (const [categoryKey, categoryInfo] of Object.entries(tocConfig)) {
-            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
-                const file = categoryInfo.files.find(f => f.path === normalizedPath);
+        for (const categoryInfo of Object.values(tocConfig)) {
+            if (categoryInfo && categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const file = categoryInfo.files.find(f => f && f.path === normalizedPath);
                 if (file && file.disable_auto_toc === true) {
                     return true;
                 }
@@ -122,9 +122,9 @@ async function isLicensePhraseDisabled(filePath) {
         const documentRoot = normalizePath(mainConfig.document_root);
         const normalizedPath = filePath.startsWith(documentRoot) ? filePath.substring(documentRoot.length) : filePath;
 
-        for (const [, categoryInfo] of Object.entries(tocConfig)) {
-            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
-                const file = categoryInfo.files.find(f => f.path === normalizedPath);
+        for (const categoryInfo of Object.values(tocConfig)) {
+            if (categoryInfo && categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const file = categoryInfo.files.find(f => f && f.path === normalizedPath);
                 if (file && file.disable_license_phrase === true) {
                     return true;
                 }
@@ -163,9 +163,9 @@ async function getTocTitleForFile(filePath) {
         const tocConfig = await loadTocConfig();
         const documentRoot = normalizePath(mainConfig.document_root);
         const relativePath = filePath.startsWith(documentRoot) ? filePath.substring(documentRoot.length) : filePath;
-        for (const [, categoryInfo] of Object.entries(tocConfig)) {
-            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
-                const found = categoryInfo.files.find(f => f.path === relativePath);
+        for (const categoryInfo of Object.values(tocConfig)) {
+            if (categoryInfo && categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const found = categoryInfo.files.find(f => f && f.path === relativePath);
                 if (found && found.title) return String(found.title);
             }
         }
@@ -478,10 +478,13 @@ async function generateDocumentMeta(filePath) {
 
         // toc.json에서 현재 문서 항목 찾기
         let tocEntry = null;
-        for (const [categoryKey, categoryInfo] of Object.entries(tocConfig)) {
-            if (categoryInfo.files && Array.isArray(categoryInfo.files)) {
-                const found = categoryInfo.files.find(f => f.path === relativePath);
-                if (found) { tocEntry = found; break; }
+        for (const categoryInfo of Object.values(tocConfig)) {
+            if (categoryInfo && categoryInfo.files && Array.isArray(categoryInfo.files)) {
+                const found = categoryInfo.files.find(f => f && f.path === relativePath);
+                if (found) {
+                    tocEntry = found;
+                    break;
+                }
             }
         }
 

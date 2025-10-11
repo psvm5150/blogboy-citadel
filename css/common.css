@@ -7,6 +7,122 @@
     box-sizing: border-box;
 }
 
+/* Body Base Styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Base */
+.header {
+    background: transparent;
+    color: inherit;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Main Content Base */
+.main-content {
+    padding: 2rem 0;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Footer Base */
+.footer {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.footer p {
+    margin-bottom: 16px;
+}
+
+/* Dark Mode Toggle Button */
+.darkmode-toggle {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    white-space: nowrap;
+}
+
+.darkmode-toggle:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* Home Button */
+.home-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 24px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    height: 40px;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.home-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* Screen Reader Only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
 /* Dark Mode Base */
 .darkmode {
     background-color: #0d1117;
@@ -25,16 +141,13 @@ html[data-theme-dark="1"] .loading {
     color: #8b949e;
 }
 
-/* Dark Mode Toggle Hover */
-.darkmode-toggle:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
 }
 
-/* Mobile shared sizing for buttons */
 @media (max-width: 480px) {
     .darkmode-toggle,
     .home-button {

@@ -1,6 +1,6 @@
 {
   "markdown": {
-    "title": "📝 마크다운 & 문서작성",
+    "title": "마크다운 & 문서작성",
     "files": [
       {
         "title": "MarkDown 완벽 가이드",
@@ -13,7 +13,7 @@
     ]
   },
   "editor": {
-    "title": "⌨️ 에디터 & 텍스트 편집",
+    "title": "에디터 & 텍스트 편집",
     "files": [
       {
         "title": "Vi/Vim 완벽 사용법",
@@ -34,7 +34,7 @@
     ]
   },
   "ide": {
-    "title": "💡 IDE & 개발환경",
+    "title": "IDE & 개발환경",
     "files": [
       {
         "title": "IntelliJ IDEA 사용자 가이드",
@@ -47,7 +47,7 @@
     ]
   },
   "framework": {
-    "title": "🌱 프레임워크 & 개발도구",
+    "title": "프레임워크 & 개발도구",
     "files": [
       {
         "title": "Spring Initializr 가이드",
@@ -56,7 +56,7 @@
     ]
   },
   "security": {
-    "title": "🔐 보안 & 인증서",
+    "title": "보안 & 인증서",
     "files": [
       {
         "title": "인증서 생성 및 관리 가이드",
@@ -65,7 +65,7 @@
     ]
   },
   "vcs": {
-    "title": "🔄 버전 관리 시스템",
+    "title": "버전 관리 시스템",
     "files": [
       {
         "title": "Git 서버 구축 가이드",
@@ -78,7 +78,7 @@
     ]
   },
   "api": {
-    "title": "📄 API & 문서화",
+    "title": "API & 문서화",
     "files": [
       {
         "title": "Swagger API 문서화 가이드",
